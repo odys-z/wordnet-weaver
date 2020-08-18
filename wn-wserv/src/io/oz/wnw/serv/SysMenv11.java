@@ -22,7 +22,7 @@ import io.odysz.semantics.x.SemanticException;
 import io.oz.wnw.serv.protocol.Wnport;
 import io.oz.wnw.serv.utils.DreamFlags;
 
-@WebServlet(description = "Load Sample App's Functions", urlPatterns = { "/menu.weave" })
+@WebServlet(description = "Load wn weaver's functions", urlPatterns = { "/menu.weaver" })
 public class SysMenv11 extends SemanticTreeV11 {
 	private static final long serialVersionUID = 1L;
 	
@@ -39,7 +39,7 @@ public class SysMenv11 extends SemanticTreeV11 {
 	protected void onGet(AnsonMsg<AnDatasetReq> msg, HttpServletResponse resp)
 			throws ServletException, IOException {
 		if (DreamFlags.menu)
-			Utils.logi("---------- menu.weave get ----------");
+			Utils.logi("---------- menu.weaver get ----------");
 
 		try {
 			String connId = msg.body(0).conn();
@@ -62,14 +62,13 @@ public class SysMenv11 extends SemanticTreeV11 {
 	@Override
 	protected void onPost(AnsonMsg<AnDatasetReq> msg, HttpServletResponse resp) throws IOException, SemanticException {
 		if (DreamFlags.menu)
-			Utils.logi("========== menu.sample post ==========");
+			Utils.logi("========== menu.weaver post ==========");
 
 		resp.setCharacterEncoding("UTF-8");
 		try {
 			IUser usr = verifier.verify(msg.header());
 
 			AnDatasetReq jreq = msg.body(0);
-			// jreq.treeSemtcs(menuSemtcs);
 
 			String sk = jreq.sk();
 			jreq.sqlArgs = new String[] {usr.uid()};
@@ -78,14 +77,10 @@ public class SysMenv11 extends SemanticTreeV11 {
 					sk == null ? defltSk : sk, jreq.page(), jreq.size(), jreq.sqlArgs);
 			
 			write(resp, ok(lst.size(), lst));
-//		} catch (SemanticException e) {
-//			write(resp, err(MsgCode.exSemantic, e.getMessage()));
 		} catch (SQLException e) {
 			if (DreamFlags.menu)
 				e.printStackTrace();
 			write(resp, err(MsgCode.exTransct, e.getMessage()));
-//		} catch (ReflectiveOperationException e) {
-//			e.printStackTrace();
 		} catch (SsException e) {
 			write(resp, err(MsgCode.exSession, e.getMessage()));
 		} finally {
