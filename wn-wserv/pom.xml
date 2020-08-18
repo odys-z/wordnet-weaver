@@ -27,4 +27,5 @@
       </plugin>
     </plugins>
   </build>
+  <url>io.odys-z.github/wn-weaver</url>
 </project>
