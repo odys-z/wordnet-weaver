@@ -1,11 +1,77 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.github.odys-z</groupId>
-  <artifactId>wn-weaver</artifactId>
+  <artifactId>wn-weaver.serv</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
   <name>wn weaver</name>
   <description>Word Synonym Web Weaver</description>
+  <url>io.odys-z.github/wn-weaver</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	<maven.compiler.source>1.8</maven.compiler.source>
+	<maven.compiler.target>1.8</maven.compiler.target>
+	<failOnMissingWebXml>false</failOnMissingWebXml>
+  </properties>
+
+  <repositories>
+  	<repository>
+  		<id>sonatype-snapshots</id>
+  		<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+  	</repository>
+  </repositories>
+
+  <dependencies>
+  	<dependency>
+    	<groupId>org.junit.jupiter</groupId>
+    	<artifactId>junit-jupiter-engine</artifactId>
+    	<version>5.3.1</version>
+    	<scope>test</scope>
+    </dependency>
+
+    <dependency>
+    	<groupId>javax.servlet</groupId>
+    	<artifactId>javax.servlet-api</artifactId>
+    	<version>3.0.1</version>
+    </dependency> 
+
+   	<dependency>
+		<!-- As sonatype SNAPSHOT is updating on a daily base, you may update this with:
+			mvn clean package -U
+			to update immediately. -->
+	    <groupId>io.github.odys-z</groupId>
+	    <artifactId>semantic.jserv</artifactId>
+	    <version>1.1.0-SNAPSHOT</version>
+   	</dependency>
+	
+	<!-- https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc -->
+	<dependency>
+	    <groupId>org.xerial</groupId>
+	    <artifactId>sqlite-jdbc</artifactId>
+	    <version>3.25.2</version>
+	</dependency>
+  </dependencies>
+
+  <scm>
+  	<connection>scm:git:git://github.com/odys-z/wordnet-weaver.git</connection>
+  	<developerConnection>scm:git:odys-z@github.com:odys-z/wordnet-weaver.git</developerConnection>
+  	<url>https://github.com/odys-z/semantic-jserv</url>
+  	<tag>HEAD</tag>
+  </scm>
+
+  <distributionManagement>
+  	<snapshotRepository>
+  		<id>ossrh</id>
+  		<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+  		<uniqueVersion>false</uniqueVersion>
+  	</snapshotRepository>
+  	<repository>
+  		<id>ossrh</id>
+  		<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+	</repository>
+  </distributionManagement>
+
   <build>
     <sourceDirectory>src</sourceDirectory>
     <testSourceDirectory>test</testSourceDirectory>
@@ -27,5 +93,5 @@
       </plugin>
     </plugins>
   </build>
-  <url>io.odys-z.github/wn-weaver</url>
+
 </project>
