@@ -23,7 +23,7 @@ import io.oz.wnw.serv.protocol.Wnport;
 import io.oz.wnw.serv.utils.DreamFlags;
 
 @WebServlet(description = "Load wn weaver's functions", urlPatterns = { "/menu.weaver" })
-public class SysMenv11 extends SemanticTreeV11 {
+public class SysMenu extends SemanticTreeV11 {
 	private static final long serialVersionUID = 1L;
 	
 	@Override

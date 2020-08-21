@@ -14,18 +14,18 @@ import io.odysz.semantics.x.SemanticException;
 /**Wordnet.weaver prots*/
 public enum Wnport implements IPort {
 	/**port provided by {@link io.odysz.jsample.SysMenu} */
-	menu("menu.weave"),
-	example("example.weave"),
+	menu("menu.weaver"),
+	example("example.weaver"),
 	/** sample servlet tools.serv */
-	tools("tools.weave");
+	tools("tools.weaver");
 
 	static {
-		JSONAnsonListener.registFactory(Wnport.class, 
+		JSONAnsonListener.registFactory(Wnport.class,
 			(s) -> {
-					return Wnport.valueOf(s);
+				return Wnport.valueOf(s);
 			});
 	}
-	
+
 	private String url;
 	Wnport(String v) { url = v; };
 	public String url() { return url; }
@@ -39,7 +39,7 @@ public enum Wnport implements IPort {
 			catch (IllegalArgumentException ex) {
 				throw new SemanticException(ex.getMessage());
 			}
-			
+
 		}
 	}
 
@@ -57,5 +57,5 @@ public enum Wnport implements IPort {
 		buf.append(url);
 		buf.append('\"');
 		return this;
-	}	
+	}
 }
