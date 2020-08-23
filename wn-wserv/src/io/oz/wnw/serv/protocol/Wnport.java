@@ -17,7 +17,13 @@ public enum Wnport implements IPort {
 	menu("menu.weaver"),
 	example("example.weaver"),
 	/** sample servlet tools.serv */
-	tools("tools.weaver");
+	tools("tools.weaver"),
+	/** reading tasks, etc. */
+	readings("reading.weaver"),
+	/**Port of tutor's function */
+	tutor("tutor.weaver"),
+	/**Port of memory status & health report*/
+	health("health.weaver");
 
 	static {
 		JSONAnsonListener.registFactory(Wnport.class,
