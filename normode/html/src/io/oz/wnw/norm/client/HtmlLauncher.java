@@ -3,7 +3,7 @@ package io.oz.wnw.norm.client;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
-import io.oz.wnw.norm.ScnHome;
+import io.oz.wnw.norm.ViewHome;
 
 public class HtmlLauncher extends GwtApplication {
 
@@ -46,6 +46,6 @@ public class HtmlLauncher extends GwtApplication {
 
         @Override
         public ApplicationListener createApplicationListener () {
-                return new ScnHome();
+                return new ViewHome();
         }
 }
