@@ -1,6 +1,8 @@
-package io.oz.wnw.norm;
+package io.oz.wnw.norm.C;
 
 import com.badlogic.gdx.ScreenAdapter;
+
+import io.oz.wnw.norm.WGame;
 
 /**Strategy & personal status.
  * 

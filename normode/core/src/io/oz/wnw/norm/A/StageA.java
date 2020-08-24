@@ -1,4 +1,4 @@
-package io.oz.wnw.norm;
+package io.oz.wnw.norm.A;
 
 import com.badlogic.ashley.core.PooledEngine;
 

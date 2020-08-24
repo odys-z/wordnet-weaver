@@ -1,7 +1,9 @@
-package io.oz.wnw.norm;
+package io.oz.wnw.norm.A;
 
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.ScreenAdapter;
+
+import io.oz.wnw.norm.WGame;
 
 /**3d wordnet overview (cubic treemap).
  * 

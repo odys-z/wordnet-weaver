@@ -26,6 +26,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
+import io.oz.wnw.norm.A.ViewA1;
+import io.oz.wnw.norm.C.ViewC1;
+
 public class ScnMenu extends ScreenAdapter {
 	WGame game;
 	OrthographicCamera guiCam;
