@@ -6,20 +6,7 @@
 		Records returned by sql can be mapped into bump cases (for oracle) if 'cols' is not empty.
 		Different version of sql, mysql, oracle, etc. is used according to connId and driver type,
 		see connects.xml. 
-		s-tree: if this field is defined, the retrieved records is translated in to an STree, with names specified as:
-			0: the checked value for check box, etc, the column's value should changed to boolean.
-				It's always configured as 'checked' for easyUI.
-				see DatasetCfg#isColChecked(String),
-			1: tabl name (ignored, used in other case),
-			2: record id,
-			3: parent id,
-			4: fullpath (optinal),
-			5: sibling sort (optional),
-			6: item text,
-			7: children name (default 'children', js can use this to find children, auto generated while building tree),
-			8: not used flag. like: should paged by server (ignored because sql is used directly. For paging by server, see SQuery).
-			Note: all element can be defined as "db field, client name", while client name is optional.
-			The client name can not ignored if the client using a different name other than db field name.
+		s-tree: if this field is defined, the retrieved records is translated in to an STree. For field index, see class TreeSemantics.Ix.
 
 		NOTE: Because semantic-jserv and jclient are case sensitive,
 			  it's strongly recommended that all oracle selected columns should being double quoted.
@@ -38,72 +25,22 @@
   		<s-tree>checked,a_domain,id,parentId,text,,,false</s-tree>
 	</c>
 	
-	<!--
 	<c>
-	  	<sk>sys.menu.vue-sample</sk>
-  		<mysql>SELECT funcId, parentId, funcName, funcUrl href, isUsed sort, fullpath
-  			FROM a_functions f order by f.fullpath </mysql>
-  		<sqlit>SELECT funcId, parentId, funcName, url href, sibling sort, fullpath
-  			FROM a_functions f order by f.fullpath</sqlit>
-  		<s-tree>,a_functions,funcId id,parentId,funcName title,,,false</s-tree>
-	</c> -->
-
-	<c>
-	  	<sk>sys.menu.ez-test</sk>
-  		<mysql>SELECT funcId, parentId, funcName, funcUrl url, isUsed sort, fullpath
-  			FROM a_sys_functions f order by f.fullpath
+	  	<sk>sys.menu.dreaming</sk>
+  		<mysql>SELECT funcId, parentId, funcName, funcUrl url, sibling sort, fullpath
+  			FROM a_functions f order by f.fullpath
   		</mysql>
   		<sqlit>SELECT funcId, parentId, funcName, url, sibling sort, fullpath
   			FROM a_functions f order by f.fullpath
   		</sqlit>
-  		<s-tree>,a_sys_functions,funcId id,parentId,funcName text,,,false</s-tree>
+  		<s-tree>,a_functions,funcId id,parentId,funcName text,,,false</s-tree>
   	</c>
   	
-  	<!-- jsample/easyui/users.html -->
-	<c> <sk>projects.ez</sk>
-		<mysql>select projectId, projectName, parentId, fullpath, sort
-		from p_projects p where p.orgId = '%s'</mysql>
-  		<s-tree>,p_projects,projectId id,parentId,fullpath,sort,projectName text,,false</s-tree>
-	</c>
-	<c> <sk>roles</sk>
-		<mysql>select roleId as value,roleName as text from a_roles</mysql>
-		<sqlit>select roleId as value,roleName as text from a_roles</sqlit>
-  	</c>
-	<c> <sk>orgs</sk>
-		<mysql>select orgId as value, orgName as text from a_reg_org</mysql>
-  	</c>
-  	<c> <sk>departs.org</sk>
-  		<mysql>select departId value, orgId, departName text, departState from a_org_depart where orgId = '%s'</mysql>
-  	</c>
-  	
-  	<!-- orgnization combobox -->
-  	<c> <sk>org.all</sk>
-  		<mysql>select orgId value, orgName text from a_orgs</mysql>
-  		<sqlit>select orgId value, orgName text from a_orgs</sqlit>
-	</c>
-
 	<!-- role-func tree -->
   	<c> <sk>trees.role_funcs</sk>
   		<mysql>select r.roleId is not null checked, funcName text, f.funcId, parentId,f.funcId sort, fullpath
   		from a_sys_functions f left outer join a_role_funcs r on r.funcId = f.funcId and r.roleId = '%s' order by fullpath</mysql>
   		<s-tree>checked,a_functions,funcId value,parentId,fullpath,sort,funcName text,children,false</s-tree>
-  	</c>
-  	
-  	<!-- workflow combobox -->
-  	<c> <sk>ezcbb-workflows</sk>
-  		<mysql>select wfId value, wfName text from oz_workflow</mysql>
-  		<sqlite></sqlite>
-  	</c>
-  	<!-- get workflow tree. arg[0] wfId, [1] roleId -->
-  	<c> <sk>wf-rights.tree</sk>
-  		<mysql>select false checked, n.nodeId, nodeName, n.nodeId value, nodeName text, '' roleId, concat(n.wfId, '/', n.nodeId) fullpath, 0 sort, wfId parent
-  		from oz_wfnodes n where n.wfId = '%1$s'
-  		union
-  		select r.roleId is not null checked, n.nodeId, nodeName, c.cmd value, c.txt text, r.roleId, concat(n.wfId, '/', n.nodeId, '/', ifnull(c.cmd, '')) fullpath, c.sort, n.nodeId parent
-  		from oz_wfnodes n join oz_wfcmds c on n.nodeId = c.nodeId and n.wfId = '%1$s'
-  		left outer join oz_wfrights r on c.cmd = r.cmd and r.roleId = '%2$s'
-  		order by fullpath, sort</mysql>
-  		<s-tree>checked,oz_workflow,value,parent,fullpath,sort,text,children,false</s-tree>
   	</c>
 </t>
 </dataset>

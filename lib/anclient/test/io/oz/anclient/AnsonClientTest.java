@@ -33,7 +33,7 @@ import io.odysz.transact.sql.parts.condition.ExprPart;
 import io.oz.wnw.serv.protocol.Wnport;
 
 /**
- * Unit test for sample App. 
+ * Unit test for Word Dreamer App. 
  */
 public class AnsonClientTest {
 	private static String jserv = null;
@@ -91,10 +91,10 @@ public class AnsonClientTest {
   						getMenu("admin", roleId);
 
   						// function/semantics tests
-  						testUpload(client);
+//  						testUpload(client);
 
   						// insert/load oracle reports
-  						testORCL_Reports(client);
+//  						testORCL_Reports(client);
   					}
   				}
     		}, (code, err) -> {
