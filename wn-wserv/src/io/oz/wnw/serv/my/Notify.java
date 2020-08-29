@@ -1,4 +1,4 @@
-package io.oz.wnw.serv.s1;
+package io.oz.wnw.serv.my;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -25,48 +25,18 @@ import io.odysz.transact.sql.Insert;
 import io.odysz.transact.sql.Update;
 import io.odysz.transact.x.TransException;
 import io.oz.wnw.serv.protocol.Wnport;
-import io.oz.wnw.serv.utils.DreamFlags;
+import io.oz.wnw.serv.utils.WeaverFlags;
 
-/**<p>Sample serv (Port = user.serv) shows how user can extend basic serv API
- * with help of semantic-transact SQL builder</p>
- * function branch: a = "A" | "B" | "C";<br>
- * The js client request should do something like this:<pre>
-var conn = jconsts.conn;
-function saveTooleA() {
-	var dat = {borrowId: 'borrow-001', items: []};
-	dat.items.push(['item001', 3]); // return 3 of tiem001
-
-	var usrReq = new jvue.UserReq(conn, "r_tools_borrows")
-						// turn back tools - or any function branch tag handled by tools.serv
-						.a("A")
-
-						// or reaplace these 2 set() with data(dat)
-						.set('borrowId', 'borrow-001')
-						.set('items', [['item001', 3]]);
-
-	var jmsg = ssClient
-		// ssClient's current user action is handled by jeasy when loading menu
-		.usrCmd('save') // return ssClient itself
-		.userReq(conn, engports.tools, usrReq); // return the AnsonMsg<UserReq> object
-
-	// You should get sqls at server side like this:
-	// delete from r_tools_borrows where borrowId = 'borrow-001'
-	// insert into detailsTbl  (item001) values ('3.0')
-	// update borrowTbl  set total= where borrowId = 'borrow-001'
-	ssClient.commit(jmsg, function(resp) {
-				EasyMsger.ok(EasyMsger.m.saved);
-			}, EasyMsger.error);
-}</pre>
- * @author odys-z@github.com
+/**Get user's notifications.
  */
-@WebServlet(description = "jserv.sample example/tools.serv", urlPatterns = { "/tools.serv" })
-public class Tools extends ServPort<UserReq> {
-	public Tools() {
-		super(null);
-		p = Wnport.tools;
-	}
-
+@WebServlet(description = "normal/notify.weaver", urlPatterns = { "/notify.weaver" })
+public class Notify extends ServPort<UserReq> {
 	private static final long serialVersionUID = 1L;
+
+	public Notify() {
+		super(null);
+		p = Wnport.notify;
+	}
 
 	static DATranscxt st;
 
@@ -83,7 +53,7 @@ public class Tools extends ServPort<UserReq> {
 	@Override
 	protected void onGet(AnsonMsg<UserReq> req, HttpServletResponse resp)
 			throws IOException {
-		if (DreamFlags.user)
+		if (WeaverFlags.my)
 			Utils.logi("---------- servs.Business A GET ----------");
 		try {
 			resp.getWriter().write(Html.ok("Please visit POST."));
@@ -95,7 +65,7 @@ public class Tools extends ServPort<UserReq> {
 	@Override
 	protected void onPost(AnsonMsg<UserReq> jmsg, HttpServletResponse resp)
 			throws IOException {
-		if (DreamFlags.user)
+		if (WeaverFlags.my)
 			Utils.logi("========== servs.Business A POST ==========");
 
 		resp.setCharacterEncoding("UTF-8");
@@ -105,7 +75,7 @@ public class Tools extends ServPort<UserReq> {
 
 			UserReq jreq = jmsg.body(0);
 
-			SampleResp rsp = null;
+			NotifyResp rsp = null;
 			if ("A".equals(jreq.a()))
 				rsp = A(jreq, usr);
 			else if ("B".equals(jreq.a()))
@@ -120,7 +90,7 @@ public class Tools extends ServPort<UserReq> {
 		} catch (SemanticException e) {
 			write(resp, err(MsgCode.exSemantic, e.getMessage()));
 		} catch (SQLException | TransException e) {
-			if (DreamFlags.user)
+			if (WeaverFlags.my)
 				e.printStackTrace();
 			write(resp, err(MsgCode.exTransct, e.getMessage()));
 		} catch (SsException e) {
@@ -130,7 +100,7 @@ public class Tools extends ServPort<UserReq> {
 		}
 	}
 
-	private SampleResp A(UserReq req, IUser usr) throws TransException {
+	private NotifyResp A(UserReq req, IUser usr) throws TransException {
 		String borrowId = (String) req.get("borrowId");
 		@SuppressWarnings("unchecked")
 		ArrayList<String[]> items = (ArrayList<String[]>) req.get("items");
@@ -158,16 +128,16 @@ public class Tools extends ServPort<UserReq> {
 		
 		Utils.logi(sqls);
 
-		return new SampleResp(p).msg(String.valueOf(sqls.size()));
+		return new NotifyResp(p).msg(String.valueOf(sqls.size()));
 	}
 
-	private SampleResp B(UserReq req, IUser usr) {
-		return new SampleResp(p)
+	private NotifyResp B(UserReq req, IUser usr) {
+		return new NotifyResp(p)
 				.msg("B");
 	}
 
-	private SampleResp C(UserReq req, IUser usr) {
-		return new SampleResp(p)
+	private NotifyResp C(UserReq req, IUser usr) {
+		return new NotifyResp(p)
 				.msg("C");
 	}
 }

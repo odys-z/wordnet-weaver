@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import io.odysz.common.Utils;
 import io.odysz.semantic.jserv.helper.Html;
-import io.oz.wnw.serv.utils.DreamFlags;
+import io.oz.wnw.serv.utils.WeaverFlags;
 
 @WebServlet(description = "Dream: echo", urlPatterns = { "/echo.weaver" })
 public class Echo extends HttpServlet {
@@ -18,7 +18,7 @@ public class Echo extends HttpServlet {
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		if (DreamFlags.echo)
+		if (WeaverFlags.echo)
 			Utils.logi("---------- echo.weaver get <- %s ----------", req.getRemoteAddr());
 
 		resp.getWriter().write(Html.ok(req.getRequestURL().toString()));

@@ -20,7 +20,7 @@ import io.odysz.semantic.jserv.x.SsException;
 import io.odysz.semantics.IUser;
 import io.odysz.semantics.x.SemanticException;
 import io.oz.wnw.serv.protocol.Wnport;
-import io.oz.wnw.serv.utils.DreamFlags;
+import io.oz.wnw.serv.utils.WeaverFlags;
 
 @WebServlet(description = "Load wn weaver's functions", urlPatterns = { "/menu.weaver" })
 public class SysMenu extends SemanticTreeV11 {
@@ -38,7 +38,7 @@ public class SysMenu extends SemanticTreeV11 {
 	@Override
 	protected void onGet(AnsonMsg<AnDatasetReq> msg, HttpServletResponse resp)
 			throws ServletException, IOException {
-		if (DreamFlags.menu)
+		if (WeaverFlags.menu)
 			Utils.logi("---------- menu.weaver get ----------");
 
 		try {
@@ -61,7 +61,7 @@ public class SysMenu extends SemanticTreeV11 {
 
 	@Override
 	protected void onPost(AnsonMsg<AnDatasetReq> msg, HttpServletResponse resp) throws IOException, SemanticException {
-		if (DreamFlags.menu)
+		if (WeaverFlags.menu)
 			Utils.logi("========== menu.weaver post ==========");
 
 		resp.setCharacterEncoding("UTF-8");
@@ -78,7 +78,7 @@ public class SysMenu extends SemanticTreeV11 {
 			
 			write(resp, ok(lst.size(), lst));
 		} catch (SQLException e) {
-			if (DreamFlags.menu)
+			if (WeaverFlags.menu)
 				e.printStackTrace();
 			write(resp, err(MsgCode.exTransct, e.getMessage()));
 		} catch (SsException e) {

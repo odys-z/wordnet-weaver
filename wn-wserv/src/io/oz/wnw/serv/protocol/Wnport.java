@@ -15,15 +15,14 @@ import io.odysz.semantics.x.SemanticException;
 public enum Wnport implements IPort {
 	/**port provided by {@link io.odysz.jsample.SysMenu} */
 	menu("menu.weaver"),
-	example("example.weaver"),
-	/** sample servlet tools.serv */
-	tools("tools.weaver"),
+	/** user notifications notify.weaver */
+	notify("notify.weaver"),
+	/**Port of memory status & health report*/
+	health("health.weaver"),
 	/** reading tasks, etc. */
 	readings("reading.weaver"),
 	/**Port of tutor's function */
-	tutor("tutor.weaver"),
-	/**Port of memory status & health report*/
-	health("health.weaver");
+	tutor("tutor.weaver");
 
 	static {
 		JSONAnsonListener.registFactory(Wnport.class,

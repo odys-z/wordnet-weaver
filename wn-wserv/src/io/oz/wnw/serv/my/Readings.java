@@ -1,4 +1,4 @@
-package io.oz.wnw.serv.admin;
+package io.oz.wnw.serv.my;
 
 import java.io.IOException;
 

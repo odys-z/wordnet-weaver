@@ -4,14 +4,13 @@ import io.odysz.semantic.jsession.JUser;
 import io.odysz.semantics.meta.TableMeta;
 import io.odysz.semantics.x.SemanticException;
 
-public class Dreamer extends JUser {
+public class WnUser extends JUser {
 	/**Hard coded field string of user table information.
 	 * With this class, sample project's user table can be different from the default table,
 	 * providing the same semantics presented.
-	 * @author odys-z@github.com
 	 */
-	public static class SampleUserMeta extends JUserMeta {
-		public SampleUserMeta(String tbl, String... conn) {
+	public static class WnUserMeta extends JUserMeta {
+		public WnUserMeta(String tbl, String... conn) {
 			super(tbl, conn);
 
 			this.tbl = "a_users";
@@ -22,12 +21,12 @@ public class Dreamer extends JUser {
 		}
 	}
 
-	public Dreamer(String uid, String pswd, String usrName) throws SemanticException {
+	public WnUser(String uid, String pswd, String usrName) throws SemanticException {
 		super(uid, pswd, usrName);
 	}
 
 	public TableMeta meta() {
-		return new SampleUserMeta("");
+		return new WnUserMeta("");
 	}
 
 }

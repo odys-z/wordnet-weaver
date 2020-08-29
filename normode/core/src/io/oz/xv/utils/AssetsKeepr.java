@@ -9,7 +9,7 @@ public class AssetsKeepr {
 		
 	}
 
-	public static MeshPart loadGltfAsync(String path, ICallback onOk) {
+	public static MeshPart loadGltfAsync(String path, IOnAssets onOk) {
 		return null;
 	}
 

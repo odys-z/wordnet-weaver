@@ -4,10 +4,11 @@ package io.oz.wnw.serv.utils;
  * 
  * @author odys-z@github.com
  */
-public class DreamFlags {
+public class WeaverFlags {
 
 	public static final boolean echo = true;
 	public static final boolean menu = true;
 
-	public static final boolean user = true;
+	/**Verbose on user's service, my.Notify, my.Health, ... */
+	public static final boolean my = true;
 }

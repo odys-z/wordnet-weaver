@@ -14,7 +14,7 @@ import io.odysz.semantic.jserv.user.UserReq;
 import io.odysz.semantics.x.SemanticException;
 import io.oz.wnw.serv.protocol.Wnport;
 
-@WebServlet(description = "totor's functions", urlPatterns = { "/tutor.weaver" })
+@WebServlet(description = "tutor's functions", urlPatterns = { "/tutor.weaver" })
 public class Tutor extends ServPort<UserReq> {
 	private static final long serialVersionUID = 1L;
 
