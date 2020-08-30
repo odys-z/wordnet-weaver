@@ -15,9 +15,9 @@ import io.odysz.semantic.jsession.AnSessionReq;
 import io.odysz.semantic.jsession.AnSessionResp;
 import io.odysz.semantics.x.SemanticException;
 
-/**
+/**Client Factory, creating client with login().
+ * 
  * @author odys-z@github.com
- * @param <T>
  */
 public class Clients {
 	public static final boolean console = true;
@@ -54,13 +54,13 @@ public class Clients {
 		
 		// formatLogin: {a: "login", logid: logId, pswd: tokenB64, iv: ivB64};
   		// AnsonMsg<? extends AnsonBody> reqv11 = new AnsonMsg<AnQueryReq>(Port.session);;
-		AnsonMsg<AnSessionReq> reqv11 = AnSessionReq.formatLogin(uid, tk64, iv64);
+		AnsonMsg<AnSessionReq> req = AnSessionReq.formatLogin(uid, tk64, iv64);
 
 		AnsonClient[] inst = new AnsonClient[1]; 
 
 		HttpServClient httpClient = new HttpServClient();
 		String url = servUrl(Port.session);
-		httpClient.post(url, reqv11, (code, msg) -> {
+		httpClient.post(url, req, (code, msg) -> {
 					if (AnsonMsg.MsgCode.ok == code) {
 						// create a logged in client
 						inst[0] = new AnsonClient(((AnSessionResp) msg).ssInf());
