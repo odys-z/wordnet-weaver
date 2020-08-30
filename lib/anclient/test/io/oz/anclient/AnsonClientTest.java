@@ -19,6 +19,7 @@ import io.odysz.anson.x.AnsonException;
 import io.odysz.common.AESHelper;
 import io.odysz.common.Utils;
 import io.odysz.module.rs.AnResultset;
+import io.odysz.semantic.DA.DatasetCfg.AnTreeNode;
 import io.odysz.semantic.ext.AnDatasetReq;
 import io.odysz.semantic.ext.AnDatasetResp;
 import io.odysz.semantic.jprotocol.AnsonBody;
@@ -31,6 +32,7 @@ import io.odysz.semantic.jserv.U.AnUpdateReq;
 import io.odysz.semantics.x.SemanticException;
 import io.odysz.transact.sql.parts.condition.ExprPart;
 import io.oz.wnw.serv.protocol.Wnport;
+import junit.framework.Assert;
 
 /**
  * Unit test for Word Dreamer App. 
@@ -120,7 +122,9 @@ public class AnsonClientTest {
 		
     	client.commit(jmsg, (code, data) -> {
 			List<?> rses = ((AnDatasetResp)data).forest();
-			Utils.logi(rses);;
+			// see data in wn-wserv/WebContent/WEB-INF/weave.sqlite
+			assertEquals("sys-domain", ((AnTreeNode)((AnTreeNode)rses.get(0)).children().get(0)).get("id"));
+			assertEquals("1 sys.1 domain", ((AnTreeNode)((AnTreeNode)rses.get(0)).child(0)).get("fullpath"));
     	});
 	}
 
@@ -217,7 +221,7 @@ public class AnsonClientTest {
     			client.commit(j,
     				(c, d) -> {
 						AnResultset rs = (AnResultset) d.rs(0);
-							rs.printSomeData(false, 2, "recId");
+						rs.printSomeData(false, 2, "recId");
 					},
 					(c, err) -> {
 						fail(String.format("code: %s, error: %s", c, err.msg()));

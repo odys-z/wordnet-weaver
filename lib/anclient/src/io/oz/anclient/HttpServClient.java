@@ -81,7 +81,7 @@ public class HttpServClient {
 //		}
 //	}
 	
-	public void postV11(String url, AnsonMsg<? extends AnsonBody> jreq, SCallbackV11 onResponse)
+	public void post(String url, AnsonMsg<? extends AnsonBody> jreq, SCallbackV11 onResponse)
 			throws IOException, SemanticException, SQLException, AnsonException {
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();

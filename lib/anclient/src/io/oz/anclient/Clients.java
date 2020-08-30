@@ -60,7 +60,7 @@ public class Clients {
 
 		HttpServClient httpClient = new HttpServClient();
 		String url = servUrl(Port.session);
-		httpClient.postV11(url, reqv11, (code, msg) -> {
+		httpClient.post(url, reqv11, (code, msg) -> {
 					if (AnsonMsg.MsgCode.ok == code) {
 						// create a logged in client
 						inst[0] = new AnsonClient(((AnSessionResp) msg).ssInf());

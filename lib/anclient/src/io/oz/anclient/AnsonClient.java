@@ -139,7 +139,7 @@ public class AnsonClient {
 	public void commit(AnsonMsg<? extends AnsonBody> req, SCallbackV11 onOk, SCallbackV11... onErr)
 			throws SemanticException, IOException, SQLException, AnsonException {
     	HttpServClient httpClient = new HttpServClient();
-  		httpClient.postV11(Clients.servUrl(req.port()), req,
+  		httpClient.post(Clients.servUrl(req.port()), req,
   				(code, obj) -> {
   					if(Clients.console) {
   						Utils.printCaller(false);
