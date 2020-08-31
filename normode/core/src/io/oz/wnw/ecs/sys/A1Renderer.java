@@ -1,4 +1,4 @@
-package io.oz.wnw.norm.A.sys;
+package io.oz.wnw.ecs.sys;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;

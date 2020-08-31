@@ -1,4 +1,4 @@
-package io.oz.wnw.norm.A.cmp;
+package io.oz.wnw.ecs.cmp;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.Entity;

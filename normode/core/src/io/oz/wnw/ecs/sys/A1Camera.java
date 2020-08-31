@@ -14,15 +14,15 @@
  * limitations under the License.
  ******************************************************************************/
 
-package io.oz.wnw.norm.A.sys;
+package io.oz.wnw.ecs.sys;
 
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 
-import io.oz.wnw.norm.A.cmp.CamPerspect;
-import io.oz.wnw.norm.A.cmp.Obj3;
+import io.oz.wnw.ecs.cmp.CamPerspect;
+import io.oz.wnw.ecs.cmp.Obj3;
 
 public class A1Camera extends IteratingSystem {
 	
