@@ -1,7 +1,5 @@
 package io.oz.wnw.norm.A;
 
-import java.util.List;
-
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
@@ -9,7 +7,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.VertexAttributes.Usage;
-import com.badlogic.gdx.graphics.g3d.Attribute;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
@@ -49,7 +46,6 @@ public class ViewA1 extends ScreenAdapter {
 	private PerspectiveCamera cam;
     private ModelBatch modelBatch;
     private Model model;
-    private ModelInstance modelInstance;
     private Environment environment;
     private AnimationController controller;
 	private CameraInputController camController;
@@ -70,11 +66,8 @@ public class ViewA1 extends ScreenAdapter {
 			@Override
 			protected Shader createShader (Renderable renderable) {
 				// if (renderable.material.has(TestAttribute.ID)) return new TestShader(renderable);
-				if (renderable.shader != null && renderable.shader instanceof WShader)
-					return (WShader)renderable.shader; // FIXME NOT SAFE!!!
-				// FIXME NOT SAFE!!!
-				// FIXME NOT SAFE!!!
-				// FIXME NOT SAFE!!!
+				if (renderable.material instanceof XMaterial)
+					return ((XMaterial)renderable.material).shader();
 				return super.createShader(renderable);
 			}
 		});
@@ -89,8 +82,8 @@ public class ViewA1 extends ScreenAdapter {
 		camController = new CameraInputController(cam);
 		Gdx.input.setInputProcessor(camController);
 
-		WShader sh1 = null;
-		WShader sh2 = null;
+		WShader sh1 = new WShader(WShader.Mode.simple);
+		WShader sh2 = new WShader(WShader.Mode.test);
 		Material testMaterial1 = new XMaterial("TestMaterial1", sh1);
 		Material redMaterial = new Material("RedMaterial", ColorAttribute.createDiffuse(Color.RED));
 		Material testMaterial2 = new XMaterial("TestMaterial2", sh2, ColorAttribute.createDiffuse(Color.BLUE));
@@ -133,27 +126,30 @@ public class ViewA1 extends ScreenAdapter {
 		// refresh word treemap
 	}
 
-	public void update (float deltaTime) {
-		if (deltaTime > 0.1f) deltaTime = 0.1f;
+	public void update (float delta) {
+		if (delta > 0.1f) delta = 0.1f;
 
-		ecs.update(deltaTime);
+		ecs.update(delta);
+
+        camController.update();
+        controller.update(delta);
+        cam.update();
 	}
 	
-	public void draw() {
-        Gdx.gl.glViewport(0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
-        Gdx.gl.glClearColor(1,1,1,1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT|GL20.GL_DEPTH_BUFFER_BIT);
-        cam.update();
-        controller.update(Gdx.graphics.getDeltaTime());
+	public void draw(float delta) {
+		Gdx.gl.glViewport(0, 0, Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight());
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+
         modelBatch.begin(cam);
-        modelBatch.render(modelInstance);
+		modelBatch.render(instances);
         modelBatch.end();	
 	}
 
 	@Override
 	public void render (float delta) {
 		update(delta);
-		draw();
+		draw(delta);
 	}
 
 }

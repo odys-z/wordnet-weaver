@@ -9,6 +9,14 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 
 public class WShader extends ShaderProgram implements Shader {
 
+	public static enum Mode {
+		test("test"), simple("simple");
+
+		private String n;
+		Mode(String v) { n = v; };
+		public String n() { return n; }
+	};
+
 	public WShader(String vertexShader, String fragmentShader) {
 		super(vertexShader, fragmentShader);
 	}
@@ -17,8 +25,17 @@ public class WShader extends ShaderProgram implements Shader {
 		super(vs, fs);
 	}
 
+	// FIXME what about uniforms?
+	// FIXME what about uniforms?
+	// FIXME what about uniforms?
+	public WShader(Mode mod) {
+		super(Glsl.simple.vs(), Glsl.simple.fs());
+	}
+
 	@Override
-	public void init() { }
+	public void init() {
+		super.init(program, null);	
+	}
 
 	@Override
 	public int compareTo(Shader other) {
