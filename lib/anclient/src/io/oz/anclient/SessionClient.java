@@ -20,11 +20,11 @@ import io.odysz.semantic.jserv.U.AnUpdateReq;
 import io.odysz.semantic.jsession.SessionInf;
 import io.odysz.semantics.x.SemanticException;
 
-/**TODO rename as SessionClient
+/**
  * @author odys-z@github.com
  *
  */
-public class AnsonClient {
+public class SessionClient {
 
 	private SessionInf ssInf;
 	public SessionInf ssInfo () { return ssInf; }
@@ -35,7 +35,7 @@ public class AnsonClient {
 	/**Session login response from server.
 	 * @param sessionInfo
 	 */
-	AnsonClient(SessionInf sessionInfo) {
+	SessionClient(SessionInf sessionInfo) {
 		this.ssInf = sessionInfo;
 	}
 	
@@ -115,7 +115,7 @@ public class AnsonClient {
 		return header;
 	}
 	
-	public AnsonClient urlPara(String pname, String pv) {
+	public SessionClient urlPara(String pname, String pv) {
 		if (urlparas == null)
 			urlparas = new ArrayList<String[]>();
 		urlparas.add(new String[] {pname, pv});
@@ -127,7 +127,7 @@ public class AnsonClient {
 	 * @return this object
 	 * @throws SQLException 
 	 */
-	public AnsonClient console(AnsonMsg<? extends AnsonBody> req) throws SQLException {
+	public SessionClient console(AnsonMsg<? extends AnsonBody> req) throws SQLException {
 		if(Clients.console) {
 			try {
 				Utils.logi(req.toString());

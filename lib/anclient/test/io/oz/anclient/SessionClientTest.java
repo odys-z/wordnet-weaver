@@ -9,7 +9,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.GeneralSecurityException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -30,19 +29,17 @@ import io.odysz.semantic.jserv.R.AnQueryReq;
 import io.odysz.semantic.jserv.U.AnInsertReq;
 import io.odysz.semantic.jserv.U.AnUpdateReq;
 import io.odysz.semantics.x.SemanticException;
-import io.odysz.transact.sql.parts.condition.ExprPart;
 import io.oz.wnw.serv.protocol.Wnport;
-import junit.framework.Assert;
 
 /**
  * Unit test for Word Dreamer App. 
  */
-public class AnsonClientTest {
+public class SessionClientTest {
 	private static String jserv = null;
 	private static String pswd = null;
 	private static String filename = "src/test/res/Sun_Yat-sen_2.jpg";
 	
-	private AnsonClient client;
+	private SessionClient client;
 
 	@BeforeAll
 	public static void init() {
@@ -125,7 +122,7 @@ public class AnsonClientTest {
     	});
 	}
 
-	static void testUpload(AnsonClient client)
+	static void testUpload(SessionClient client)
 			throws SemanticException, IOException, SQLException, AnsonException {
 		Path p = Paths.get(filename);
 		byte[] f = Files.readAllBytes(p);

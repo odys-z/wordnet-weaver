@@ -5,6 +5,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import io.oz.wnw.norm.A.ViewA1;
+
 /**Application manager like XWorld of x-visual.
  * 
  * keep assets<br>
@@ -21,7 +23,8 @@ public class WGame extends Game {
 		batcher = new SpriteBatch();
 		// Settings.load();
 		Assets.load();
-		setScreen(new ScnMenu(this));
+		// setScreen(new ScnMenu(this));
+		setScreen(new ViewA1(this));
 	}
 	
 	@Override

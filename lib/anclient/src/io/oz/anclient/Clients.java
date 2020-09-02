@@ -44,7 +44,7 @@ public class Clients {
 	 * @throws GeneralSecurityException  other error
 	 * @throws Exception, most likely the network failed
 	 */
-	public static AnsonClient login(String uid, String pswdPlain)
+	public static SessionClient login(String uid, String pswdPlain)
 			throws IOException, SemanticException, SQLException, GeneralSecurityException, AnsonException {
 		byte[] iv =   AESHelper.getRandom();
 		String iv64 = AESHelper.encode64(iv);
@@ -56,14 +56,14 @@ public class Clients {
   		// AnsonMsg<? extends AnsonBody> reqv11 = new AnsonMsg<AnQueryReq>(Port.session);;
 		AnsonMsg<AnSessionReq> req = AnSessionReq.formatLogin(uid, tk64, iv64);
 
-		AnsonClient[] inst = new AnsonClient[1]; 
+		SessionClient[] inst = new SessionClient[1]; 
 
 		HttpServClient httpClient = new HttpServClient();
 		String url = servUrl(Port.session);
 		httpClient.post(url, req, (code, msg) -> {
 					if (AnsonMsg.MsgCode.ok == code) {
 						// create a logged in client
-						inst[0] = new AnsonClient(((AnSessionResp) msg).ssInf());
+						inst[0] = new SessionClient(((AnSessionResp) msg).ssInf());
 
 						if (Clients.console)
 							Utils.logi(msg.toString());

@@ -2,9 +2,9 @@ package io.oz.anclient;
 
 import io.odysz.semantic.jsession.SessionInf;
 
-public class InsecureClient extends AnsonClient {
+public class NoneSessionClient extends SessionClient {
 
-	InsecureClient(String servRt, String conn) {
+	NoneSessionClient(String servRt, String conn) {
 		super(robotSsInf());
 	}
 

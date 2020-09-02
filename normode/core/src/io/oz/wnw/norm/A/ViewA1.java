@@ -25,6 +25,7 @@ import com.badlogic.gdx.graphics.g3d.utils.shapebuilders.SphereShapeBuilder;
 import com.badlogic.gdx.utils.Array;
 
 import io.oz.wnw.norm.WGame;
+import io.oz.xv.glsl.Glsl.ShaderFlag;
 import io.oz.xv.glsl.WShader;
 import io.oz.xv.material.XMaterial;
 
@@ -46,8 +47,8 @@ public class ViewA1 extends ScreenAdapter {
 	private PerspectiveCamera cam;
     private ModelBatch modelBatch;
     private Model model;
-    private Environment environment;
-    private AnimationController controller;
+//    private Environment environment;
+//    private AnimationController animController;
 	private CameraInputController camController;
 	private Array<ModelInstance> instances;
 
@@ -58,8 +59,8 @@ public class ViewA1 extends ScreenAdapter {
 		
 		// load personal skybox
 		// load top level synset (correct time?)
-		if (stage.synsets.get("top") == null)
-			stage.loadSnyset("top");
+//		if (stage.synsets.get("top") == null)
+//			stage.loadSnyset("top");
 	
 		// create screen
 		modelBatch = new ModelBatch(new DefaultShaderProvider() {
@@ -82,33 +83,34 @@ public class ViewA1 extends ScreenAdapter {
 		camController = new CameraInputController(cam);
 		Gdx.input.setInputProcessor(camController);
 
-		WShader sh1 = new WShader(WShader.Mode.simple);
-		WShader sh2 = new WShader(WShader.Mode.test);
-		Material testMaterial1 = new XMaterial("TestMaterial1", sh1);
+		WShader sh2 = new WShader(ShaderFlag.test);
+		WShader sh1 = new WShader(ShaderFlag.test);
 		Material redMaterial = new Material("RedMaterial", ColorAttribute.createDiffuse(Color.RED));
-		Material testMaterial2 = new XMaterial("TestMaterial2", sh2, ColorAttribute.createDiffuse(Color.BLUE));
+		Material material2 = new XMaterial("TestMaterial1", sh1, ColorAttribute.createDiffuse(Color.GREEN));
+		 Material material1 = new XMaterial("TestMaterial2", sh1, ColorAttribute.createDiffuse(Color.BLUE));
+//		Material material1 = new Material("TestMaterial2", ColorAttribute.createDiffuse(Color.BLUE));
 
 		ModelBuilder builder = new ModelBuilder();
 		Node node;
 
 		builder.begin();
 		node = builder.node();
-		node.id = "testCone1";
+		node.id = "cone1";
 		node.translation.set(-10, 0f, 0f);
-		// builder.part("testCone", GL20.GL_TRIANGLES, Usage.Position, testMaterial1).cone(5, 5, 5, 20);
+		 builder.part("testCone", GL20.GL_TRIANGLES, Usage.Position | Usage.Normal, material1).cone(5, 5, 5, 20);
 		// cone() is deprecated, this:?
-		ConeShapeBuilder.build(builder.part("testCone", GL20.GL_TRIANGLES, Usage.Position, testMaterial1), 5, 5, 5, 20);
+//		ConeShapeBuilder.build(builder.part("cone1", GL20.GL_TRIANGLES, Usage.Position, material1), 5, 5, 5, 20);
 
 		node = builder.node();
 		node.id = "redSphere";
-		// builder.part("redSphere", GL20.GL_TRIANGLES, Usage.Position, redMaterial).sphere(5, 5, 5, 20, 20);
-		SphereShapeBuilder.build(builder.part("redSphere", GL20.GL_TRIANGLES, Usage.Position, redMaterial), 5, 5, 5, 20, 20);
+		 builder.part("redSphere", GL20.GL_TRIANGLES, Usage.Position | Usage.Normal, redMaterial).sphere(5, 5, 5, 20, 20);
+//		SphereShapeBuilder.build(builder.part("redSphere", GL20.GL_TRIANGLES, Usage.Position, redMaterial), 5, 5, 5, 20, 20);
 
 		node = builder.node();
-		node.id = "testCone1";
+		node.id = "cone2";
 		node.translation.set(10, 0f, 0f);
-		// builder.part("testCone", GL20.GL_TRIANGLES, Usage.Position, testMaterial2).cone(5, 5, 5, 20);
-		ConeShapeBuilder.build(builder.part("testCone", GL20.GL_TRIANGLES, Usage.Position, testMaterial2), 5, 5, 5, 20);
+		 builder.part("testCone", GL20.GL_TRIANGLES, Usage.Position | Usage.Normal, material2).cone(5, 5, 5, 20);
+//		ConeShapeBuilder.build(builder.part("cone1", GL20.GL_TRIANGLES, Usage.Position, material2), 5, 5, 5, 20);
 
 		model = builder.end();
 
@@ -116,6 +118,7 @@ public class ViewA1 extends ScreenAdapter {
 		modelInstance = new ModelInstance(model);
 //		testAttribute1 = (TestAttribute)modelInstance.getMaterial("TestMaterial1").get(TestAttribute.ID);
 //		testAttribute2 = (TestAttribute)modelInstance.getMaterial("TestMaterial2").get(TestAttribute.ID);
+		instances = new Array<ModelInstance>(); 
 		instances.add(modelInstance);
 	}
 
@@ -132,7 +135,7 @@ public class ViewA1 extends ScreenAdapter {
 		ecs.update(delta);
 
         camController.update();
-        controller.update(delta);
+//        animController.update(delta);
         cam.update();
 	}
 	
