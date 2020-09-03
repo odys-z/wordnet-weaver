@@ -29,8 +29,10 @@ public class Glsl {
 			"	vColor = a_normal;",
 			"	gl_Position = u_vpMat4 * pos4;",
 			"}");
-		static String fs =
-			"varying vec3 vColor; void main() { gl_FragColor = vec4(0.5, 0.5, 0.5, 1.); }";
+		static String fs = String.join(delimiter, 
+			"varying vec3 vColor;",
+			"void main() { gl_FragColor = vec4(abs(vColor), 1.); }"
+		);
 	}
 	
 	static class simple {

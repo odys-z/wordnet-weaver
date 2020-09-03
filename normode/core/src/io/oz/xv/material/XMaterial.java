@@ -26,7 +26,7 @@ public class XMaterial extends Material {
 
 	public XMaterial(XMaterial from) {
 		super(from.id, from);
-		shader = from.shader();
+		this.shader = from.shader();
 	}
 
 	public WShader shader() {

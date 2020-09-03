@@ -34,11 +34,14 @@ comment out line 5 and use this line::
 
     distributionUrl=https\://services.gradle.org/distributions/gradle-5.4.1-bin.zip
 
-If using local mode, the gradle binary zip must downloaded and saved locally, and
-the file path needing to be changed in configure file.
+If using local mode, the gradle binary zip must been downloaded and saved locally,
+and the file path needing to be changed in configure file.
 
 Gradle.bin.zip can be `download from gradle home page <https://gradle.org/releases/>`_.
 
 To import normod, in Eclipse::
 
     import -> existing gradle project -> browse to wnw/normode
+
+Note: According to the author's experience, you better run desktop project in
+Eclipse and run Android project from Android Studio.

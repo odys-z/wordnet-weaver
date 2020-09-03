@@ -86,9 +86,8 @@ public class ViewA1 extends ScreenAdapter {
 		WShader sh2 = new WShader(ShaderFlag.test);
 		WShader sh1 = new WShader(ShaderFlag.test);
 		Material redMaterial = new Material("RedMaterial", ColorAttribute.createDiffuse(Color.RED));
-		Material material2 = new XMaterial("TestMaterial1", sh1, ColorAttribute.createDiffuse(Color.GREEN));
-		 Material material1 = new XMaterial("TestMaterial2", sh1, ColorAttribute.createDiffuse(Color.BLUE));
-//		Material material1 = new Material("TestMaterial2", ColorAttribute.createDiffuse(Color.BLUE));
+		Material material1 = new XMaterial("TestMaterial1", sh1);
+		Material material2 = new XMaterial("TestMaterial2", sh1);
 
 		ModelBuilder builder = new ModelBuilder();
 		Node node;
@@ -97,27 +96,22 @@ public class ViewA1 extends ScreenAdapter {
 		node = builder.node();
 		node.id = "cone1";
 		node.translation.set(-10, 0f, 0f);
-		 builder.part("testCone", GL20.GL_TRIANGLES, Usage.Position | Usage.Normal, material1).cone(5, 5, 5, 20);
-		// cone() is deprecated, this:?
-//		ConeShapeBuilder.build(builder.part("cone1", GL20.GL_TRIANGLES, Usage.Position, material1), 5, 5, 5, 20);
+		ConeShapeBuilder.build(builder.part("cone1_", GL20.GL_TRIANGLES, Usage.Position | Usage.Normal, material1), 5, 5, 5, 20);
 
 		node = builder.node();
 		node.id = "redSphere";
-		 builder.part("redSphere", GL20.GL_TRIANGLES, Usage.Position | Usage.Normal, redMaterial).sphere(5, 5, 5, 20, 20);
-//		SphereShapeBuilder.build(builder.part("redSphere", GL20.GL_TRIANGLES, Usage.Position, redMaterial), 5, 5, 5, 20, 20);
+		node.translation.set(0f, 6f, 0f);
+		SphereShapeBuilder.build(builder.part("redSphere", GL20.GL_TRIANGLES, Usage.Position, redMaterial), 5, 5, 5, 20, 20);
 
 		node = builder.node();
 		node.id = "cone2";
 		node.translation.set(10, 0f, 0f);
-		 builder.part("testCone", GL20.GL_TRIANGLES, Usage.Position | Usage.Normal, material2).cone(5, 5, 5, 20);
-//		ConeShapeBuilder.build(builder.part("cone1", GL20.GL_TRIANGLES, Usage.Position, material2), 5, 5, 5, 20);
+		ConeShapeBuilder.build(builder.part("cone2_", GL20.GL_TRIANGLES, Usage.Position | Usage.Normal, material2), 5, 5, 5, 20);
 
 		model = builder.end();
 
 		ModelInstance modelInstance;
 		modelInstance = new ModelInstance(model);
-//		testAttribute1 = (TestAttribute)modelInstance.getMaterial("TestMaterial1").get(TestAttribute.ID);
-//		testAttribute2 = (TestAttribute)modelInstance.getMaterial("TestMaterial2").get(TestAttribute.ID);
 		instances = new Array<ModelInstance>(); 
 		instances.add(modelInstance);
 	}
