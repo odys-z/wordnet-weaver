@@ -5,7 +5,7 @@ import com.badlogic.gdx.Gdx;
 public class Glsl {
 
 	public static enum ShaderFlag {
-		test("test"), simple("simple");
+		test("test"), simple("simple"), sdfont("sdfont");
 
 		private String p;
 		ShaderFlag(String v) { p = v; };

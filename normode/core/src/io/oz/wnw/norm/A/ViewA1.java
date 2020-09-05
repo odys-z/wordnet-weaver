@@ -3,30 +3,17 @@ package io.oz.wnw.norm.A;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
-import com.badlogic.gdx.graphics.VertexAttributes.Usage;
-import com.badlogic.gdx.graphics.g3d.Environment;
-import com.badlogic.gdx.graphics.g3d.Material;
-import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.Shader;
-import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
-import com.badlogic.gdx.graphics.g3d.model.Node;
-import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.graphics.g3d.utils.DefaultShaderProvider;
-import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
-import com.badlogic.gdx.graphics.g3d.utils.shapebuilders.ConeShapeBuilder;
-import com.badlogic.gdx.graphics.g3d.utils.shapebuilders.SphereShapeBuilder;
 import com.badlogic.gdx.utils.Array;
 
 import io.oz.wnw.norm.WGame;
-import io.oz.xv.glsl.Glsl.ShaderFlag;
-import io.oz.xv.glsl.WShader;
 import io.oz.xv.material.XMaterial;
 
 /**<p>3d wordnet overview (cubic treemap).</p>
@@ -38,7 +25,8 @@ import io.oz.xv.material.XMaterial;
  * libGDX wiki: ModelBatch</a>, section on ShaderProvider<br>
  * 3. <a href='https://github.com/libgdx/libgdx/blob/master/tests/gdx-tests/src/com/badlogic/gdx/tests/g3d/ShaderTest.java'>
  * libGDX source: ShaderTest.java</a>, example of how to implement shader been used by ModelInstance.
- * @author odys-z@github.com
+ * 
+ * @author Odys Zhou
  */
 public class ViewA1 extends ScreenAdapter {
 	PooledEngine ecs;
@@ -46,9 +34,6 @@ public class ViewA1 extends ScreenAdapter {
 
 	private PerspectiveCamera cam;
     private ModelBatch modelBatch;
-    private Model model;
-//    private Environment environment;
-//    private AnimationController animController;
 	private CameraInputController camController;
 	private Array<ModelInstance> instances;
 
@@ -57,11 +42,6 @@ public class ViewA1 extends ScreenAdapter {
 		stage = new StageA(ecs);
 		stage.init(this, ecs);
 		
-		// load personal skybox
-		// load top level synset (correct time?)
-//		if (stage.synsets.get("top") == null)
-//			stage.loadSnyset("top");
-	
 		// create screen
 		modelBatch = new ModelBatch(new DefaultShaderProvider() {
 			@Override
@@ -83,37 +63,9 @@ public class ViewA1 extends ScreenAdapter {
 		camController = new CameraInputController(cam);
 		Gdx.input.setInputProcessor(camController);
 
-		WShader sh2 = new WShader(ShaderFlag.test);
-		WShader sh1 = new WShader(ShaderFlag.test);
-		Material redMaterial = new Material("RedMaterial", ColorAttribute.createDiffuse(Color.RED));
-		Material material1 = new XMaterial("TestMaterial1", sh1);
-		Material material2 = new XMaterial("TestMaterial2", sh1);
-
-		ModelBuilder builder = new ModelBuilder();
-		Node node;
-
-		builder.begin();
-		node = builder.node();
-		node.id = "cone1";
-		node.translation.set(-10, 0f, 0f);
-		ConeShapeBuilder.build(builder.part("cone1_", GL20.GL_TRIANGLES, Usage.Position | Usage.Normal, material1), 5, 5, 5, 20);
-
-		node = builder.node();
-		node.id = "redSphere";
-		node.translation.set(0f, 6f, 0f);
-		SphereShapeBuilder.build(builder.part("redSphere", GL20.GL_TRIANGLES, Usage.Position, redMaterial), 5, 5, 5, 20, 20);
-
-		node = builder.node();
-		node.id = "cone2";
-		node.translation.set(10, 0f, 0f);
-		ConeShapeBuilder.build(builder.part("cone2_", GL20.GL_TRIANGLES, Usage.Position | Usage.Normal, material2), 5, 5, 5, 20);
-
-		model = builder.end();
-
-		ModelInstance modelInstance;
-		modelInstance = new ModelInstance(model);
 		instances = new Array<ModelInstance>(); 
-		instances.add(modelInstance);
+		// instances.add(stage.sphereCones(modelBatch));
+		instances.add(stage.cube(modelBatch));
 	}
 
 	@Override

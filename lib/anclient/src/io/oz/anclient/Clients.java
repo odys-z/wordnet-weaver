@@ -17,7 +17,7 @@ import io.odysz.semantics.x.SemanticException;
 
 /**Client Factory, creating client with login().
  * 
- * @author odys-z@github.com
+ * @author Odys Zhou
  */
 public class Clients {
 	public static final boolean console = true;

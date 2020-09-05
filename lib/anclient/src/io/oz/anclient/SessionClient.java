@@ -21,7 +21,7 @@ import io.odysz.semantic.jsession.SessionInf;
 import io.odysz.semantics.x.SemanticException;
 
 /**
- * @author odys-z@github.com
+ * @author Odys Zhou
  *
  */
 public class SessionClient {

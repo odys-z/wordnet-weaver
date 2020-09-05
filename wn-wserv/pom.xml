@@ -3,7 +3,6 @@
   <groupId>io.github.odys-z</groupId>
   <artifactId>wordnet.weaver</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <packaging>war</packaging>
   <name>wn weaver</name>
   <description>Word Synonym Web Weaver</description>
   <url>io.odys-z.github/wn-weaver</url>

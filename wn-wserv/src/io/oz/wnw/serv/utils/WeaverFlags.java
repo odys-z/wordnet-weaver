@@ -2,7 +2,7 @@ package io.oz.wnw.serv.utils;
 
 /**Flags for working/debugging etc.
  * 
- * @author odys-z@github.com
+ * @author Odys Zhou
  */
 public class WeaverFlags {
 
