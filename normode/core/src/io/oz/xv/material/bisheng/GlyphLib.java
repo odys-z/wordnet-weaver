@@ -1,5 +1,9 @@
 package io.oz.xv.material.bisheng;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
@@ -9,8 +13,10 @@ import com.badlogic.gdx.graphics.VertexAttributes.Usage;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
+import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.attributes.BlendingAttribute;
+import com.badlogic.gdx.graphics.g3d.model.Node;
 import com.badlogic.gdx.graphics.g3d.utils.MeshPartBuilder;
 import com.badlogic.gdx.graphics.g3d.utils.MeshPartBuilder.VertexInfo;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
@@ -18,9 +24,10 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.StreamUtils;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.StringTokenizer;
+import io.oz.wnw.norm.Assets;
+import io.oz.xv.glsl.Glsl.ShaderFlag;
+import io.oz.xv.glsl.WShader;
+import io.oz.xv.material.XMaterial;
 
 /**
  * 
@@ -36,10 +43,14 @@ public class GlyphLib implements Disposable {
     /** texture region, in page order */
 	// Array<TextureRegion> regions;
 
-   @Override
-    public void dispose() {
-       System.out.println("TODO dispose...");
-   }
+	@Override
+	public void dispose() {
+		System.out.println("TODO dispose...");
+	}
+
+	public GlyphLib(String fontFile, boolean flip) {
+		this(Gdx.files.internal(fontFile), false);
+	}
 
 	public GlyphLib (FileHandle fontFile, boolean flip) {
 		data = new FontData(fontFile, flip);
@@ -49,18 +60,21 @@ public class GlyphLib implements Disposable {
 	/**Vertex infomation*/
 	private static VertexInfo[] vis;
 
-    /**Bind string characters as a text line (page?) - the frame for printing.<br>
-     * Set uv of texture page to vertex info.
+    /**Bind string characters as a text line (page?) - the plane instance for rendering.<br>
+     * - set uv of texture page to vertex info.
      * 
-     * @TODO return ModelInstance 
      * @param str
      * @param color
      * @param texId OpenGL texture id, parameter of GL20.glActiveTexture(int)
      * @return the text model
      */
-	public Model bindFrame(String str, Color color, int texId) {
+	public ModelInstance bindText(String str, Color color) {
+
 		char ch = str.charAt(0);
 		Glyph glyph = data.getGlyph(ch);
+        // bind texture
+        data.regions[glyph.page].getTexture().bind(Assets.texGlyph);
+
 		int x = glyph.xoffset;
 		int y = glyph.yoffset;
 		float width = glyph.width, height = glyph.height;
@@ -79,19 +93,26 @@ public class GlyphLib implements Disposable {
 		vis[2].setPos(x2, y2, 0).setCol(Color.GREEN).setUV(u2, v2);
 		vis[3].setPos(x2, y , 0).setCol(Color.BLUE).setUV(u2, v );
 		
-        ModelBuilder modelBuilder = new ModelBuilder();
-        modelBuilder.begin();
-        MeshPartBuilder mpbuilder = modelBuilder.part(str,
+        XMaterial texmat = new XMaterial(str, new WShader(ShaderFlag.sdfont),
+        		new BlendingAttribute(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA));
+
+		ModelBuilder builder = new ModelBuilder();
+		Node node;
+		builder.begin();
+		node = builder.node();
+		node.id = "cone1";
+		node.scale.scl(0.4f);
+		node.translation.set(-15, 15f, 0f);
+
+		MeshPartBuilder mpbuilder = builder.part(str,
                 GL20.GL_TRIANGLES, Usage.Position | Usage.ColorUnpacked | Usage.TextureCoordinates | Usage.Normal,
-                new Material());
-        mpbuilder.rect(vis[0], vis[1], vis[2], vis[3]);
-        Model model = modelBuilder.end();
+                texmat);
+		mpbuilder.rect(vis[0], vis[1], vis[2], vis[3]);
+
+        Model model = builder.end();
         model.calculateTransforms();
 
-        // bind texture
-        data.regions[glyph.page].getTexture().bind(texId);
-
-        return model;
+        return new ModelInstance(model);
 	}
 
     /**

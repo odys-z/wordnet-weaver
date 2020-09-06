@@ -87,6 +87,10 @@
 <li class="toctree-l2"><a class="reference internal" href="#import-wn-server">Import wn-server</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#import-anclient-weaver">Import anclient.weaver</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#import-normod">Import normod</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#troublshootings">Troublshootings</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#class-of-depending-project-not-found">Class of Depending Project not Found</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -175,6 +179,46 @@ and the file path needing to be changed in configure file.</p>
 </div>
 <p>Note: According to the author’s experience, you better run desktop project in
 Eclipse and run Android project from Android Studio.</p>
+</div>
+<div class="section" id="troublshootings">
+<h2>Troublshootings<a class="headerlink" href="#troublshootings" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="class-of-depending-project-not-found">
+<h3>Class of Depending Project not Found<a class="headerlink" href="#class-of-depending-project-not-found" title="Permalink to this headline">¶</a></h3>
+<p>Error:</p>
+<p>When running desktop, report error message like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Exception in thread &quot;LWJGL Application&quot; com.badlogic.gdx.utils.GdxRuntimeException: java.lang.NoClassDefFoundError: io/oz/wnw/my/ISettings
+at com.badlogic.gdx.backends.lwjgl.LwjglApplication$1.run(LwjglApplication.java:135)
+Caused by: java.lang.NoClassDefFoundError: io/oz/wnw/my/ISettings
+...
+</pre></div>
+</div>
+<p>Cause:</p>
+<p>The normode/core gradle sub-project depends on another maven project, anclient.weaver.
+The desktop application can’t find it’s class in run time environment.</p>
+<p>Shooting:</p>
+<p>In core/gradle.build, add compile dependency after applied Java plugin. (
+<a class="reference external" href="https://stackoverflow.com/questions/23796404/could-not-find-method-compile-for-arguments-gradle">Otherwise the compile command will failed</a>.)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dependencies</span> <span class="p">{</span>
+        <span class="nb">compile</span> <span class="s1">&#39;io.github.odys-z:anclient.weaver:0.0.1-SNAPSHOT&#39;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Update anclient.weaver dependency or install it to local repository:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mvn</span> <span class="n">install</span>
+</pre></div>
+</div>
+<p>then have normal/gradle.build use mavenLocal:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">repositories</span> <span class="p">{</span>
+    <span class="n">mavenLocal</span><span class="p">()</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Now the gradlew run task should start the desktop application.</p>
+<p>When using Eclipse to debug, the depending project must been added to runtime
+classpath.</p>
+<img alt="_images/002-mvn-prj-dependency.png" src="_images/002-mvn-prj-dependency.png" />
+</div>
 </div>
 </div>
 

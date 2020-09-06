@@ -19,9 +19,14 @@ public class XMaterial extends Material {
 
 	private WShader shader;
 
-	public XMaterial(String string, WShader shader, Attribute... attr) {
-		super(string, attr);
-		this.shader = shader;
+	/**Create XMaterial with shader xshader.
+	 * @param matId material id
+	 * @param xshader
+	 * @param attr
+	 */
+	public XMaterial(String matId, WShader xshader, Attribute... attr) {
+		super(matId, attr);
+		this.shader = xshader;
 	}
 
 	public XMaterial(XMaterial from) {

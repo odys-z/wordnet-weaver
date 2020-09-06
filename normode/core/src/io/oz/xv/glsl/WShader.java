@@ -10,15 +10,21 @@ import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 
 import io.oz.xv.glsl.Glsl.ShaderFlag;
+import io.oz.xv.glsl.Glsl.sdfont;
 import io.oz.xv.material.XMaterial;
 
 public class WShader extends BaseShader implements Shader {
-	protected final int u_projTrans = register(new Uniform("u_vpMat4"));
-	protected final int u_worldTrans = register(new Uniform("u_modelMat4"));
+	protected final int u_vpM4 = register(new Uniform("u_vpMat4"));
+	protected final int u_modelM4 = register(new Uniform("u_modelMat4"));
+
+	ShaderFlag flag;
+
+	public ShaderFlag flag() { return flag; }
 	
-	public WShader(ShaderFlag mod) {
+	public WShader(ShaderFlag flag) {
 		super();
-		program = new ShaderProgram(Glsl.vs(mod), Glsl.fs(mod));
+		this.flag = flag;
+		program = new ShaderProgram(Glsl.vs(flag), Glsl.fs(flag));
 	}
 
 	public WShader uniforms(XUniforms uniforms) {
@@ -28,6 +34,9 @@ public class WShader extends BaseShader implements Shader {
 	@Override
 	public void init() {
 		super.init(program, null);
+
+		if (flag == ShaderFlag.sdfont)
+			sdfont.init(program);
 	}
 
 	@Override
@@ -46,12 +55,12 @@ public class WShader extends BaseShader implements Shader {
 		program.begin();
 		context.setDepthTest(GL20.GL_LEQUAL, 0f, 1f);
 		context.setDepthMask(true);
-		set(u_projTrans, camera.combined);
+		set(u_vpM4, camera.combined);
 	}
 	
 	@Override
 	public void render(Renderable renderable) {
-		set(u_worldTrans, renderable.worldTransform);
+		set(u_modelM4, renderable.worldTransform);
 
 		renderable.meshPart.render(program);	
 	}

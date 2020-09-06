@@ -15,12 +15,10 @@ import io.oz.wnw.norm.A.ViewA1;
  * @author Odys Zhou
  */
 public class WGame extends Game {
-//	public SpriteBatch batcher;
 	private MyWeaver me;
 
 	@Override
 	public void create () {
-//		batcher = new SpriteBatch();
 		Assets.load();
 		
 		// setup weaver client
@@ -30,13 +28,9 @@ public class WGame extends Game {
 		// setScreen(new ScnMenu(this));
 		setScreen(new ViewA1(this));
 	}
+
+	public MyWeaver me() {
+		return me;
+	}
 	
-//	@Override
-//	public void render() {
-//		GL20 gl = Gdx.gl;
-//		gl.glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
-//		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-//		
-//		super.render();
-//	}
 }

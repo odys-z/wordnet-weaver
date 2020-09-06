@@ -45,3 +45,51 @@ To import normod, in Eclipse::
 
 Note: According to the author's experience, you better run desktop project in
 Eclipse and run Android project from Android Studio.
+
+Troublshootings
+---------------
+
+Class of Depending Project not Found
+____________________________________
+
+Error:
+
+When running desktop, report error message like::
+
+    Exception in thread "LWJGL Application" com.badlogic.gdx.utils.GdxRuntimeException: java.lang.NoClassDefFoundError: io/oz/wnw/my/ISettings
+    at com.badlogic.gdx.backends.lwjgl.LwjglApplication$1.run(LwjglApplication.java:135)
+    Caused by: java.lang.NoClassDefFoundError: io/oz/wnw/my/ISettings
+    ...
+
+Cause:
+
+The normode/core gradle sub-project depends on another maven project, anclient.weaver.
+The desktop application can't find it's class in run time environment.
+
+Shooting:
+
+In core/gradle.build, add compile dependency after applied Java plugin. (
+`Otherwise the compile command will failed <https://stackoverflow.com/questions/23796404/could-not-find-method-compile-for-arguments-gradle>`_.)
+::
+
+    dependencies {
+	    compile 'io.github.odys-z:anclient.weaver:0.0.1-SNAPSHOT'
+    }
+
+Update anclient.weaver dependency or install it to local repository::
+
+    mvn install
+
+then have normal/gradle.build use mavenLocal::
+
+    repositories {
+        mavenLocal()
+        ...
+    }
+
+Now the gradlew run task should start the desktop application.
+
+When using Eclipse to debug, the depending project must been added to runtime
+classpath.
+
+.. image:: imgs/002-mvn-prj-dependency.png

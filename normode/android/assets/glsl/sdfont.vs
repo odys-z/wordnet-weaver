@@ -1,15 +1,16 @@
-uniform vec3 CameraPos;
-uniform mat4 ModelWorld;
-uniform mat4 vpMatrix;
+uniform mat4 u_vpMat4;
+uniform mat4 u_modelMat4;
 
 attribute vec4 a_position;
+attribute vec4 a_color;
+attribute vec2 a_texCoord0;
 attribute vec3 a_normal;
 
-varying vec3 vColor;
+varying vec4 v_color;
+varying vec2 v_texCoord;
 
 void main() {
-	vec4 pos4 = ModelWorld * vec4( a_position );
-	vColor = normalize(pos4.xyz);
-	gl_Position = vpMatrix * pos4;
+	gl_Position = u_vpMat4 * u_modelMat4 * a_position;
+	v_texCoord = a_texCoord0;
+	v_color = a_color;
 }
-

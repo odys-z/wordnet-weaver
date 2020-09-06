@@ -12,11 +12,6 @@ buildscript {
     dependencies {
         classpath 'org.wisepersist:gwt-gradle-plugin:1.0.9'
         classpath 'com.android.tools.build:gradle:3.4.1'
-
-		// https://stackoverflow.com/questions/35795250/maven-project-as-dependency-in-gradle-project
-		// To install client, install wn-weaver first
-		classpath 'io.github.odys-z:anclient.weaver:0.0.1-SNAPSHOT'
-
     }
 }
 
@@ -93,10 +88,13 @@ project(":html") {
 project(":core") {
     apply plugin: "java-library"
 
-
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
         api "com.badlogicgames.ashley:ashley:$ashleyVersion"
+
+		// https://stackoverflow.com/questions/35795250/maven-project-as-dependency-in-gradle-project
+		// To install client, install wn-weaver first
+		// compile 'io.github.odys-z:anclient.weaver:0.0.1-SNAPSHOT'
 
     }
 }

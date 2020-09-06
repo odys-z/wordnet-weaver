@@ -1,6 +1,10 @@
 package io.oz.xv.glsl;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.math.MathUtils;
+
+import io.oz.wnw.norm.Assets;
 
 public class Glsl {
 
@@ -47,6 +51,19 @@ public class Glsl {
 		static String fs = 
 			"void main() { gl_FragColor = vec4(0.0, 0.2, 0.8, 0.75); }";
 	}
+	
+	static class sdfont {
+		static ShaderProgram init(ShaderProgram program) {
+			float smoothing = 0.3f;
+			float delta = 0.5f * MathUtils.clamp(smoothing, 0, 1);
+			try {
+				program.setUniformf("u_lower", 0.9f - delta);
+				program.setUniformf("u_upper", 0.9f + delta);
+			} catch (Throwable t) {}
+			program.setUniformi("u_texture", Assets.texGlyph);
+			return program;
+		}
+	}
 
 	public static String vs(ShaderFlag m) {
 		switch (m) {
@@ -69,7 +86,5 @@ public class Glsl {
 			default:
 				return Gdx.files.internal(String.format("glsl/%s.fs", m.path())).readString();
 		}
-
 	}
-
 }

@@ -19,8 +19,8 @@ import io.oz.xv.material.XMaterial;
 /**<p>3d wordnet overview (cubic treemap).</p>
  * 
  * This view also illustrates the better practice of ModelInstance + ShaderProgram. See<br>
- * 1. <a href='https://stackoverflow.com/questions/28590802/libgdx-assigning-a-specific-shader-to-a-modelinstance'>
- * Answer of Xoppa</a> for question "LibGDX assigning a specific shader to a ModelInstance"<br>
+ * 1. Answer of Xoppa for question <a href='https://stackoverflow.com/questions/28590802/libgdx-assigning-a-specific-shader-to-a-modelinstance'>
+ * LibGDX assigning a specific shader to a ModelInstance</a><br>
  * 2. <a href='https://github.com/libgdx/libgdx/wiki/ModelBatch'>
  * libGDX wiki: ModelBatch</a>, section on ShaderProvider<br>
  * 3. <a href='https://github.com/libgdx/libgdx/blob/master/tests/gdx-tests/src/com/badlogic/gdx/tests/g3d/ShaderTest.java'>
@@ -39,7 +39,7 @@ public class ViewA1 extends ScreenAdapter {
 
 	public ViewA1(WGame game) {
 		ecs = new PooledEngine();
-		stage = new StageA(ecs);
+		stage = new StageA(ecs, game.me());
 		stage.init(this, ecs);
 		
 		// create screen
@@ -64,8 +64,9 @@ public class ViewA1 extends ScreenAdapter {
 		Gdx.input.setInputProcessor(camController);
 
 		instances = new Array<ModelInstance>(); 
-		// instances.add(stage.sphereCones(modelBatch));
-		instances.add(stage.cube(modelBatch));
+		// instances.add(stage.sphereCones());
+		// instances.add(stage.cube());
+		instances.add(stage.loadSnyset());
 	}
 
 	@Override
@@ -87,9 +88,16 @@ public class ViewA1 extends ScreenAdapter {
 	
 	public void draw(float delta) {
 		Gdx.gl.glViewport(0, 0, Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight());
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClearColor(0, 0, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
+		Gdx.gl20.glEnable(GL20.GL_BLEND);
+	    Gdx.gl20.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+	    Gdx.gl20.glEnable(GL20.GL_TEXTURE_2D);
+	    Gdx.gl20.glBlendEquation(GL20.GL_BLEND);
+
+	    Gdx.gl20.glDepthMask(false);
+	    
         modelBatch.begin(cam);
 		modelBatch.render(instances);
         modelBatch.end();	
