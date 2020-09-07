@@ -3,12 +3,17 @@ package io.oz.wnw.norm.A;
 import java.util.Map;
 
 import com.badlogic.ashley.core.PooledEngine;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.TextureLoader.TextureParameter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.VertexAttributes.Usage;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.attributes.BlendingAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.model.Node;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
@@ -18,6 +23,7 @@ import com.badlogic.gdx.graphics.g3d.utils.shapebuilders.SphereShapeBuilder;
 
 import io.oz.jwi.Synset;
 import io.oz.wnw.my.MyWeaver;
+import io.oz.xv.glsl.Glsl;
 import io.oz.xv.glsl.Glsl.ShaderFlag;
 import io.oz.xv.glsl.WShader;
 import io.oz.xv.material.XMaterial;
@@ -96,6 +102,39 @@ public class StageA {
 
 	// test & try
 	ModelInstance cube() {
+		// Material simpleMat = new Material("cubeMat", new BlendingAttribute(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA));
+
+		WShader sh = new WShader(ShaderFlag.tex0);
+		XMaterial simpleMat = new XMaterial("cubeMat", sh , new BlendingAttribute(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA));
+
+		TextureParameter param = new TextureParameter();
+		param.minFilter = TextureFilter.Linear;
+		param.genMipMaps = true;
+		AssetManager manager = new AssetManager();
+		String f = "font/verdana39distancefield.png";
+		manager.load(f, Texture.class, param);
+		manager.update(5000);
+		if(manager.isLoaded(f)) {
+			Texture tex = manager.get(f, Texture.class);
+			tex.bind(0);
+		}
+
+		ModelBuilder builder = new ModelBuilder();
+		Node node;
+
+		builder.begin();
+		node = builder.node();
+		node.id = "cone1";
+		node.translation.set(0, 0f, 0f);
+		BoxShapeBuilder.build(builder.part("cone1",
+				GL20.GL_TRIANGLES, Usage.Position | Usage.TextureCoordinates | Usage.Normal,
+				simpleMat), 5, 8, 5);
+
+		Model model = builder.end();
+		return new ModelInstance(model);
+	}
+
+	ModelInstance cubex() {
 		WShader sh = new WShader(ShaderFlag.simple);
 		Material simpleMat = new XMaterial("cubeMat", sh);
 
@@ -111,4 +150,5 @@ public class StageA {
 		Model model = builder.end();
 		return new ModelInstance(model);
 	}
+
 }

@@ -16,6 +16,7 @@ import io.oz.xv.material.XMaterial;
 public class WShader extends BaseShader implements Shader {
 	protected final int u_vpM4 = register(new Uniform("u_vpMat4"));
 	protected final int u_modelM4 = register(new Uniform("u_modelMat4"));
+//	protected final int u_texture = register(new Uniform("u_texture"));
 
 	ShaderFlag flag;
 
@@ -54,7 +55,7 @@ public class WShader extends BaseShader implements Shader {
 	public void begin (Camera camera, RenderContext context) {
 		program.begin();
 		context.setDepthTest(GL20.GL_LEQUAL, 0f, 1f);
-		context.setDepthMask(true);
+		// context.setDepthMask(true);
 		set(u_vpM4, camera.combined);
 	}
 	
@@ -62,6 +63,7 @@ public class WShader extends BaseShader implements Shader {
 	public void render(Renderable renderable) {
 		set(u_modelM4, renderable.worldTransform);
 
+		program.setUniformi("u_texture", 0);
 		renderable.meshPart.render(program);	
 	}
 

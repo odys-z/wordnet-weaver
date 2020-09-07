@@ -9,7 +9,7 @@ import io.oz.wnw.norm.Assets;
 public class Glsl {
 
 	public static enum ShaderFlag {
-		test("test"), simple("simple"), sdfont("sdfont");
+		test("test"), simple("simple"), tex0("tex0"), sdfont("sdfont");
 
 		private String p;
 		ShaderFlag(String v) { p = v; };
@@ -51,7 +51,30 @@ public class Glsl {
 		static String fs = 
 			"void main() { gl_FragColor = vec4(0.0, 0.2, 0.8, 0.75); }";
 	}
-	
+
+	static class tex0 {
+		static String vs = String.join(delimiter, 
+			"uniform mat4 u_modelMat4;",
+			"uniform mat4 u_vpMat4;",
+
+			"attribute vec4 a_position;",
+			"attribute vec3 a_normal;",
+			"attribute vec2 a_texCoord0;",
+			"varying vec2 v_uv;",
+
+			"void main() {",
+			"    gl_Position = u_vpMat4 * u_modelMat4 * a_position;",
+			"    v_uv = a_texCoord0;",
+			"}");
+		static String fs = String.join(delimiter, 
+			"uniform sampler2D u_texture;",
+			"varying vec2 v_uv;",
+			"void main() {",
+			"	gl_FragColor = texture2D(u_texture, v_uv);",
+			//"	gl_FragColor.r = v_uv.t;", // u_uv: 0 ~ 1
+			"}");
+	}
+
 	static class sdfont {
 		static ShaderProgram init(ShaderProgram program) {
 			float smoothing = 0.3f;
@@ -71,6 +94,8 @@ public class Glsl {
 				return test.vs;
 			case simple:
 				return simple.vs;
+			case tex0:
+				return tex0.vs;
 
 			default:
 				return Gdx.files.internal(String.format("glsl/%s.vs", m.path())).readString();
@@ -83,6 +108,8 @@ public class Glsl {
 				return test.fs;
 			case simple:
 				return simple.fs;
+			case tex0:
+				return tex0.fs;
 			default:
 				return Gdx.files.internal(String.format("glsl/%s.fs", m.path())).readString();
 		}
