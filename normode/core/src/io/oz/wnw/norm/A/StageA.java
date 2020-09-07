@@ -7,6 +7,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.TextureLoader.TextureParameter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.VertexAttributes.Usage;
@@ -23,7 +24,6 @@ import com.badlogic.gdx.graphics.g3d.utils.shapebuilders.SphereShapeBuilder;
 
 import io.oz.jwi.Synset;
 import io.oz.wnw.my.MyWeaver;
-import io.oz.xv.glsl.Glsl;
 import io.oz.xv.glsl.Glsl.ShaderFlag;
 import io.oz.xv.glsl.WShader;
 import io.oz.xv.material.XMaterial;
@@ -109,6 +109,7 @@ public class StageA {
 
 		TextureParameter param = new TextureParameter();
 		param.minFilter = TextureFilter.Linear;
+		param.format = Pixmap.Format.RGBA8888;
 		param.genMipMaps = true;
 		AssetManager manager = new AssetManager();
 		String f = "font/verdana39distancefield.png";

@@ -72,6 +72,7 @@ public class Glsl {
 			"void main() {",
 			"	gl_FragColor = texture2D(u_texture, v_uv);",
 			//"	gl_FragColor.r = v_uv.t;", // u_uv: 0 ~ 1
+			"	gl_FragColor.a = 0.;",
 			"}");
 	}
 
