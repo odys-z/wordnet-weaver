@@ -25,8 +25,9 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.StreamUtils;
 
 import io.oz.wnw.norm.Assets;
+import io.oz.xv.glsl.Glsl;
+import io.oz.xv.glsl.Glsl.Sdfont;
 import io.oz.xv.glsl.Glsl.ShaderFlag;
-import io.oz.xv.glsl.WShader;
 import io.oz.xv.material.XMaterial;
 
 /**
@@ -93,7 +94,8 @@ public class GlyphLib implements Disposable {
 		vis[2].setPos(x2, y2, 0).setCol(Color.GREEN).setUV(u2, v2);
 		vis[3].setPos(x2, y , 0).setCol(Color.BLUE).setUV(u2, v );
 		
-        XMaterial texmat = new XMaterial(str, new WShader(ShaderFlag.sdfont),
+        XMaterial texmat = new XMaterial(str,
+        		((Sdfont) Glsl.wshader(ShaderFlag.sdfont)).smooth(0.24f),
         		new BlendingAttribute(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA));
 
 		ModelBuilder builder = new ModelBuilder();

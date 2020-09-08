@@ -7,7 +7,6 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.TextureLoader.TextureParameter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.VertexAttributes.Usage;
@@ -24,6 +23,7 @@ import com.badlogic.gdx.graphics.g3d.utils.shapebuilders.SphereShapeBuilder;
 
 import io.oz.jwi.Synset;
 import io.oz.wnw.my.MyWeaver;
+import io.oz.xv.glsl.Glsl;
 import io.oz.xv.glsl.Glsl.ShaderFlag;
 import io.oz.xv.glsl.WShader;
 import io.oz.xv.material.XMaterial;
@@ -51,8 +51,8 @@ public class StageA {
 	}
 
 	ModelInstance loadSnyset() {
-//		WShader sh = new WShader(ShaderFlag.sdfont);
-//		Material simpleMat = new XMaterial("smat", sh);
+//		WShader sh = Glsl.wshader(ShaderFlag.sdfont);
+//		Material matr = new XMaterial("smat", sh);
 
 //		ModelBuilder builder = new ModelBuilder();
 //		Node node;
@@ -71,8 +71,8 @@ public class StageA {
 
 	// test & try
 	ModelInstance sphereCones() {
-		WShader sh2 = new WShader(ShaderFlag.test);
-		WShader sh1 = new WShader(ShaderFlag.test);
+		WShader sh2 = Glsl.wshader(ShaderFlag.test);
+		WShader sh1 = Glsl.wshader(ShaderFlag.test);
 		Material redMaterial = new Material("RedMaterial", ColorAttribute.createDiffuse(Color.RED));
 		Material material1 = new XMaterial("TestMaterial1", sh1);
 		Material material2 = new XMaterial("TestMaterial2", sh2);
@@ -102,14 +102,11 @@ public class StageA {
 
 	// test & try
 	ModelInstance cube() {
-		// Material simpleMat = new Material("cubeMat", new BlendingAttribute(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA));
-
-		WShader sh = new WShader(ShaderFlag.tex0);
+		WShader sh = Glsl.wshader(ShaderFlag.tex0);
 		XMaterial simpleMat = new XMaterial("cubeMat", sh , new BlendingAttribute(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA));
 
 		TextureParameter param = new TextureParameter();
 		param.minFilter = TextureFilter.Linear;
-		// param.format = Pixmap.Format.RGBA8888;
 		param.genMipMaps = true;
 		AssetManager manager = new AssetManager();
 		String f = "font/verdana39distancefield.png";
@@ -135,8 +132,9 @@ public class StageA {
 		return new ModelInstance(model);
 	}
 
+	// test & try
 	ModelInstance cubex() {
-		WShader sh = new WShader(ShaderFlag.simple);
+		WShader sh = Glsl.wshader(ShaderFlag.simple);
 		Material simpleMat = new XMaterial("cubeMat", sh);
 
 		ModelBuilder builder = new ModelBuilder();

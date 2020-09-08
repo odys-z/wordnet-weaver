@@ -66,9 +66,9 @@ public class ViewA1 extends ScreenAdapter {
 		instances = new Array<ModelInstance>(); 
 		// try
 		// instances.add(stage.sphereCones());
-		instances.add(stage.cube());
+//		instances.add(stage.cube());
 
-//		instances.add(stage.loadSnyset());
+		instances.add(stage.loadSnyset());
 	}
 
 	@Override
@@ -91,11 +91,11 @@ public class ViewA1 extends ScreenAdapter {
 	public void draw(float delta) {
 		Gdx.gl.glViewport(0, 0, Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight());
 
-        Gdx.gl.glClearColor(0, 0, 1, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+		Gdx.gl.glClearColor(0, 0, 1, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
  
 		Gdx.gl.glEnable(GL20.GL_BLEND);
-        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 
 	    Gdx.gl.glDepthMask(false);
 	    
