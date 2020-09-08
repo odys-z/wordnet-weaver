@@ -1,5 +1,6 @@
 package io.oz.xv.glsl;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g3d.Material;
@@ -64,6 +65,9 @@ public class WShader extends BaseShader implements Shader {
 		set(u_modelM4, renderable.worldTransform);
 
 		program.setUniformi("u_texture", 0);
+		// https://stackoverflow.com/questions/8594703/lwjgl-transparency
+		Gdx.gl.glEnable(GL20.GL_BLEND);
+		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 		renderable.meshPart.render(program);	
 	}
 

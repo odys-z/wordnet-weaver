@@ -23,7 +23,6 @@ import com.badlogic.gdx.graphics.g3d.utils.shapebuilders.SphereShapeBuilder;
 
 import io.oz.jwi.Synset;
 import io.oz.wnw.my.MyWeaver;
-import io.oz.xv.glsl.Glsl;
 import io.oz.xv.glsl.Glsl.ShaderFlag;
 import io.oz.xv.glsl.WShader;
 import io.oz.xv.material.XMaterial;
