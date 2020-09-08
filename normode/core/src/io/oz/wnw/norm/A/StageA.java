@@ -109,7 +109,7 @@ public class StageA {
 
 		TextureParameter param = new TextureParameter();
 		param.minFilter = TextureFilter.Linear;
-		param.format = Pixmap.Format.RGBA8888;
+		// param.format = Pixmap.Format.RGBA8888;
 		param.genMipMaps = true;
 		AssetManager manager = new AssetManager();
 		String f = "font/verdana39distancefield.png";
