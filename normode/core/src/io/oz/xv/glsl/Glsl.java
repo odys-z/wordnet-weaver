@@ -71,6 +71,7 @@ public class Glsl {
 			"varying vec2 v_uv;",
 			"void main() {",
 			"	gl_FragColor = texture2D(u_texture, v_uv);",
+			//"	if (gl_FragColor.a == 0.) discard;",
 			//"	gl_FragColor.r = v_uv.t;", // u_uv: 0 ~ 1
 			"	gl_FragColor.a = 0.;",
 			"}");
