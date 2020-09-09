@@ -51,20 +51,6 @@ public class StageA {
 	}
 
 	ModelInstance loadSnyset() {
-//		WShader sh = Glsl.wshader(ShaderFlag.sdfont);
-//		Material matr = new XMaterial("smat", sh);
-
-//		ModelBuilder builder = new ModelBuilder();
-//		Node node;
-
-//		builder.begin();
-//		node = builder.node();
-//		node.id = "s1";
-//		node.translation.set(0, 0f, 0f);
-		// BoxShapeBuilder.build(builder.part("s1", GL20.GL_TRIANGLES, Usage.Position | Usage.Normal, simpleMat), 5, 5, 5);
-//		Model model = builder.end();
-//		return new ModelInstance(model);
-
 		ModelInstance mi = glyphs.bindText(me.myset().name(), new Color(1f, 1f, 0f, 1f));
 		return mi;
 	}

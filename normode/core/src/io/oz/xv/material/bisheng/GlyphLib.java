@@ -10,22 +10,15 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
-import com.badlogic.gdx.graphics.VertexAttributes.Usage;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.BlendingAttribute;
-import com.badlogic.gdx.graphics.g3d.model.Node;
-import com.badlogic.gdx.graphics.g3d.utils.MeshPartBuilder;
-import com.badlogic.gdx.graphics.g3d.utils.MeshPartBuilder.VertexInfo;
-import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.StreamUtils;
 
-import io.oz.wnw.norm.Assets;
 import io.oz.xv.glsl.Glsl;
 import io.oz.xv.glsl.Glsl.Sdfont;
 import io.oz.xv.glsl.Glsl.ShaderFlag;
@@ -59,9 +52,6 @@ public class GlyphLib implements Disposable {
 		//ownsTexture = true;
 	}
 
-	/**Vertex infomation*/
-	private static VertexInfo[] vis;
-
     /**Bind string characters as a text line (page?) - the plane instance for rendering.<br>
      * - set uv of texture page to vertex info.
      * 
@@ -72,14 +62,13 @@ public class GlyphLib implements Disposable {
      */
 	public ModelInstance bindText(String str, Color color) {
         XMaterial texmat = new XMaterial(str,
-        		((Sdfont) Glsl.wshader(ShaderFlag.sdfont)).smooth(0.06f).thin(0.5f).white("0.5"),
+        		((Sdfont) Glsl.wshader(ShaderFlag.sdfont)).smooth(0.06f).thin(0.5f).white("0.4"),
         		new BlendingAttribute(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA));
 
-		ModelBuilder builder = new ModelBuilder();
-		Node node;
-		MeshPartBuilder mpbuilder; 
+		Paragraph p = new Paragraph(str, color, texmat);
+		return p.buildMesh(data);
 
-
+        /*
 		Glyph glyph = data.getGlyph('D');
         // bind texture
         data.regions[glyph.page].getTexture().bind(Assets.texGlyph);
@@ -89,7 +78,7 @@ public class GlyphLib implements Disposable {
 		int y = glyph.yoffset;
 		float width = glyph.width, height = glyph.height;
 		final float u = glyph.u, u2 = glyph.u2, v = glyph.v, v2 = glyph.v2;
-        // FIXME calculate width of the string
+        // calculate width of the string
 		final float x2 = x + width, y2 = y + height;
 
 		if (vis == null) {
@@ -130,13 +119,14 @@ public class GlyphLib implements Disposable {
                 texmat);
 		mpbuilder.rect(vis[0], vis[1], vis[2], vis[3]);
 
-        Model model = builder.end();
+        Model model = builder.end(); 
         model.calculateTransforms();
 
         return new ModelInstance(model);
+        */
 	}
 
-    /**
+	/**
      * Manager of font file - glyphs info and textures
      */
     public static class FontData {
@@ -288,9 +278,9 @@ public class GlyphLib implements Disposable {
 	                glyph.xoffset = Integer.parseInt(tokens.nextToken());
 	                tokens.nextToken();
 	                if (flip)
-	                    glyph.yoffset = Integer.parseInt(tokens.nextToken());
-	                else
 	                    glyph.yoffset = -(glyph.height + Integer.parseInt(tokens.nextToken()));
+	                else
+	                    glyph.yoffset = Integer.parseInt(tokens.nextToken());
 	                tokens.nextToken();
 	                glyph.xadvance = Integer.parseInt(tokens.nextToken());
 
