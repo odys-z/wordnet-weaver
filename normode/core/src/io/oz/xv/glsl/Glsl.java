@@ -100,12 +100,19 @@ public class Glsl {
 		final int u_vpM4 = register(new Uniform("u_vpMat4"));
 		final int u_modelM4 = register(new Uniform("u_modelMat4"));
 		private float delta = 0.1f;
+		/** Font weight */
+		private float weight = 0.4f;
+
+		/** White area alpha - for debug */
+		private String whiteAlpha = "0.0";
 
 		public Sdfont() {
 			super(ShaderFlag.sdfont);
+
+			String vs = String.format(Gdx.files.internal(String.format("glsl/%s.fs", flag.path())).readString(),
+							whiteAlpha);
 			program = new ShaderProgram(
-				Gdx.files.internal(String.format("glsl/%s.vs", flag.path())).readString(),
-				Gdx.files.internal(String.format("glsl/%s.fs", flag.path())).readString());
+				Gdx.files.internal(String.format("glsl/%s.vs", flag.path())).readString(), vs);
 		}
 
 		public Sdfont smooth(float smoothing) {
@@ -113,10 +120,24 @@ public class Glsl {
 			return this;
 		}
 
+		public Sdfont thin(float weight) {
+			this.weight = weight;
+			return this;
+		}
+
+		public Sdfont white(String alpha) {
+			this.whiteAlpha = alpha;
+			String vs = String.format(Gdx.files.internal(String.format("glsl/%s.fs", flag.path())).readString(),
+							whiteAlpha);
+			program = new ShaderProgram(
+				Gdx.files.internal(String.format("glsl/%s.vs", flag.path())).readString(), vs);
+			return this;
+		}
+
 		@Override
 		public void render(Renderable renderable) {
-			program.setUniformf("u_lower", 0.5f - delta);
-			program.setUniformf("u_upper", 0.5f + delta);
+			program.setUniformf("u_lower", weight - delta);
+			program.setUniformf("u_upper", weight + delta);
 			program.setUniformi("u_texture", Assets.texGlyph);
 			super.render(renderable);
 		}

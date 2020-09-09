@@ -9,6 +9,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.VertexAttributes.Usage;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
@@ -70,12 +71,20 @@ public class GlyphLib implements Disposable {
      * @return the text model
      */
 	public ModelInstance bindText(String str, Color color) {
+        XMaterial texmat = new XMaterial(str,
+        		((Sdfont) Glsl.wshader(ShaderFlag.sdfont)).smooth(0.06f).thin(0.5f).white("0.5"),
+        		new BlendingAttribute(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA));
 
-		char ch = str.charAt(0);
-		Glyph glyph = data.getGlyph(ch);
+		ModelBuilder builder = new ModelBuilder();
+		Node node;
+		MeshPartBuilder mpbuilder; 
+
+
+		Glyph glyph = data.getGlyph('D');
         // bind texture
         data.regions[glyph.page].getTexture().bind(Assets.texGlyph);
 
+        // 'D' id=68 x=318 y=127 width=34 height=38 xoffset=0 yoffset=7 xadvance=30 page=0 chnl=0
 		int x = glyph.xoffset;
 		int y = glyph.yoffset;
 		float width = glyph.width, height = glyph.height;
@@ -94,19 +103,29 @@ public class GlyphLib implements Disposable {
 		vis[2].setPos(x2, y2, 0).setCol(Color.GREEN).setUV(u2, v2);
 		vis[3].setPos(x2, y , 0).setCol(Color.BLUE).setUV(u2, v );
 		
-        XMaterial texmat = new XMaterial(str,
-        		((Sdfont) Glsl.wshader(ShaderFlag.sdfont)).smooth(0.24f),
-        		new BlendingAttribute(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA));
-
-		ModelBuilder builder = new ModelBuilder();
-		Node node;
 		builder.begin();
 		node = builder.node();
 		node.id = "cone1";
 		node.scale.scl(0.4f);
 		node.translation.set(-15, 15f, 0f);
 
-		MeshPartBuilder mpbuilder = builder.part(str,
+		mpbuilder = builder.part(str,
+                GL20.GL_TRIANGLES, Usage.Position | Usage.ColorUnpacked | Usage.TextureCoordinates | Usage.Normal,
+                texmat);
+		mpbuilder.rect(vis[0], vis[1], vis[2], vis[3]);
+
+		//////////////////////////////////////////////////////////////////////////////////////
+		vis[0].setPos(x , y , 0).setCol(color).setUV(u - 0.5f, v );
+		vis[1].setPos(x , y2, 0).setCol(Color.RED).setUV(u - 0.5f, v2);
+		vis[2].setPos(x2, y2, 0).setCol(Color.GREEN).setUV(u2- 0.5f, v2);
+		vis[3].setPos(x2, y , 0).setCol(Color.BLUE).setUV(u2- 0.5f, v );
+
+		node = builder.node();
+		node.id = "cone2";
+		node.scale.scl(0.4f);
+		node.translation.set(0f, 15f, 0f);
+
+		builder.part(str,
                 GL20.GL_TRIANGLES, Usage.Position | Usage.ColorUnpacked | Usage.TextureCoordinates | Usage.Normal,
                 texmat);
 		mpbuilder.rect(vis[0], vis[1], vis[2], vis[3]);
@@ -380,8 +399,11 @@ public class GlyphLib implements Disposable {
 		    // Load each path.
 		    for (int i = 0; i < n; i++) {
 			    FileHandle file = Gdx.files.internal(imagePathes[i]);
-			    regions[i] = new TextureRegion(new Texture(file, false));
+			    Texture tex = new Texture(file, true);
+			    tex.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+				regions[i] = new TextureRegion(tex);
 		    }
+		    
     	    return regions;
         }
 
