@@ -1,6 +1,6 @@
-# gradle-wrapper.properties
+# setup gradle-wrapper.properties
 
-Add this to file *gradle-wrapper.properties*
+Create a new file here: *gradle-wrapper.properties*
 
 ```
     distributionBase=GRADLE_USER_HOME

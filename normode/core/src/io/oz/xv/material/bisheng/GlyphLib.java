@@ -24,12 +24,16 @@ import io.oz.xv.glsl.Glsl.Sdfont;
 import io.oz.xv.glsl.Glsl.ShaderFlag;
 import io.oz.xv.material.XMaterial;
 
-/**
- * 
+/**<p>Verdana font helper binding string to meshes.</p>
+ * This glyph lib needs 2 supporting files:<br>
+ * verdana39distancefield.fnt &amp; verdana39distancefield.png,<br>
+ * in addition to a ink material, {@link ShaderFlag#sdfont}.
  * @author Odys Zhou
  *
  */
 public class GlyphLib implements Disposable {
+	static public final boolean debug = false;
+
 	static private final int LOG2_PAGE_SIZE = 9;
 	static private final int PAGE_SIZE = 1 << LOG2_PAGE_SIZE;
     static private final int PAGES = 1;
@@ -61,69 +65,13 @@ public class GlyphLib implements Disposable {
      * @return the text model
      */
 	public ModelInstance bindText(String str, Color color) {
-        XMaterial texmat = new XMaterial(str,
-        		((Sdfont) Glsl.wshader(ShaderFlag.sdfont)).smooth(0.06f).thin(0.5f).white("0.4"),
+        XMaterial ink = new XMaterial(str,
+        		((Sdfont) Glsl.wshader(ShaderFlag.sdfont)).smooth(0.06f).thin(0.5f)
+        					  .white(debug ? "0.5" : "0.0"),
         		new BlendingAttribute(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA));
 
-		Paragraph p = new Paragraph(str, color, texmat);
+		Paragraph p = new Paragraph(str, color, ink);
 		return p.buildMesh(data);
-
-        /*
-		Glyph glyph = data.getGlyph('D');
-        // bind texture
-        data.regions[glyph.page].getTexture().bind(Assets.texGlyph);
-
-        // 'D' id=68 x=318 y=127 width=34 height=38 xoffset=0 yoffset=7 xadvance=30 page=0 chnl=0
-		int x = glyph.xoffset;
-		int y = glyph.yoffset;
-		float width = glyph.width, height = glyph.height;
-		final float u = glyph.u, u2 = glyph.u2, v = glyph.v, v2 = glyph.v2;
-        // calculate width of the string
-		final float x2 = x + width, y2 = y + height;
-
-		if (vis == null) {
-			vis = new VertexInfo[4];
-			for (int i = 0; i < 4; i++)
-				vis[i] = new VertexInfo();
-		}
-		
-		vis[0].setPos(x , y , 0).setCol(color).setUV(u , v );
-		vis[1].setPos(x , y2, 0).setCol(Color.RED).setUV(u , v2);
-		vis[2].setPos(x2, y2, 0).setCol(Color.GREEN).setUV(u2, v2);
-		vis[3].setPos(x2, y , 0).setCol(Color.BLUE).setUV(u2, v );
-		
-		builder.begin();
-		node = builder.node();
-		node.id = "cone1";
-		node.scale.scl(0.4f);
-		node.translation.set(-15, 15f, 0f);
-
-		mpbuilder = builder.part(str,
-                GL20.GL_TRIANGLES, Usage.Position | Usage.ColorUnpacked | Usage.TextureCoordinates | Usage.Normal,
-                texmat);
-		mpbuilder.rect(vis[0], vis[1], vis[2], vis[3]);
-
-		//////////////////////////////////////////////////////////////////////////////////////
-		vis[0].setPos(x , y , 0).setCol(color).setUV(u - 0.5f, v );
-		vis[1].setPos(x , y2, 0).setCol(Color.RED).setUV(u - 0.5f, v2);
-		vis[2].setPos(x2, y2, 0).setCol(Color.GREEN).setUV(u2- 0.5f, v2);
-		vis[3].setPos(x2, y , 0).setCol(Color.BLUE).setUV(u2- 0.5f, v );
-
-		node = builder.node();
-		node.id = "cone2";
-		node.scale.scl(0.4f);
-		node.translation.set(0f, 15f, 0f);
-
-		builder.part(str,
-                GL20.GL_TRIANGLES, Usage.Position | Usage.ColorUnpacked | Usage.TextureCoordinates | Usage.Normal,
-                texmat);
-		mpbuilder.rect(vis[0], vis[1], vis[2], vis[3]);
-
-        Model model = builder.end(); 
-        model.calculateTransforms();
-
-        return new ModelInstance(model);
-        */
 	}
 
 	/**

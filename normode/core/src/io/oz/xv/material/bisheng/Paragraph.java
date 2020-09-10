@@ -15,8 +15,7 @@ import io.oz.xv.material.XMaterial;
 import io.oz.xv.material.bisheng.GlyphLib.FontData;
 import io.oz.xv.material.bisheng.GlyphLib.Glyph;
 
-/** String mesh building context */
-/**
+/** String mesh building context
  * @author Odys Zhou
  *
  */
@@ -110,12 +109,15 @@ public class Paragraph {
 		Glyph glyph = data.getGlyph(ch);
 		data.regions[glyph.page].getTexture().bind(Assets.texGlyph);
 
-		// e.g. 'D' id=68
-		// x=318 y=127 width=34 height=38 xoffset=0 yoffset=7 xadvance=30 page=0 chnl=0
-		// 'r' id=114   
-		// x=414 y=165 width=23 height=31 xoffset=0 yoffset=14 advance=17 page=0 chnl=0 
+		/* font sample
+		 * 'D' id=68
+		 * x=318 y=127 width=34 height=38 xoffset=0 yoffset=7 xadvance=30 page=0 chnl=0
+		 * 'r' id=114   
+		 * x=414 y=165 width=23 height=31 xoffset=0 yoffset=14 advance=17 page=0 chnl=0 
+		 */
 		int x = -glyph.xoffset;
-		int y = -glyph.yoffset;
+		// y = 0 instead of -yoffset (font start at upper left, offset is to bottom)
+		int y = 0;
 		final float u = glyph.u, u2 = glyph.u2, v = glyph.v, v2 = glyph.v2;
 		final float x2 = x + glyph.width, y2 = y + glyph.height;
 
