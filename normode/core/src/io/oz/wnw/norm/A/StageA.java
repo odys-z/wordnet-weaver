@@ -3,30 +3,14 @@ package io.oz.wnw.norm.A;
 import java.util.Map;
 
 import com.badlogic.ashley.core.PooledEngine;
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.assets.loaders.TextureLoader.TextureParameter;
+import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
-import com.badlogic.gdx.graphics.VertexAttributes.Usage;
-import com.badlogic.gdx.graphics.g3d.Material;
-import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.badlogic.gdx.graphics.g3d.attributes.BlendingAttribute;
-import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
-import com.badlogic.gdx.graphics.g3d.model.Node;
-import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
-import com.badlogic.gdx.graphics.g3d.utils.shapebuilders.BoxShapeBuilder;
-import com.badlogic.gdx.graphics.g3d.utils.shapebuilders.ConeShapeBuilder;
-import com.badlogic.gdx.graphics.g3d.utils.shapebuilders.SphereShapeBuilder;
 
 import io.oz.jwi.Synset;
+import io.oz.wnw.ecs.sys.RenderingSystem;
+import io.oz.wnw.ecs.sys.SysAffine;
 import io.oz.wnw.my.MyWeaver;
-import io.oz.xv.glsl.Glsl;
-import io.oz.xv.glsl.Glsl.ShaderFlag;
-import io.oz.xv.glsl.WShader;
-import io.oz.xv.material.XMaterial;
 import io.oz.xv.material.bisheng.GlyphLib;
 
 /**Scene A's world / objects manager.
@@ -45,9 +29,11 @@ public class StageA {
 		this.me = me;
 	}
 
-	public void init(ViewA1 viewA1, PooledEngine ecs) {
-		// glyphs = new GlyphLib(null, false);
+	public void init(ScreenAdapter viewA1, PooledEngine ecs) {
 		glyphs = new GlyphLib("font/verdana39distancefield.fnt", false);
+		
+		ecs.addSystem(new SysAffine());
+		ecs.addSystem(new RenderingSystem());
 	}
 
 	ModelInstance loadSnyset() {
@@ -55,85 +41,6 @@ public class StageA {
 		return mi;
 	}
 
-	// test & try
-	ModelInstance sphereCones() {
-		WShader sh2 = Glsl.wshader(ShaderFlag.test);
-		WShader sh1 = Glsl.wshader(ShaderFlag.test);
-		Material redMaterial = new Material("RedMaterial", ColorAttribute.createDiffuse(Color.RED));
-		Material material1 = new XMaterial("TestMaterial1", sh1);
-		Material material2 = new XMaterial("TestMaterial2", sh2);
-
-		ModelBuilder builder = new ModelBuilder();
-		Node node;
-
-		builder.begin();
-		node = builder.node();
-		node.id = "cone1";
-		node.translation.set(-10, 0f, 0f);
-		ConeShapeBuilder.build(builder.part("cone1_", GL20.GL_TRIANGLES, Usage.Position | Usage.Normal, material1), 5, 5, 5, 20);
-
-		node = builder.node();
-		node.id = "redSphere";
-		node.translation.set(0f, 6f, 0f);
-		SphereShapeBuilder.build(builder.part("redSphere", GL20.GL_TRIANGLES, Usage.Position, redMaterial), 5, 5, 5, 20, 20);
-
-		node = builder.node();
-		node.id = "cone2";
-		node.translation.set(10, 0f, 0f);
-		ConeShapeBuilder.build(builder.part("cone2_", GL20.GL_TRIANGLES, Usage.Position | Usage.Normal, material2), 5, 5, 5, 20);
-
-		Model model = builder.end();
-		return new ModelInstance(model);
+	public void update(PooledEngine ecs) {
 	}
-
-	// test & try
-	ModelInstance cube() {
-		WShader sh = Glsl.wshader(ShaderFlag.tex0);
-		XMaterial simpleMat = new XMaterial("cubeMat", sh , new BlendingAttribute(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA));
-
-		TextureParameter param = new TextureParameter();
-		param.minFilter = TextureFilter.Linear;
-		param.genMipMaps = true;
-		AssetManager manager = new AssetManager();
-		String f = "font/verdana39distancefield.png";
-		manager.load(f, Texture.class, param);
-		manager.update(5000);
-		if(manager.isLoaded(f)) {
-			Texture tex = manager.get(f, Texture.class);
-			tex.bind(0);
-		}
-
-		ModelBuilder builder = new ModelBuilder();
-		Node node;
-
-		builder.begin();
-		node = builder.node();
-		node.id = "cone1";
-		node.translation.set(0, 0f, 0f);
-		BoxShapeBuilder.build(builder.part("cone1",
-				GL20.GL_TRIANGLES, Usage.Position | Usage.TextureCoordinates | Usage.Normal,
-				simpleMat), 5, 8, 5);
-
-		Model model = builder.end();
-		return new ModelInstance(model);
-	}
-
-	// test & try
-	ModelInstance cubex() {
-		WShader sh = Glsl.wshader(ShaderFlag.simple);
-		Material simpleMat = new XMaterial("cubeMat", sh);
-
-		ModelBuilder builder = new ModelBuilder();
-		Node node;
-
-		builder.begin();
-		node = builder.node();
-		node.id = "cone1";
-		node.translation.set(0, 0f, 0f);
-		BoxShapeBuilder.build(builder.part("cone1", GL20.GL_TRIANGLES, Usage.Position | Usage.Normal, simpleMat), 5, 5, 5);
-
-		Model model = builder.end();
-		return new ModelInstance(model);
-	}
-
 }

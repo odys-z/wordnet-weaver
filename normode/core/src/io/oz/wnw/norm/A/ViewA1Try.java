@@ -17,7 +17,7 @@ import io.oz.wnw.norm.WGame;
 import io.oz.xv.material.XMaterial;
 
 /**<p>3d wordnet overview (cubic treemap).</p>
- *
+ * 
  * This view also illustrates the better practice of ModelInstance + ShaderProgram. See<br>
  * 1. Answer of Xoppa for question <a href='https://stackoverflow.com/questions/28590802/libgdx-assigning-a-specific-shader-to-a-modelinstance'>
  * LibGDX assigning a specific shader to a ModelInstance</a><br>
@@ -25,10 +25,10 @@ import io.oz.xv.material.XMaterial;
  * libGDX wiki: ModelBatch</a>, section on ShaderProvider<br>
  * 3. <a href='https://github.com/libgdx/libgdx/blob/master/tests/gdx-tests/src/com/badlogic/gdx/tests/g3d/ShaderTest.java'>
  * libGDX source: ShaderTest.java</a>, example of how to implement shader been used by ModelInstance.
- *
+ * 
  * @author Odys Zhou
  */
-public class ViewA1 extends ScreenAdapter {
+public class ViewA1Try extends ScreenAdapter {
 	PooledEngine ecs;
 	StageA stage;
 
@@ -37,11 +37,11 @@ public class ViewA1 extends ScreenAdapter {
 	private CameraInputController camController;
 	private Array<ModelInstance> instances;
 
-	public ViewA1(WGame game) {
+	public ViewA1Try(WGame game) {
 		ecs = new PooledEngine();
 		stage = new StageA(ecs, game.me());
 		stage.init(this, ecs);
-
+		
 		// create screen
 		modelBatch = new ModelBatch(new DefaultShaderProvider() {
 			@Override
@@ -63,7 +63,10 @@ public class ViewA1 extends ScreenAdapter {
 		camController = new CameraInputController(cam);
 		Gdx.input.setInputProcessor(camController);
 
-		instances = new Array<ModelInstance>();
+		instances = new Array<ModelInstance>(); 
+		// try
+		// instances.add(stage.sphereCones());
+//		instances.add(stage.cube());
 
 		instances.add(stage.loadSnyset());
 	}
@@ -81,23 +84,24 @@ public class ViewA1 extends ScreenAdapter {
 		ecs.update(delta);
 
         camController.update();
+//        animController.update(delta);
         cam.update();
 	}
-
+	
 	public void draw(float delta) {
 		Gdx.gl.glViewport(0, 0, Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight());
 
 		Gdx.gl.glClearColor(0, 0, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-
+ 
 		Gdx.gl.glEnable(GL20.GL_BLEND);
 		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 
 	    Gdx.gl.glDepthMask(false);
-
+	    
         modelBatch.begin(cam);
 		modelBatch.render(instances);
-        modelBatch.end();
+        modelBatch.end();	
 	}
 
 	@Override

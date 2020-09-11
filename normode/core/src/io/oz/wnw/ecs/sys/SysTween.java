@@ -4,16 +4,16 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 
-/** @deprecated replaced by SysRenderer? */
-public class A1Renderer extends IteratingSystem {
+import io.oz.wnw.ecs.cmp.WTween;
 
-	public A1Renderer(Family family) {
-		super(family);
+public class SysTween extends IteratingSystem {
+
+	public SysTween() {
+		super(Family.all(WTween.class).get());
 	}
 
 	@Override
 	protected void processEntity(Entity entity, float deltaTime) {
-
 	}
 
 }

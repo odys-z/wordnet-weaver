@@ -12,6 +12,9 @@ buildscript {
     dependencies {
         classpath 'org.wisepersist:gwt-gradle-plugin:1.0.9'
         classpath 'com.android.tools.build:gradle:3.4.1'
+
+		classpath 'io.github.odys-z:anclient.weaver:0.0.1-SNAPSHOT'
+		classpath 'com.aurelienribon:tween-engine-api:6.3.3'
     }
 }
 

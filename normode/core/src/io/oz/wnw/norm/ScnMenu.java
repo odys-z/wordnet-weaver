@@ -26,7 +26,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
-import io.oz.wnw.norm.A.ViewA1;
+import io.oz.wnw.norm.A.ViewA1Try;
 import io.oz.wnw.norm.C.ViewC1;
 
 public class ScnMenu extends ScreenAdapter {
@@ -62,7 +62,7 @@ public class ScnMenu extends ScreenAdapter {
 
 	/**Check button bounds against unprojected Gdx.input.xy.<br>
 	 * For ex., if My Words (playBounds) touched, do<br>
-	 * {@link #game}.setScree(new {@link ViewA1}(game));
+	 * {@link #game}.setScree(new {@link ViewA1Try}(game));
 	 * @param delta 
 	 */
 	public void update (float delta) {

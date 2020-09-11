@@ -4,16 +4,16 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 
-/** @deprecated replaced by SysRenderer? */
-public class A1Renderer extends IteratingSystem {
+import io.oz.wnw.ecs.cmp.Affine;
 
-	public A1Renderer(Family family) {
-		super(family);
+public class SysAffine extends IteratingSystem {
+
+	public SysAffine() {
+		super(Family.all(Affine.class).get());
 	}
 
 	@Override
 	protected void processEntity(Entity entity, float deltaTime) {
-
 	}
 
 }

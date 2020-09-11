@@ -22,17 +22,17 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 
 import io.oz.wnw.ecs.cmp.CamPerspect;
-import io.oz.wnw.ecs.cmp.Obj3;
+import io.oz.wnw.ecs.cmp.Affine;
 
 public class A1Camera extends IteratingSystem {
 	
-	private ComponentMapper<Obj3> tm;
+	private ComponentMapper<Affine> tm;
 	private ComponentMapper<CamPerspect> cm;
 	
 	public A1Camera() {
 		super(Family.all(CamPerspect.class).get());
 		
-		tm = ComponentMapper.getFor(Obj3.class);
+		tm = ComponentMapper.getFor(Affine.class);
 		cm = ComponentMapper.getFor(CamPerspect.class);
 	}
 
@@ -44,7 +44,7 @@ public class A1Camera extends IteratingSystem {
 			return;
 		}
 		
-		Obj3 target = tm.get(cam.target);
+		Affine target = tm.get(cam.target);
 		
 		if (target == null) {
 			return;

@@ -1,16 +1,18 @@
 package io.oz.wnw.ecs.cmp;
 
 import com.badlogic.ashley.core.Component;
-import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.math.Vector3;
 
 /**3D stage object transformation
- *
+ * 
  * @author Odys Zhou
  *
  */
-public class Obj3 implements Component {
+public class Affine implements Component {
 	public Vector3 pos;
 	public Vector3 scl;
-	public ModelInstance inst;
+	public Vector3 dir;
+
+	/** Transforms apply to pos, scl at each updating */
+	public Vector3 transf[];
 }
