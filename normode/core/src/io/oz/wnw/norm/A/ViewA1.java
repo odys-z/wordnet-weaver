@@ -4,9 +4,7 @@ import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
-import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
-import com.badlogic.gdx.utils.Array;
 
 import io.oz.wnw.norm.WGame;
 
@@ -27,26 +25,14 @@ public class ViewA1 extends ScreenAdapter {
 	StageA stage;
 
 	private PerspectiveCamera cam;
-//    private ModelBatch modelBatch;
 	private CameraInputController camController;
-	private Array<ModelInstance> instances;
-	//private SysModelRenderer renderer;
+	// private Array<ModelInstance> instances;
 
 	public ViewA1(WGame game) {
 		stage = new StageA(game.me());
 		stage.init(this);
 
 		// create screen
-//		modelBatch = new ModelBatch(new DefaultShaderProvider() {
-//			@Override
-//			protected Shader createShader (Renderable renderable) {
-//				// if (renderable.material.has(TestAttribute.ID)) return new TestShader(renderable);
-//				if (renderable.material instanceof XMaterial)
-//					return ((XMaterial)renderable.material).shader();
-//				return super.createShader(renderable);
-//			}
-//		});
-
 		cam = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		cam.position.set(0f, 0f, 20f);
 		cam.lookAt(0, 0, 0);
@@ -57,9 +43,10 @@ public class ViewA1 extends ScreenAdapter {
 		camController = new CameraInputController(cam);
 		Gdx.input.setInputProcessor(camController);
 
-		instances = new Array<ModelInstance>();
+		//instances = new Array<ModelInstance>();
+		// instances.add(stage.loadSnyset());
 
-		instances.add(stage.loadSnyset());
+		stage.loadMyset();
 	}
 
 	@Override
@@ -69,35 +56,8 @@ public class ViewA1 extends ScreenAdapter {
 		// refresh word treemap
 	}
 
-//	public void update (float delta) {
-//		if (delta > 0.1f) delta = 0.1f;
-//		
-//		stage.update(delta);
-//		camController.update();
-//		cam.update();
-//	}
-
-//	public void draw(float delta) {
-//		Gdx.gl.glViewport(0, 0, Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight());
-//
-//		Gdx.gl.glClearColor(0, 0, 1, 1);
-//        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-//
-//		Gdx.gl.glEnable(GL20.GL_BLEND);
-//		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-//
-//	    Gdx.gl.glDepthMask(false);
-//
-//        modelBatch.begin(cam);
-//		modelBatch.render(instances);
-//        modelBatch.end();
-//	}
-
 	@Override
 	public void render (float delta) {
-//		update(delta);
-//		draw(delta);
-
 		if (delta > 0.1f) delta = 0.1f;
 		
 		stage.update(delta);
