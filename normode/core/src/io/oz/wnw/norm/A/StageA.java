@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 
 import io.oz.jwi.Synset;
-import io.oz.wnw.ecs.sys.RenderingSystem;
+import io.oz.wnw.ecs.sys.SysModelRenderer;
 import io.oz.wnw.ecs.sys.SysAffine;
 import io.oz.wnw.my.MyWeaver;
 import io.oz.xv.material.bisheng.GlyphLib;
@@ -25,15 +25,30 @@ public class StageA {
 
 	private MyWeaver me;
 
-	public StageA(PooledEngine ecs, MyWeaver me) {
+	private PooledEngine ecs;
+
+	public StageA(MyWeaver me) {
 		this.me = me;
+		ecs = new PooledEngine();
 	}
 
-	public void init(ScreenAdapter viewA1, PooledEngine ecs) {
+	/** @deprecated only for ViewA1Try
+	 * @param ecs
+	 * @param me
+	 */
+	public StageA(PooledEngine ecs, MyWeaver me) {
+		this.me = me;
+		this.ecs = ecs;
+	}
+
+	public void init(ScreenAdapter viewA1) {
 		glyphs = new GlyphLib("font/verdana39distancefield.fnt", false);
 		
 		ecs.addSystem(new SysAffine());
-		ecs.addSystem(new RenderingSystem());
+		ecs.addSystem(new SysModelRenderer());
+		
+		// setup objects
+
 	}
 
 	ModelInstance loadSnyset() {
@@ -41,6 +56,7 @@ public class StageA {
 		return mi;
 	}
 
-	public void update(PooledEngine ecs) {
+	public void update(float delta) {
+		ecs.update(delta);
 	}
 }

@@ -25,7 +25,7 @@ import io.oz.xv.material.XMaterial;
  * libGDX wiki: ModelBatch</a>, section on ShaderProvider<br>
  * 3. <a href='https://github.com/libgdx/libgdx/blob/master/tests/gdx-tests/src/com/badlogic/gdx/tests/g3d/ShaderTest.java'>
  * libGDX source: ShaderTest.java</a>, example of how to implement shader been used by ModelInstance.
- * 
+ * @deprecated
  * @author Odys Zhou
  */
 public class ViewA1Try extends ScreenAdapter {
@@ -40,7 +40,7 @@ public class ViewA1Try extends ScreenAdapter {
 	public ViewA1Try(WGame game) {
 		ecs = new PooledEngine();
 		stage = new StageA(ecs, game.me());
-		stage.init(this, ecs);
+		stage.init(this);
 		
 		// create screen
 		modelBatch = new ModelBatch(new DefaultShaderProvider() {
