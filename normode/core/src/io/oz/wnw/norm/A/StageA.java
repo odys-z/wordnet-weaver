@@ -10,10 +10,13 @@ import com.badlogic.gdx.graphics.g3d.ModelInstance;
 
 import io.oz.jwi.Synset;
 import io.oz.wnw.ecs.sys.SysModelRenderer;
+import io.oz.wnw.ecs.cmp.Affine;
 import io.oz.wnw.ecs.cmp.Obj3;
 import io.oz.wnw.ecs.sys.SysAffine;
 import io.oz.wnw.my.MyWeaver;
 import io.oz.xv.material.bisheng.GlyphLib;
+import io.oz.xv.math.Geoshape;
+import io.oz.xv.utils.Xutils;
 
 /**Scene A's world / objects manager.
  * 
@@ -28,6 +31,7 @@ public class StageA {
 	private MyWeaver me;
 
 	private PooledEngine ecs;
+	public PooledEngine engine() { return ecs; }
 
 	public StageA(MyWeaver me) {
 		this.me = me;
@@ -60,12 +64,15 @@ public class StageA {
 	}
 
 	Entity loadMyset() {
-		ModelInstance mi = glyphs.bindText(me.myset().name(), new Color(1f, 1f, 0f, 1f));
-		
 		Entity entity = ecs.createEntity();
+
 		Obj3 obj3 = ecs.createComponent(Obj3.class);
-		obj3.modInst = mi;
+		// ModelInstance mi = glyphs.bindText(me.myset().name(), new Color(1f, 1f, 0f, 1f));
+		obj3.modInst = Xutils.modelInstance(Geoshape.cube);
 		entity.add(obj3);
+		
+		Affine aff = ecs.createComponent(Affine.class);
+		aff.pos(0f, 0f, 0f);
 
 		return entity;
 	}
@@ -73,4 +80,5 @@ public class StageA {
 	public void update(float delta) {
 		ecs.update(delta);
 	}
+
 }

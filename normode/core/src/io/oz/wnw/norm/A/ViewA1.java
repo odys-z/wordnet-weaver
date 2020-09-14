@@ -31,6 +31,7 @@ public class ViewA1 extends ScreenAdapter {
 	public ViewA1(WGame game) {
 		stage = new StageA(game.me());
 		stage.init(this);
+		ecs = stage.engine();
 
 		// create screen
 		cam = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -65,5 +66,4 @@ public class ViewA1 extends ScreenAdapter {
 		cam.update();
 		ecs.update(delta);;
 	}
-
 }

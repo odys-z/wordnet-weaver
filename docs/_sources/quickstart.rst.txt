@@ -46,6 +46,20 @@ To import normod, in Eclipse::
 Note: According to the author's experience, you better run desktop project in
 Eclipse and run Android project from Android Studio.
 
+*Note*
+
+The normal project depends on Ashley and [Universal-tween-engine](https://github.com/AurelienRibon/universal-tween-engine).
+Both have some problem for newest GDX version to depends on. Have to be installed
+in local maven repository.
+
+To install Ashley locally, see Ashely issue #279.
+
+To install Universal-tween-engine, run it's gradle task.
+
+If Eclipse doesn't recognize dependency class, this may help::
+
+    right click build.gradle -> gradle -> refresh project
+
 Troublshootings
 ---------------
 

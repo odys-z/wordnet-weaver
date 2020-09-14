@@ -11,6 +11,7 @@ Welcome to wordnet weaver's documentation!
    :caption: Contents:
 
    quickstart
+   reference/index
 
 
 Indices and tables

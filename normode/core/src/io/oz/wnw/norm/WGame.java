@@ -32,5 +32,4 @@ public class WGame extends Game {
 	public MyWeaver me() {
 		return me;
 	}
-	
 }

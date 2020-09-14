@@ -15,4 +15,9 @@ public class Affine implements Component {
 
 	/** Transforms apply to pos, scl at each updating */
 	public Vector3 transf[];
+
+	public Affine pos(float x, float y, float z) {
+		pos = new Vector3(x, y, z);
+		return this;
+	}
 }

@@ -36,6 +36,7 @@
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="wordnet weaver 1.0 documentation" href="index.html"/>
+        <link rel="next" title="&lt;no title&gt;" href="reference/index.html"/>
         <link rel="prev" title="Welcome to wordnet weaver’s documentation!" href="index.html"/> 
 
   
@@ -93,6 +94,7 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="reference/gdx-modelbuilder.html">Hacking GDX</a></li>
 </ul>
 
             
@@ -179,6 +181,16 @@ and the file path needing to be changed in configure file.</p>
 </div>
 <p>Note: According to the author’s experience, you better run desktop project in
 Eclipse and run Android project from Android Studio.</p>
+<p><em>Note</em></p>
+<p>The normal project depends on Ashley and [Universal-tween-engine](<a class="reference external" href="https://github.com/AurelienRibon/universal-tween-engine">https://github.com/AurelienRibon/universal-tween-engine</a>).
+Both have some problem for newest GDX version to depends on. Have to be installed
+in local maven repository.</p>
+<p>To install Ashley locally, see Ashely issue #279.</p>
+<p>To install Universal-tween-engine, run it’s gradle task.</p>
+<p>If Eclipse doesn’t recognize dependency class, this may help:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">right</span> <span class="n">click</span> <span class="n">build</span><span class="o">.</span><span class="n">gradle</span> <span class="o">-&gt;</span> <span class="n">gradle</span> <span class="o">-&gt;</span> <span class="n">refresh</span> <span class="n">project</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="troublshootings">
 <h2>Troublshootings<a class="headerlink" href="#troublshootings" title="Permalink to this headline">¶</a></h2>
@@ -228,6 +240,8 @@ classpath.</p>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="reference/index.html" class="btn btn-neutral float-right" title="&lt;no title&gt;" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="index.html" class="btn btn-neutral" title="Welcome to wordnet weaver’s documentation!" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
