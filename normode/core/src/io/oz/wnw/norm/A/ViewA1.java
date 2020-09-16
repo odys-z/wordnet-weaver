@@ -30,6 +30,8 @@ public class ViewA1 extends ScreenAdapter {
 
 	public ViewA1(WGame game) {
 		stage = new StageA(game.me());
+		// Entities must created before creating EntitySystems
+		stage.loadMyset();
 		stage.init(this);
 		ecs = stage.engine();
 
@@ -47,7 +49,6 @@ public class ViewA1 extends ScreenAdapter {
 		//instances = new Array<ModelInstance>();
 		// instances.add(stage.loadSnyset());
 
-		stage.loadMyset();
 	}
 
 	@Override

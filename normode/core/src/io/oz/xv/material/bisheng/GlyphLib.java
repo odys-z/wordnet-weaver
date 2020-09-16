@@ -65,10 +65,7 @@ public class GlyphLib implements Disposable {
      * @return the text model
      */
 	public ModelInstance bindText(String str, Color color) {
-        XMaterial ink = new XMaterial(str,
-        		((Sdfont) Glsl.wshader(ShaderFlag.sdfont)).smooth(0.06f).thin(0.5f)
-        					  .white(debug ? "0.5" : "0.0"),
-        		new BlendingAttribute(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA));
+        XMaterial ink = Inkstone.colorful(str); 
 
 		Paragraph p = new Paragraph(str, color, ink);
 		return p.buildMesh(data);

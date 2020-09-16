@@ -23,15 +23,20 @@ public class SysAffine extends IteratingSystem {
 		super(Family.all(Affines.class, Obj3.class).get());
 		mAffine = ComponentMapper.getFor(Affines.class);
 		mObj3 = ComponentMapper.getFor(Obj3.class);
+		
+		_m4 = new Matrix4().idt();
 	}
 
 	@Override
 	protected void processEntity(Entity entity, float deltaTime) {
 		Affines a = mAffine.get(entity);
-		Obj3 obj = mObj3.get(entity);
-		ModelInstance mi = obj.modInst;
-		mi.calculateTransforms(); // not necessary?
-		transform(mi.transform, a);
+		if (a.dirty) {
+			a.dirty = false;
+			Obj3 obj = mObj3.get(entity);
+			ModelInstance mi = obj.modInst;
+			mi.calculateTransforms(); // not necessary?
+			transform(mi.transform, a);
+		}
 	}
 
 	private Matrix4 transform(Matrix4 target, Affines a) {
@@ -39,10 +44,13 @@ public class SysAffine extends IteratingSystem {
 			switch (t.a) {
 				case rotation:
 					_m4.rotate(t.rotation);
+					break;
 				case translate:
 					_m4.translate(t.translate);
+					break;
 				case scale:
 					_m4.scl(t.scale);
+					break;
 				default:
 			}
 		return target.set(_m4);

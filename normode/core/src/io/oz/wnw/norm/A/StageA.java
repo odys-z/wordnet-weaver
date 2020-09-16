@@ -7,11 +7,17 @@ import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Quaternion;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Array;
 
 import io.oz.jwi.Synset;
 import io.oz.wnw.ecs.sys.SysModelRenderer;
 import io.oz.wnw.ecs.cmp.Affines;
 import io.oz.wnw.ecs.cmp.Obj3;
+import io.oz.wnw.ecs.cmp.ds.AffineTrans;
+import io.oz.wnw.ecs.cmp.ds.AffineType;
 import io.oz.wnw.ecs.sys.SysAffine;
 import io.oz.wnw.my.MyWeaver;
 import io.oz.xv.material.bisheng.GlyphLib;
@@ -65,14 +71,21 @@ public class StageA {
 
 	Entity loadMyset() {
 		Entity entity = ecs.createEntity();
+		ecs.addEntity(entity);
 
 		Obj3 obj3 = ecs.createComponent(Obj3.class);
 		// ModelInstance mi = glyphs.bindText(me.myset().name(), new Color(1f, 1f, 0f, 1f));
-		obj3.modInst = Xutils.modelInstance(Geoshape.cube);
+		obj3.modInst = Xutils.modelInstance(Geoshape.cube, new Vector3(5, 5, 5));
 		entity.add(obj3);
 		
 		Affines aff = ecs.createComponent(Affines.class);
-		aff.pos(0f, 0f, 0f);
+		aff.pos = new Vector3(0f, 0f, 0f);
+		aff.transforms = new Array<AffineTrans>();
+		aff.transforms.add(new AffineTrans(AffineType.translate).translate(-1f, 0f, 0f));
+		Quaternion q = new Quaternion().setEulerAngles(30f, 0f, 60f);
+		aff.transforms.add(new AffineTrans(AffineType.rotation).rotate(q));
+
+		entity.add(aff);
 
 		return entity;
 	}
