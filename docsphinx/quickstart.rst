@@ -107,3 +107,18 @@ When using Eclipse to debug, the depending project must been added to runtime
 classpath.
 
 .. image:: imgs/002-mvn-prj-dependency.png
+
+Installing Universal-tween-engine on Ubuntu
+___________________________________________
+
+Error
+
+Gradle complain about command not found while installing to local repository.
+
+Cause:
+
+The gradle task script can't do the job.
+
+Shooting:
+
+Try this [modified build.gradle version](https://github.com/odys-z/universal-tween-engine/blob/master/build.gradle)

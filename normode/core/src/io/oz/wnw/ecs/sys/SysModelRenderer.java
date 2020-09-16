@@ -30,7 +30,7 @@ import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.Shader;
 import com.badlogic.gdx.graphics.g3d.utils.DefaultShaderProvider;
 
-import io.oz.wnw.ecs.cmp.Affine;
+import io.oz.wnw.ecs.cmp.Affines;
 import io.oz.wnw.ecs.cmp.Obj3;
 import io.oz.xv.material.XMaterial;
 
@@ -67,7 +67,7 @@ public class SysModelRenderer extends EntitySystem {
 
 	@Override
 	public void addedToEngine(Engine engine) {
-		entities = engine.getEntitiesFor(Family.all(Affine.class, Obj3.class).get());
+		entities = engine.getEntitiesFor(Family.all(Affines.class, Obj3.class).get());
 	}
 	
 	@Override

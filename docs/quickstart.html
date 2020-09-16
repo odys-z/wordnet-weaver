@@ -32,9 +32,6 @@
   
 
   
-        <link rel="index" title="Index"
-              href="genindex.html"/>
-        <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="wordnet weaver 1.0 documentation" href="index.html"/>
         <link rel="next" title="&lt;no title&gt;" href="reference/index.html"/>
         <link rel="prev" title="Welcome to wordnet weaver’s documentation!" href="index.html"/> 
@@ -84,12 +81,13 @@
             
                 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Start from sources</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Start from sources</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#import-wn-server">Import wn-server</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#import-anclient-weaver">Import anclient.weaver</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#import-normod">Import normod</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#troublshootings">Troublshootings</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#class-of-depending-project-not-found">Class of Depending Project not Found</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#installing-universal-tween-engine-on-ubuntu">Installing Universal-tween-engine on Ubuntu</a></li>
 </ul>
 </li>
 </ul>
@@ -129,7 +127,7 @@
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="_sources/quickstart.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/quickstart.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -142,20 +140,20 @@
   <div class="section" id="start-from-sources">
 <h1>Start from sources<a class="headerlink" href="#start-from-sources" title="Permalink to this headline">¶</a></h1>
 <p>Clone project:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">odys</span><span class="o">-</span><span class="n">z</span><span class="o">/</span><span class="n">wordnet</span><span class="o">-</span><span class="n">weaver</span><span class="o">.</span><span class="n">git</span> <span class="n">wnw</span>
+<div class="highlight-python"><div class="highlight"><pre>git clone https://github.com/odys-z/wordnet-weaver.git wnw
 </pre></div>
 </div>
 <div class="section" id="import-wn-server">
 <h2>Import wn-server<a class="headerlink" href="#import-wn-server" title="Permalink to this headline">¶</a></h2>
 <p>In Eclipse (tested on Oxygen):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="o">-&gt;</span> <span class="n">existing</span> <span class="n">maven</span> <span class="n">project</span> <span class="o">-&gt;</span> <span class="n">browse</span> <span class="n">to</span> <span class="n">file</span><span class="p">:</span><span class="o">//</span><span class="n">wnw</span><span class="o">/</span><span class="n">wn</span><span class="o">-</span><span class="n">serv</span>
+<div class="highlight-python"><div class="highlight"><pre>import -&gt; existing maven project -&gt; browse to file://wnw/wn-serv
 </pre></div>
 </div>
 </div>
 <div class="section" id="import-anclient-weaver">
 <h2>Import anclient.weaver<a class="headerlink" href="#import-anclient-weaver" title="Permalink to this headline">¶</a></h2>
 <p>In Eclipse (tested on Oxygen):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="o">-&gt;</span> <span class="n">existing</span> <span class="n">maven</span> <span class="n">project</span> <span class="o">-&gt;</span> <span class="n">browse</span> <span class="n">to</span> <span class="n">file</span><span class="p">:</span><span class="o">//</span><span class="n">wnw</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">anclient</span>
+<div class="highlight-python"><div class="highlight"><pre>import -&gt; existing maven project -&gt; browse to file://wnw/lib/anclient
 </pre></div>
 </div>
 </div>
@@ -163,32 +161,32 @@
 <h2>Import normod<a class="headerlink" href="#import-normod" title="Permalink to this headline">¶</a></h2>
 <p>The normod is a <a class="reference external" href="https://libgdx.badlogicgames.com/">libGDX</a> gradle project with
 sub-prorjects <a class="reference external" href="https://libgdx.badlogicgames.com/documentation/gettingstarted/Creating%20Projects.html">created with gdx-setup</a>.</p>
-<p>The default gradle project is been set using gradle wrapper’s local mode. If your
+<p>The default gradle project is been set using gradle wrapper&#8217;s local mode. If your
 need a newer version, or using gradle online mode, change this file:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wnw</span><span class="o">/</span><span class="n">normode</span><span class="o">/</span><span class="n">gradle</span><span class="o">/</span><span class="n">wrapper</span><span class="o">/</span><span class="n">gradle</span><span class="o">-</span><span class="n">wrapper</span><span class="o">.</span><span class="n">properties</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">wnw</span><span class="o">/</span><span class="n">normode</span><span class="o">/</span><span class="n">gradle</span><span class="o">/</span><span class="n">wrapper</span><span class="o">/</span><span class="n">gradle</span><span class="o">-</span><span class="n">wrapper</span><span class="o">.</span><span class="n">properties</span>
 </pre></div>
 </div>
 <p>comment out line 5 and use this line:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">distributionUrl</span><span class="o">=</span><span class="n">https</span>\<span class="p">:</span><span class="o">//</span><span class="n">services</span><span class="o">.</span><span class="n">gradle</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">distributions</span><span class="o">/</span><span class="n">gradle</span><span class="o">-</span><span class="mf">5.4</span><span class="o">.</span><span class="mi">1</span><span class="o">-</span><span class="nb">bin</span><span class="o">.</span><span class="n">zip</span>
+<div class="highlight-python"><div class="highlight"><pre>distributionUrl=https\://services.gradle.org/distributions/gradle-5.4.1-bin.zip
 </pre></div>
 </div>
 <p>If using local mode, the gradle binary zip must been downloaded and saved locally,
 and the file path needing to be changed in configure file.</p>
 <p>Gradle.bin.zip can be <a class="reference external" href="https://gradle.org/releases/">download from gradle home page</a>.</p>
 <p>To import normod, in Eclipse:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="o">-&gt;</span> <span class="n">existing</span> <span class="n">gradle</span> <span class="n">project</span> <span class="o">-&gt;</span> <span class="n">browse</span> <span class="n">to</span> <span class="n">wnw</span><span class="o">/</span><span class="n">normode</span>
+<div class="highlight-python"><div class="highlight"><pre>import -&gt; existing gradle project -&gt; browse to wnw/normode
 </pre></div>
 </div>
-<p>Note: According to the author’s experience, you better run desktop project in
+<p>Note: According to the author&#8217;s experience, you better run desktop project in
 Eclipse and run Android project from Android Studio.</p>
 <p><em>Note</em></p>
 <p>The normal project depends on Ashley and [Universal-tween-engine](<a class="reference external" href="https://github.com/AurelienRibon/universal-tween-engine">https://github.com/AurelienRibon/universal-tween-engine</a>).
 Both have some problem for newest GDX version to depends on. Have to be installed
 in local maven repository.</p>
 <p>To install Ashley locally, see Ashely issue #279.</p>
-<p>To install Universal-tween-engine, run it’s gradle task.</p>
-<p>If Eclipse doesn’t recognize dependency class, this may help:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">right</span> <span class="n">click</span> <span class="n">build</span><span class="o">.</span><span class="n">gradle</span> <span class="o">-&gt;</span> <span class="n">gradle</span> <span class="o">-&gt;</span> <span class="n">refresh</span> <span class="n">project</span>
+<p>To install Universal-tween-engine, run it&#8217;s gradle task.</p>
+<p>If Eclipse doesn&#8217;t recognize dependency class, this may help:</p>
+<div class="highlight-python"><div class="highlight"><pre>right click build.gradle -&gt; gradle -&gt; refresh project
 </pre></div>
 </div>
 </div>
@@ -198,7 +196,7 @@ in local maven repository.</p>
 <h3>Class of Depending Project not Found<a class="headerlink" href="#class-of-depending-project-not-found" title="Permalink to this headline">¶</a></h3>
 <p>Error:</p>
 <p>When running desktop, report error message like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Exception in thread &quot;LWJGL Application&quot; com.badlogic.gdx.utils.GdxRuntimeException: java.lang.NoClassDefFoundError: io/oz/wnw/my/ISettings
+<div class="highlight-python"><div class="highlight"><pre>Exception in thread &quot;LWJGL Application&quot; com.badlogic.gdx.utils.GdxRuntimeException: java.lang.NoClassDefFoundError: io/oz/wnw/my/ISettings
 at com.badlogic.gdx.backends.lwjgl.LwjglApplication$1.run(LwjglApplication.java:135)
 Caused by: java.lang.NoClassDefFoundError: io/oz/wnw/my/ISettings
 ...
@@ -206,30 +204,39 @@ Caused by: java.lang.NoClassDefFoundError: io/oz/wnw/my/ISettings
 </div>
 <p>Cause:</p>
 <p>The normode/core gradle sub-project depends on another maven project, anclient.weaver.
-The desktop application can’t find it’s class in run time environment.</p>
+The desktop application can&#8217;t find it&#8217;s class in run time environment.</p>
 <p>Shooting:</p>
 <p>In core/gradle.build, add compile dependency after applied Java plugin. (
 <a class="reference external" href="https://stackoverflow.com/questions/23796404/could-not-find-method-compile-for-arguments-gradle">Otherwise the compile command will failed</a>.)</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dependencies</span> <span class="p">{</span>
-        <span class="nb">compile</span> <span class="s1">&#39;io.github.odys-z:anclient.weaver:0.0.1-SNAPSHOT&#39;</span>
-<span class="p">}</span>
+<div class="highlight-python"><div class="highlight"><pre>dependencies {
+        compile &#39;io.github.odys-z:anclient.weaver:0.0.1-SNAPSHOT&#39;
+}
 </pre></div>
 </div>
 <p>Update anclient.weaver dependency or install it to local repository:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mvn</span> <span class="n">install</span>
+<div class="highlight-python"><div class="highlight"><pre>mvn install
 </pre></div>
 </div>
 <p>then have normal/gradle.build use mavenLocal:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">repositories</span> <span class="p">{</span>
-    <span class="n">mavenLocal</span><span class="p">()</span>
-    <span class="o">...</span>
-<span class="p">}</span>
+<div class="highlight-python"><div class="highlight"><pre>repositories {
+    mavenLocal()
+    ...
+}
 </pre></div>
 </div>
 <p>Now the gradlew run task should start the desktop application.</p>
 <p>When using Eclipse to debug, the depending project must been added to runtime
 classpath.</p>
 <img alt="_images/002-mvn-prj-dependency.png" src="_images/002-mvn-prj-dependency.png" />
+</div>
+<div class="section" id="installing-universal-tween-engine-on-ubuntu">
+<h3>Installing Universal-tween-engine on Ubuntu<a class="headerlink" href="#installing-universal-tween-engine-on-ubuntu" title="Permalink to this headline">¶</a></h3>
+<p>Error</p>
+<p>Gradle complain about command not found while installing to local repository.</p>
+<p>Cause:</p>
+<p>The gradle task script can&#8217;t do the job.</p>
+<p>Shooting:</p>
+<p>Try this [modified build.gradle version](<a class="reference external" href="https://github.com/odys-z/universal-tween-engine/blob/master/build.gradle">https://github.com/odys-z/universal-tween-engine/blob/master/build.gradle</a>)</p>
 </div>
 </div>
 </div>
@@ -284,7 +291,7 @@ classpath.</p>
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

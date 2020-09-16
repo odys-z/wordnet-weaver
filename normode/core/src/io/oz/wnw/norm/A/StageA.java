@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g3d.ModelInstance;
 
 import io.oz.jwi.Synset;
 import io.oz.wnw.ecs.sys.SysModelRenderer;
-import io.oz.wnw.ecs.cmp.Affine;
+import io.oz.wnw.ecs.cmp.Affines;
 import io.oz.wnw.ecs.cmp.Obj3;
 import io.oz.wnw.ecs.sys.SysAffine;
 import io.oz.wnw.my.MyWeaver;
@@ -71,7 +71,7 @@ public class StageA {
 		obj3.modInst = Xutils.modelInstance(Geoshape.cube);
 		entity.add(obj3);
 		
-		Affine aff = ecs.createComponent(Affine.class);
+		Affines aff = ecs.createComponent(Affines.class);
 		aff.pos(0f, 0f, 0f);
 
 		return entity;
