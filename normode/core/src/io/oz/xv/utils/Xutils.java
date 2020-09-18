@@ -18,6 +18,8 @@ import io.oz.xv.math.Geoshape;
 public class Xutils {
 
 	/**A {@link ModelPartBuilder} wrapper building cube.
+	 * <br>
+	 * If material is ignored, create a grey pixel texture.
 	 * @param cube
 	 * @return
 	 */

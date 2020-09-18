@@ -40,6 +40,7 @@ public class SysAffine extends IteratingSystem {
 	}
 
 	private Matrix4 transform(Matrix4 target, Affines a) {
+		_m4.idt();
 		for (AffineTrans t : a.transforms)
 			switch (t.a) {
 				case rotation:

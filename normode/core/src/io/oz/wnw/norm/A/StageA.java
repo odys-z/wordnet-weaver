@@ -4,11 +4,8 @@ import java.util.Map;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
-import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
@@ -21,8 +18,7 @@ import io.oz.wnw.ecs.cmp.ds.AffineType;
 import io.oz.wnw.ecs.sys.SysAffine;
 import io.oz.wnw.my.MyWeaver;
 import io.oz.xv.material.bisheng.GlyphLib;
-import io.oz.xv.math.Geoshape;
-import io.oz.xv.utils.Xutils;
+import io.oz.xv.treemap.TreeContext;
 
 /**Scene A's world / objects manager.
  * 
@@ -41,6 +37,7 @@ public class StageA {
 
 	public StageA(MyWeaver me) {
 		this.me = me;
+		glyphs = new GlyphLib(GlyphLib.defaultFnt, false);
 		ecs = new PooledEngine();
 	}
 
@@ -50,17 +47,14 @@ public class StageA {
 	 */
 	public StageA(PooledEngine ecs, MyWeaver me) {
 		this.me = me;
+		glyphs = new GlyphLib(GlyphLib.defaultFnt, false);
 		this.ecs = ecs;
 	}
 
-	public void init(ScreenAdapter viewA1) {
-		glyphs = new GlyphLib("font/verdana39distancefield.fnt", false);
-		
-		ecs.addSystem(new SysAffine());
-		ecs.addSystem(new SysModelRenderer());
-		
+	public void init(ViewA1 viewA1) {
 		// setup objects
-
+		ecs.addSystem(new SysAffine());
+		ecs.addSystem(new SysModelRenderer(viewA1.cam()));
 	}
 
 	/** @deprecated only for ViewA1Try() */
@@ -69,25 +63,58 @@ public class StageA {
 		return mi;
 	}
 
-	Entity loadMyset() {
+	/**@deprecated Tried OK for testing ViewA1
+	 * @return
+	 */
+	Entity loadMysetry() {
 		Entity entity = ecs.createEntity();
 		ecs.addEntity(entity);
 
 		Obj3 obj3 = ecs.createComponent(Obj3.class);
-		// ModelInstance mi = glyphs.bindText(me.myset().name(), new Color(1f, 1f, 0f, 1f));
-		obj3.modInst = Xutils.modelInstance(Geoshape.cube, new Vector3(5, 5, 5));
+		// works: obj3.modInst = Xutils.modelInstance(Geoshape.cube, new Vector3(5, 5, 5));
+		obj3.modInst = glyphs.bindText(me.myset().name(), new Color(1f, 1f, 0f, 1f));
 		entity.add(obj3);
 		
 		Affines aff = ecs.createComponent(Affines.class);
 		aff.pos = new Vector3(0f, 0f, 0f);
+
 		aff.transforms = new Array<AffineTrans>();
-		aff.transforms.add(new AffineTrans(AffineType.translate).translate(-1f, 0f, 0f));
-		Quaternion q = new Quaternion().setEulerAngles(30f, 0f, 60f);
-		aff.transforms.add(new AffineTrans(AffineType.rotation).rotate(q));
+		aff.transforms.add(new AffineTrans(AffineType.scale).scale(0.1f));
+		aff.transforms.add(new AffineTrans(AffineType.rotation).rotate(60f, 0f, 0f));
+		aff.transforms.add(new AffineTrans(AffineType.translate).translate(60f, 0f, 0f));
 
 		entity.add(aff);
 
 		return entity;
+	}
+
+	void loadMyset() {
+		TreeContext context = new TreeContext();
+		context.level = 0;
+		wordNode(me.myset().name(), context);
+
+		context.level = 1;
+		for (String cn : me.myset().childrenName())
+			wordNode(cn, context);
+	}
+
+
+	/**Create treemap node for a word.
+	 * @param name
+	 * @param context
+	 */
+	private void wordNode(String word, TreeContext context) {
+		Entity entity = ecs.createEntity();
+		ecs.addEntity(entity);
+
+		Obj3 obj3 = ecs.createComponent(Obj3.class);
+		obj3.modInst = glyphs.bindText(word, context.color(word));
+		entity.add(obj3);
+		
+		Affines aff = ecs.createComponent(Affines.class);
+		
+		context.setAffine(aff, word);
+		entity.add(aff);
 	}
 
 	public void update(float delta) {

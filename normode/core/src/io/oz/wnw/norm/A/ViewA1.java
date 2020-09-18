@@ -10,31 +10,18 @@ import io.oz.wnw.norm.WGame;
 
 /**<p>3d wordnet overview (cubic treemap).</p>
  *
- * This view also illustrates the better practice of ModelInstance + ShaderProgram. See<br>
- * 1. Answer of Xoppa for question <a href='https://stackoverflow.com/questions/28590802/libgdx-assigning-a-specific-shader-to-a-modelinstance'>
- * LibGDX assigning a specific shader to a ModelInstance</a><br>
- * 2. <a href='https://github.com/libgdx/libgdx/wiki/ModelBatch'>
- * libGDX wiki: ModelBatch</a>, section on ShaderProvider<br>
- * 3. <a href='https://github.com/libgdx/libgdx/blob/master/tests/gdx-tests/src/com/badlogic/gdx/tests/g3d/ShaderTest.java'>
- * libGDX source: ShaderTest.java</a>, example of how to implement shader been used by ModelInstance.
- *
  * @author Odys Zhou
  */
 public class ViewA1 extends ScreenAdapter {
 	PooledEngine ecs;
 	StageA stage;
 
-	private PerspectiveCamera cam;
 	private CameraInputController camController;
-	// private Array<ModelInstance> instances;
+
+	private PerspectiveCamera cam;
+	public PerspectiveCamera cam() { return cam; }
 
 	public ViewA1(WGame game) {
-		stage = new StageA(game.me());
-		// Entities must created before creating EntitySystems
-		stage.loadMyset();
-		stage.init(this);
-		ecs = stage.engine();
-
 		// create screen
 		cam = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		cam.position.set(0f, 0f, 20f);
@@ -43,12 +30,17 @@ public class ViewA1 extends ScreenAdapter {
 		cam.far = 300f;
 		cam.update();
 
+		stage = new StageA(game.me());
+
+		// Entities must created before creating EntitySystems
+		// stage.loadMysetry();
+		stage.loadMyset();
+
+		stage.init(this);
+		ecs = stage.engine();
+
 		camController = new CameraInputController(cam);
 		Gdx.input.setInputProcessor(camController);
-
-		//instances = new Array<ModelInstance>();
-		// instances.add(stage.loadSnyset());
-
 	}
 
 	@Override
@@ -67,4 +59,5 @@ public class ViewA1 extends ScreenAdapter {
 		cam.update();
 		ecs.update(delta);;
 	}
+
 }

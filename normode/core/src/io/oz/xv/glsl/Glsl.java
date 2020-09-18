@@ -17,13 +17,21 @@ public class Glsl {
 	static final CharSequence delimiter = System.getProperty("line.separator");
 
 	public static enum ShaderFlag {
-		test("test"), simple("simple"), tex0("tex0"), sdfont("sdfont");
+		/** shader type of {@link Test} */
+		test("test"),
+		/** shader type of {@link Simple} */
+		simple("simple"),
+		/**shader type of {@link Tex0} */
+		tex0("tex0"),
+		/** shader type of {@link Sdfont} */
+		sdfont("sdfont");
 
 		private String p;
 		ShaderFlag(String v) { p = v; };
 		public String path() { return p; }
 	}
 	
+	/** A test texture shader with color shows normal */
 	static class Test extends WShader {
 		static String vs = String.join(delimiter, 
 			"uniform mat4 u_modelMat4;",
@@ -50,6 +58,7 @@ public class Glsl {
 		}
 	}
 	
+	/** A cheap texture shader with color for testing */
 	static class Simple extends WShader {
 		static String vs = String.join(delimiter, 
 			"uniform mat4 u_modelMat4;",
@@ -68,6 +77,7 @@ public class Glsl {
 		}
 	}
 
+	/** A cheap texture shader attribute 'a_texCoord0' as sampler */
 	static class Tex0 extends WShader {
 		static String vs = String.join(delimiter, 
 			"uniform mat4 u_modelMat4;",
@@ -96,6 +106,8 @@ public class Glsl {
 		}
 	}
 
+	/**<p>Shader of SDF font</p>
+	 * {@link io.oz.xv.material.bisheng.GlyphLib GlyphLib } use this for default ink. */
 	public static class Sdfont extends WShader {
 		final int u_vpM4 = register(new Uniform("u_vpMat4"));
 		final int u_modelM4 = register(new Uniform("u_modelMat4"));

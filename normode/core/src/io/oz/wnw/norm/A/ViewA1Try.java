@@ -40,7 +40,7 @@ public class ViewA1Try extends ScreenAdapter {
 	public ViewA1Try(WGame game) {
 		ecs = new PooledEngine();
 		stage = new StageA(ecs, game.me());
-		stage.init(this);
+		// stage.init(this);
 		
 		// create screen
 		modelBatch = new ModelBatch(new DefaultShaderProvider() {

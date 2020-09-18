@@ -8,7 +8,7 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.Shader;
@@ -25,12 +25,12 @@ public class SysModelRenderer extends EntitySystem {
 	
     private ModelBatch modelBatch;
 
-	private OrthographicCamera cam;
+	private PerspectiveCamera cam;
 	
 	private ComponentMapper<Obj3> mObj3;
 	private ImmutableArray<Entity> entities;
 	
-	public SysModelRenderer() {
+	public SysModelRenderer(PerspectiveCamera camera) {
 		super();
 		
 		mObj3 = ComponentMapper.getFor(Obj3.class);
@@ -45,8 +45,7 @@ public class SysModelRenderer extends EntitySystem {
 			}
 		});
 		
-		cam = new OrthographicCamera(FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
-		cam.position.set(FRUSTUM_WIDTH / 2, FRUSTUM_HEIGHT / 2, 0);
+		this.cam = camera;
 	}
 
 	@Override
@@ -59,7 +58,7 @@ public class SysModelRenderer extends EntitySystem {
 		super.update(deltaTime);
 
 		Gdx.gl.glViewport(0, 0, Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight());
-		Gdx.gl.glClearColor(0, 0, 1, 1);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 		Gdx.gl.glEnable(GL20.GL_BLEND);
 		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
