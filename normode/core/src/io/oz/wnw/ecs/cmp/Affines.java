@@ -1,7 +1,6 @@
 package io.oz.wnw.ecs.cmp;
 
 import com.badlogic.ashley.core.Component;
-import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 

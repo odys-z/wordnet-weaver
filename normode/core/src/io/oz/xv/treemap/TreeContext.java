@@ -9,7 +9,6 @@ import io.oz.wnw.ecs.cmp.ds.AffineTrans;
 import io.oz.wnw.ecs.cmp.ds.AffineType;
 
 public class TreeContext {
-
 	private static final Color color = new Color(1f, 1f, 0f, 1f);
 
 	private static final int maxLevel = 3;
@@ -28,9 +27,9 @@ public class TreeContext {
 		aff.pos = new Vector3(c * 40f, 0f, 0f);
 
 		aff.transforms = new Array<AffineTrans>();
-		aff.transforms.add(new AffineTrans(AffineType.scale).scale(0.05f * (maxLevel - level)));
+		aff.transforms.add(new AffineTrans(AffineType.scale).scale(0.04f * (maxLevel - level)));
 		aff.transforms.add(new AffineTrans(AffineType.rotation).rotate(60f * (1 - level), -30f, 0f));
-		aff.transforms.add(new AffineTrans(AffineType.translate).translate(150f * c, -40f * level, 60f * level * c));
+		aff.transforms.add(new AffineTrans(AffineType.translate).translate(100f * c, -40f * level, 30f * level * c));
 	}
 
 }
