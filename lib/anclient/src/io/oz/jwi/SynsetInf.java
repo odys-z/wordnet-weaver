@@ -49,4 +49,6 @@ public class SynsetInf {
 	public ArrayList<SynsetInf> children() {
 		return web.get(root);
 	}
+	
+	public float weight() { return 0.1f; }
 }

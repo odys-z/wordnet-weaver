@@ -15,30 +15,33 @@ public class TreeContext {
 	public Engine ecs;
 
 	/**Grid scale*/
-	float scale;
+//	private float space;
 	
 	/**Current level*/
 	int level;
 
 	/**availability*/
-	private int[] wh;
-	/**current empty slot */
-	private int[] freex;
+	// private int[] wh;
+	private int columns;
 
-	private ArrayList<TreemapNode>[] pool;
+	/**current empty cell in current (last) row */
+	private int freex;
+
+	/**w-column(+x) x h-row(+z) */
+	private ArrayList<TreemapNode[]> pool;
+
+//	public TreeContext space(float f) {
+//		this.space = f;
+//		return this;
+//	}
 
 	TreeContext(PooledEngine ecs2) {
 		this.ecs = ecs2;
 		level = 0;
-		scale = 1f;
-		freex = new int[] {-1, -1};
+//		space = 1f;
+		freex = Integer.MAX_VALUE;
 	}
 	
-	public TreeContext scale(float s) {
-		this.scale = s;
-		return this;
-	}
-
 	public Color getColor(String word) {
 		return color;
 	}
@@ -47,35 +50,36 @@ public class TreeContext {
 	 * @param synsets
 	 * @return 
 	 */
-	@SuppressWarnings("unchecked")
-	ArrayList<TreemapNode>[] init(ArrayList<SynsetInf> synsets) {
+	ArrayList<TreemapNode[]> init(ArrayList<SynsetInf> synsets) {
 		int size = synsets.size();
-		wh = XMath.encampass(size);
-		freex[0] = 0;
-		freex[1] = 0;
+		int[] wh = XMath.encampass(size);
+		columns = wh[1];
+		freex = 0;
 		
-		pool = (ArrayList<TreemapNode>[]) new ArrayList<?>[wh[0]];
-		for (int i = 0; i < wh[0]; i++) {
-			pool[i] = new ArrayList<TreemapNode>(wh[1]);
-			// TODO init row = [ null, ...]
-		}
+		pool = new ArrayList<TreemapNode[]>(wh[0]);
+		pool.add(new TreemapNode[wh[1]]);
 		return pool;
 	}
 
+	/**One way allocating a node from pool.
+	 * It's the map's responsibility to prune and reuse resource.
+	 * @param si
+	 * @return
+	 */
 	TreemapNode allocatNode(SynsetInf si) {
-		TreemapNode n = new TreemapNode(this, freex[0], level, freex[1]);
-		freex[1]++;
-		if (freex[1] >= wh[1] && freex[0] < wh[0] - 1
+		// allocate from initial matrix
+		int rx = pool.size() - 1;
+		TreemapNode n = new TreemapNode(this, freex, -level, rx);
+		pool.get(rx)[freex] = n;
+
+		freex++;
+		if (freex >= columns) {
 			// insert to next row when creating, ignored and add new at end when later appending 
-			&& freex[1] < wh[1] && pool[freex[0] + 1].get(0) == null) {
-			freex[1] = 0;
-			freex[0]++;
-			pool[freex[1]].set(freex[1], n);
+			TreemapNode[] nextRow = new TreemapNode[columns];
+			pool.add(nextRow);
+			freex = 0;
 		}
-		else {
-			// TODO find shortest
-			pool[0].add(0, n);
-		}
+
 		return n;
 	}
 	

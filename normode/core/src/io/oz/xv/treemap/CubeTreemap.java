@@ -23,6 +23,8 @@ import io.oz.xv.utils.XVException;
  */
 @SuppressWarnings("unchecked")
 public class CubeTreemap {
+	final float space = 40f;
+
 	private GlyphLib glyphs;
 	
 	/** active lemma index */
@@ -39,16 +41,16 @@ public class CubeTreemap {
 	 * stable, selected, dig-down, on-sky<br>
 	 * Usually the base form for a word or collocation.</p>
 	 */
-	private ArrayList<?>[][] layers = new ArrayList<?>[3][];
+	private ArrayList<TreemapNode[]>[] layers = (ArrayList<TreemapNode[]>[]) new ArrayList<?>[3];
 
-	public ArrayList<TreemapNode>[] hypernyms() {
-		return (ArrayList<TreemapNode>[]) layers[lyx];
+	public ArrayList<TreemapNode[]> hypernyms() {
+		return (ArrayList<TreemapNode[]>) layers[lyx];
 	}
-	public ArrayList<TreemapNode>[] lemmas() {
-		return (ArrayList<TreemapNode>[]) layers[lyx + 1];
+	public ArrayList<TreemapNode[]> lemmas() {
+		return (ArrayList<TreemapNode[]>) layers[lyx + 1];
 	}
-	public ArrayList<TreemapNode>[] hyponyms() {
-		return (ArrayList<TreemapNode>[]) layers[lyx + 2];
+	public ArrayList<TreemapNode[]> hyponyms() {
+		return (ArrayList<TreemapNode[]>) layers[lyx + 2];
 	}
 	
 	public CubeTreemap(String font) {
@@ -56,7 +58,7 @@ public class CubeTreemap {
 	}
 
 	public void create(PooledEngine ecs, ArrayList<SynsetInf> synsets) throws XVException {
-		TreeContext context = new TreeContext(ecs).scale(0.25f);
+		TreeContext context = new TreeContext(ecs); //.space(20f);
 		lmx = 1;
 		layers[lmx] = context.init(synsets);
 		for (SynsetInf si : synsets) {
@@ -101,13 +103,14 @@ public class CubeTreemap {
 		return context;
 	}
 
-	private void initAffine(Affines aff, SynsetInf si, TreeContext context) {
-		TreemapNode n = context.allocatNode(si);
+	private void initAffine(Affines aff, SynsetInf si, TreeContext context) throws XVException {
+		TreemapNode n = context.allocatNode(si).rotate(30f, 0, 0f);
 
-		aff.pos = n.pos();
+		// aff.pos = n.pos();
 		aff.transforms = new Array<AffineTrans>();
-		aff.transforms.add(new AffineTrans(AffineType.scale).scale(n.scale()));
+		aff.transforms.add(new AffineTrans(AffineType.scale).scale(si.weight()));
 		aff.transforms.add(new AffineTrans(AffineType.rotation).rotate(n.rotate()));
+		aff.transforms.add(new AffineTrans(AffineType.translate).translate(n.pos().scl(space)));
 		aff.transforms.add(new AffineTrans(AffineType.translate).translate(n.offset()));
 	}
 }
