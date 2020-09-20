@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 
 import io.oz.wnw.norm.WGame;
+import io.oz.xv.utils.XVException;
 
 /**<p>3d wordnet overview (cubic treemap).</p>
  *
@@ -34,10 +35,14 @@ public class ViewA1 extends ScreenAdapter {
 
 		// Entities must created before creating EntitySystems
 		// stage.loadMysetry();
-		stage.loadMyset();
+		try {
+			stage.init(this);
+			ecs = stage.engine();
+			stage.loadMyset();
 
-		stage.init(this);
-		ecs = stage.engine();
+		} catch (XVException e) {
+			e.printStackTrace();
+		}
 
 		camController = new CameraInputController(cam);
 		Gdx.input.setInputProcessor(camController);

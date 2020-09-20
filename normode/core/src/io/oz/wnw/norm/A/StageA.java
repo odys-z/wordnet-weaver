@@ -1,6 +1,6 @@
 package io.oz.wnw.norm.A;
 
-import java.util.Map;
+import java.util.ArrayList;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
-import io.oz.jwi.Synset;
+import io.oz.jwi.SynsetInf;
 import io.oz.wnw.ecs.sys.SysModelRenderer;
 import io.oz.wnw.ecs.cmp.Affines;
 import io.oz.wnw.ecs.cmp.Obj3;
@@ -18,7 +18,8 @@ import io.oz.wnw.ecs.cmp.ds.AffineType;
 import io.oz.wnw.ecs.sys.SysAffine;
 import io.oz.wnw.my.MyWeaver;
 import io.oz.xv.material.bisheng.GlyphLib;
-import io.oz.xv.treemap.TreeContext;
+import io.oz.xv.treemap.CubeTreemap;
+import io.oz.xv.utils.XVException;
 
 /**Scene A's world / objects manager.
  * 
@@ -26,7 +27,7 @@ import io.oz.xv.treemap.TreeContext;
  */
 public class StageA {
 
-	public Map<String, Synset> synsets;
+	public ArrayList<SynsetInf> synsets;
 
 	private GlyphLib glyphs;
 
@@ -55,11 +56,14 @@ public class StageA {
 		// setup objects
 		ecs.addSystem(new SysAffine());
 		ecs.addSystem(new SysModelRenderer(viewA1.cam()));
+		
+		synsets = new ArrayList<SynsetInf>();
+		synsets.add(me.myset());
 	}
 
 	/** @deprecated only for ViewA1Try() */
 	ModelInstance loadSnyset() {
-		ModelInstance mi = glyphs.bindText(me.myset().name(), new Color(1f, 1f, 0f, 1f));
+		ModelInstance mi = glyphs.bindText(me.myset().lemma(), new Color(1f, 1f, 0f, 1f));
 		return mi;
 	}
 
@@ -72,7 +76,7 @@ public class StageA {
 
 		Obj3 obj3 = ecs.createComponent(Obj3.class);
 		// works: obj3.modInst = Xutils.modelInstance(Geoshape.cube, new Vector3(5, 5, 5));
-		obj3.modInst = glyphs.bindText(me.myset().name(), new Color(1f, 1f, 0f, 1f));
+		obj3.modInst = glyphs.bindText(me.myset().lemma(), new Color(1f, 1f, 0f, 1f));
 		entity.add(obj3);
 		
 		Affines aff = ecs.createComponent(Affines.class);
@@ -88,21 +92,14 @@ public class StageA {
 		return entity;
 	}
 
-	void loadMyset() {
-		TreeContext context = new TreeContext();
-		context.level = 0;
-		wordNode(me.myset().name(), context);
-
-		context.level = 1;
-		for (String cn : me.myset().childrenName())
-			wordNode(cn, context);
+	void loadMyset() throws XVException {
+		CubeTreemap m = new CubeTreemap(null);
+		m.create(ecs, synsets);
 	}
-
 
 	/**Create treemap node for a word.
 	 * @param name
 	 * @param context
-	 */
 	private void wordNode(String word, TreeContext context) {
 		Entity entity = ecs.createEntity();
 		ecs.addEntity(entity);
@@ -116,6 +113,7 @@ public class StageA {
 		context.setAffine(aff, word);
 		entity.add(aff);
 	}
+	 */
 
 	public void update(float delta) {
 		ecs.update(delta);

@@ -12,22 +12,27 @@ import java.util.HashMap;
  */
 public class SynsetInf {
 	@SuppressWarnings("serial")
-	static HashMap<String, ArrayList<String>> web =
-			new HashMap<String, ArrayList<String>>(2){
-		{put("indigenous", new ArrayList<String>() {
-			{add("Tibetan");}
-			{add("Inuit");}
-			{add("Rapa Nui");}
+	static HashMap<String, ArrayList<SynsetInf>> web =
+			new HashMap<String, ArrayList<SynsetInf>>(2){
+		{put("Dreamweaver", new ArrayList<SynsetInf>() {
+			{add(new SynsetInf("Moana"));}
+			{add(new SynsetInf("Tinkle"));}
+			{add(new SynsetInf("Coco"));}
 		});}
-		{put("Sumer food", new ArrayList<String>() {
-			{add("lentil");}
-			{add("millet");}
-			{add("sesame");}
-			{add("chickpea");}
-			{add("leek");}
-			{add("fig");}
-			{add("melic");}
-			{add("granit fruit");}
+		{put("indigenous", new ArrayList<SynsetInf>() {
+			{add(new SynsetInf("Tibetan"));}
+			{add(new SynsetInf("Inuit"));}
+			{add(new SynsetInf("Rapa Nui"));}
+		});}
+		{put("Sumer food", new ArrayList<SynsetInf>() {
+			{add(new SynsetInf("lentil"));}
+			{add(new SynsetInf("millet"));}
+			{add(new SynsetInf("sesame"));}
+			{add(new SynsetInf("chickpea"));}
+			{add(new SynsetInf("leek"));}
+			{add(new SynsetInf("fig"));}
+			{add(new SynsetInf("melic"));}
+			{add(new SynsetInf("granit fruit"));}
 		});}
 	};
 
@@ -37,17 +42,11 @@ public class SynsetInf {
 		this.root = topLemma;
 	}
 	
-	public String name() {
+	public String lemma() {
 		return root;
 	}
 
-	@SuppressWarnings("serial")
-	public ArrayList<String> childrenName() {
-		if (web.containsKey(root))
-			return web.get(root);
-		else
-			return new ArrayList<String>() {
-				{add("Dreamweaver");}
-			};
+	public ArrayList<SynsetInf> children() {
+		return web.get(root);
 	}
 }

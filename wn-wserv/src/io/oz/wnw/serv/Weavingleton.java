@@ -30,7 +30,7 @@ public class Weavingleton extends JSingleton implements ServletContextListener {
 //		} catch (IOException e) {
 //			e.printStackTrace();
 //			Utils.warn("%s: %s\nCheck Config.xml:\ntable=cheap\nk=config-path\nv=%s",
-//					e.getClass().getName(), e.getMessage(), relapath);
+//					e.getClass().getlemma(), e.getMessage(), relapath);
 		System.out.println("try:\nhttp://127.0.0.1:8080/wnw/echo.weaver");
 	}
 
