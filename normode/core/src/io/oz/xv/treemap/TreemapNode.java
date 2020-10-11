@@ -6,8 +6,10 @@ import com.badlogic.gdx.math.Vector3;
 public class TreemapNode {
 
 	private Vector3 cellIx;
+	/** grid distance scale */
 	private float scl;
 	private Quaternion q;
+	/** position offset on grid point */
 	private Vector3 offset;
 
 	/**

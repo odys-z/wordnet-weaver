@@ -10,6 +10,8 @@ import io.oz.jwi.SynsetInf;
 import io.oz.xv.math.XMath;
 import io.oz.xv.utils.XVException;
 
+/** A helper class for treemap space grid management.<br>
+ * Treemap here is actually fixed size of cubes. */
 public class TreeContext {
 	private static final Color color = new Color(1f, 1f, 0f, 1f);
 	public Engine ecs;
@@ -24,22 +26,19 @@ public class TreeContext {
 	// private int[] wh;
 	private int columns;
 
-	/**current empty cell in current (last) row */
-	private int freex;
+	/**Next empty cell index to be used in current (last) row */
+	private int freeCol;
 
-	/**w-column(+x) x h-row(+z) */
-	private ArrayList<TreemapNode[]> pool;
-
-//	public TreeContext space(float f) {
-//		this.space = f;
-//		return this;
-//	}
+	/**rows of columns, size = c x r
+	 * where column is also represented as grid.w and count in +x axis direction,
+	 * row also represented as grid.d, count in +z axis direction.
+	 * */
+	private ArrayList<TreemapNode[]> rowPool;
 
 	TreeContext(PooledEngine ecs2) {
 		this.ecs = ecs2;
 		level = 0;
-//		space = 1f;
-		freex = Integer.MAX_VALUE;
+		freeCol = Integer.MAX_VALUE;
 	}
 	
 	public Color getColor(String word) {
@@ -54,11 +53,11 @@ public class TreeContext {
 		int size = synsets.size();
 		int[] wh = XMath.encampass(size);
 		columns = wh[1];
-		freex = 0;
+		freeCol = 0;
 		
-		pool = new ArrayList<TreemapNode[]>(wh[0]);
-		pool.add(new TreemapNode[wh[1]]);
-		return pool;
+		rowPool = new ArrayList<TreemapNode[]>(wh[0]);
+		rowPool.add(new TreemapNode[wh[1]]);
+		return rowPool;
 	}
 
 	/**One way allocating a node from pool.
@@ -68,16 +67,16 @@ public class TreeContext {
 	 */
 	TreemapNode allocatNode(SynsetInf si) {
 		// allocate from initial matrix
-		int rx = pool.size() - 1;
-		TreemapNode n = new TreemapNode(this, freex, -level, rx);
-		pool.get(rx)[freex] = n;
+		int rx = rowPool.size() - 1;
+		TreemapNode n = new TreemapNode(this, freeCol, -level, rx);
+		rowPool.get(rx)[freeCol] = n;
 
-		freex++;
-		if (freex >= columns) {
+		freeCol++;
+		if (freeCol >= columns) {
 			// insert to next row when creating, ignored and add new at end when later appending 
 			TreemapNode[] nextRow = new TreemapNode[columns];
-			pool.add(nextRow);
-			freex = 0;
+			rowPool.add(nextRow);
+			freeCol = 0;
 		}
 
 		return n;

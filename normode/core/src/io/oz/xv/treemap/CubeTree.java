@@ -22,8 +22,8 @@ import io.oz.xv.utils.XVException;
  * @author Odys Zhou
  */
 @SuppressWarnings("unchecked")
-public class CubeTreemap {
-	final float space = 40f;
+public class CubeTree {
+	final float space = 160f;
 
 	private GlyphLib glyphs;
 	
@@ -38,13 +38,13 @@ public class CubeTreemap {
 	 * wngloss(7WN) wordnet documentation</a>:</p>
 	 * <p>Lower case ASCII text of word as found in the WordNet database index files.</p>
 	 * <p>Cube State:<br>
-	 * stable, selected, dig-down, on-sky<br>
+	 * lemma-stable, selected, push-down(hidden), on-sky<br>
 	 * Usually the base form for a word or collocation.</p>
 	 */
 	private ArrayList<TreemapNode[]>[] layers = (ArrayList<TreemapNode[]>[]) new ArrayList<?>[3];
 
 	public ArrayList<TreemapNode[]> hypernyms() {
-		return (ArrayList<TreemapNode[]>) layers[lyx];
+		return (ArrayList<TreemapNode[]>) layers[lyx]; // correct?
 	}
 	public ArrayList<TreemapNode[]> lemmas() {
 		return (ArrayList<TreemapNode[]>) layers[lyx + 1];
@@ -53,7 +53,7 @@ public class CubeTreemap {
 		return (ArrayList<TreemapNode[]>) layers[lyx + 2];
 	}
 	
-	public CubeTreemap(String font) {
+	public CubeTree(String font) {
 		glyphs = new GlyphLib(font == null ? GlyphLib.defaultFnt : font, false);
 	}
 

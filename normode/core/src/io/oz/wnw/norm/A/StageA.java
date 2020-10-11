@@ -18,7 +18,7 @@ import io.oz.wnw.ecs.cmp.ds.AffineType;
 import io.oz.wnw.ecs.sys.SysAffine;
 import io.oz.wnw.my.MyWeaver;
 import io.oz.xv.material.bisheng.GlyphLib;
-import io.oz.xv.treemap.CubeTreemap;
+import io.oz.xv.treemap.CubeTree;
 import io.oz.xv.utils.XVException;
 
 /**Scene A's world / objects manager.
@@ -93,7 +93,7 @@ public class StageA {
 	}
 
 	void loadMyset() throws XVException {
-		CubeTreemap m = new CubeTreemap(null);
+		CubeTree m = new CubeTree(null);
 		m.create(ecs, synsets);
 	}
 

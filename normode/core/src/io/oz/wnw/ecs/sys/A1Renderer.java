@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 
-/** @deprecated replaced by SysRenderer? */
+/** @deprecated replaced by {@link SysModelRenderer}? */
 public class A1Renderer extends IteratingSystem {
 
 	public A1Renderer(Family family) {
