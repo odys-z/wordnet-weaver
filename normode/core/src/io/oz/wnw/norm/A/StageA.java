@@ -93,7 +93,8 @@ public class StageA {
 	}
 
 	void loadMyset() throws XVException {
-		CubeTree m = new CubeTree(null);
+		CubeTree.init(null);
+		CubeTree m = new CubeTree();
 		m.create(ecs, synsets);
 	}
 

@@ -32,14 +32,15 @@ import io.oz.xv.utils.XVException;
 public class CubeTree {
 	final float space = 160f;
 
-	private GlyphLib glyphs;
-	
+	private static GlyphLib glyphs;
+
 	/** active lemma index
 	private int lmx = -1; */
 	/** Layer index
 	private int lyx = 0; */
 	/**
 	 * <p>Layer Cubes:<br>
+	
 	 * hypernym, lemma, hyponym</p>
 	 * <p>"lemma" means word base form, see <a href='https://wordnet.princeton.edu/documentation/wngloss7wn'>
 	 * wngloss(7WN) wordnet documentation</a>:</p>
@@ -59,17 +60,29 @@ public class CubeTree {
 		return (ArrayList<TreemapNode[]>) layers[lyx + 2];
 	}
 	 */
-	
-	public CubeTree(String font) {
+
+	public static void init(String font) {
 		glyphs = new GlyphLib(font == null ? GlyphLib.defaultFnt : font, false);
 	}
 
-	public void create(PooledEngine ecs, ArrayList<SynsetInf> synsets) throws XVException {
+//	public CubeTree(String font) {
+//		// glyphs = new GlyphLib(font == null ? GlyphLib.defaultFnt : font, false);
+//	}
+
+	public static void create(PooledEngine ecs, ArrayList<SynsetInf> synsets) throws XVException {
 		TreeContext context = new TreeContext(ecs); //.space(20f);
 		context.init(synsets);
+
+		createGround(context);
+
 		for (SynsetInf si : synsets) {
 			context = createCube(si, context);
 		}
+	}
+
+	private static void createGround(TreeContext context) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	/**Create treemap node of a lemma.
@@ -79,7 +92,7 @@ public class CubeTree {
 	 * @return
 	 * @throws XVException 
 	 */
-	private TreeContext createCube(SynsetInf si, TreeContext context) throws XVException {
+	private static TreeContext createCube(SynsetInf si, TreeContext context) throws XVException {
 		if (si == null) return context;
 
 		PooledEngine ecs = (PooledEngine) context.ecs;
@@ -110,14 +123,14 @@ public class CubeTree {
 		return context;
 	}
 
-	private void initAffine(Affines aff, SynsetInf si, TreeContext context) throws XVException {
+	private static void initAffine(Affines aff, SynsetInf si, TreeContext context) throws XVException {
 		TreemapNode n = context.allocatNode(si).rotate(30f, 0, 0f);
 
 		// aff.pos = n.pos();
 		aff.transforms = new Array<AffineTrans>();
 		aff.transforms.add(new AffineTrans(AffineType.scale).scale(si.weight()));
 		aff.transforms.add(new AffineTrans(AffineType.rotation).rotate(n.rotate()));
-		aff.transforms.add(new AffineTrans(AffineType.translate).translate(n.pos().scl(space)));
+		aff.transforms.add(new AffineTrans(AffineType.translate).translate(n.pos().scl(context.space())));
 		aff.transforms.add(new AffineTrans(AffineType.translate).translate(n.offset()));
 	}
 }

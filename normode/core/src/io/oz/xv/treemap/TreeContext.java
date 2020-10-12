@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Vector3;
 
 import io.oz.jwi.SynsetInf;
 import io.oz.xv.math.XMath;
@@ -17,7 +18,8 @@ public class TreeContext {
 	public Engine ecs;
 
 	/**Grid scale*/
-//	private float space;
+	private Vector3 space = new Vector3(80f, 80f, 80f);
+	public Vector3 space() { return space; }
 	
 	/**Current level*/
 	int level;
