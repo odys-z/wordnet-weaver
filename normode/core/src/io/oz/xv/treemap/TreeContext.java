@@ -47,9 +47,9 @@ public class TreeContext {
 
 	/**Create tree structure, setup resource pool for allocating.
 	 * @param synsets
-	 * @return 
+	 * @return this context 
 	 */
-	ArrayList<TreemapNode[]> init(ArrayList<SynsetInf> synsets) {
+	TreeContext init(ArrayList<SynsetInf> synsets) {
 		int size = synsets.size();
 		int[] wh = XMath.encampass(size);
 		columns = wh[1];
@@ -57,7 +57,7 @@ public class TreeContext {
 		
 		rowPool = new ArrayList<TreemapNode[]>(wh[0]);
 		rowPool.add(new TreemapNode[wh[1]]);
-		return rowPool;
+		return this;
 	}
 
 	/**One way allocating a node from pool.

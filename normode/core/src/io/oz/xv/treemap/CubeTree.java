@@ -16,21 +16,28 @@ import io.oz.xv.material.bisheng.GlyphLib;
 import io.oz.xv.utils.XVException;
 
 /**
- * Children blinking word stars in it's cube, at the exact positions of hyponyms?
+ * <p>Cube with Children of blinking word stars.</p>
+ * At the exact positions of hyponyms?
  * And even shape clue of word length?<br>
+ * 
+ * <h6>Design Notes:</h6>
+ * A CubeTree has 2 cube layers: the sky and the ground.<br>
+ * A Layer has a box of volumetric shading and a group of cubes.<br>
+ * CubeTree also has a empty layer used for animation<br>
+ * 
+ * <img src='../../../../../../../docsphinx/res/cube-layers.png' />
  * 
  * @author Odys Zhou
  */
-@SuppressWarnings("unchecked")
 public class CubeTree {
 	final float space = 160f;
 
 	private GlyphLib glyphs;
 	
-	/** active lemma index */
-	private int lmx = -1;
-	/** Layer index */
-	private int lyx = 0;
+	/** active lemma index
+	private int lmx = -1; */
+	/** Layer index
+	private int lyx = 0; */
 	/**
 	 * <p>Layer Cubes:<br>
 	 * hypernym, lemma, hyponym</p>
@@ -40,7 +47,6 @@ public class CubeTree {
 	 * <p>Cube State:<br>
 	 * lemma-stable, selected, push-down(hidden), on-sky<br>
 	 * Usually the base form for a word or collocation.</p>
-	 */
 	private ArrayList<TreemapNode[]>[] layers = (ArrayList<TreemapNode[]>[]) new ArrayList<?>[3];
 
 	public ArrayList<TreemapNode[]> hypernyms() {
@@ -52,6 +58,7 @@ public class CubeTree {
 	public ArrayList<TreemapNode[]> hyponyms() {
 		return (ArrayList<TreemapNode[]>) layers[lyx + 2];
 	}
+	 */
 	
 	public CubeTree(String font) {
 		glyphs = new GlyphLib(font == null ? GlyphLib.defaultFnt : font, false);
@@ -59,20 +66,20 @@ public class CubeTree {
 
 	public void create(PooledEngine ecs, ArrayList<SynsetInf> synsets) throws XVException {
 		TreeContext context = new TreeContext(ecs); //.space(20f);
-		lmx = 1;
-		layers[lmx] = context.init(synsets);
+		context.init(synsets);
 		for (SynsetInf si : synsets) {
-			context = cubeNode(si, context);
+			context = createCube(si, context);
 		}
 	}
 
 	/**Create treemap node of a lemma.
+	 * <p>This method create entity managed by ECS engine, no node returned.</p>
 	 * @param si
 	 * @param context
 	 * @return
 	 * @throws XVException 
 	 */
-	private TreeContext cubeNode(SynsetInf si, TreeContext context) throws XVException {
+	private TreeContext createCube(SynsetInf si, TreeContext context) throws XVException {
 		if (si == null) return context;
 
 		PooledEngine ecs = (PooledEngine) context.ecs;
@@ -96,7 +103,7 @@ public class CubeTree {
 		if (children != null) {
 			context.zoomin();
 			for (SynsetInf child : si.children())
-				cubeNode(child, context);
+				createCube(child, context);
 			context.zoomout();
 		}
 
