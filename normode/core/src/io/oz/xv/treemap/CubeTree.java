@@ -4,6 +4,14 @@ import java.util.ArrayList;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.VertexAttributes.Usage;
+import com.badlogic.gdx.graphics.g3d.Model;
+import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.utils.MeshPartBuilder;
+import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
+import com.badlogic.gdx.graphics.g3d.utils.shapebuilders.BoxShapeBuilder;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
 import io.oz.jwi.SynsetInf;
@@ -12,6 +20,8 @@ import io.oz.wnw.ecs.cmp.Obj3;
 import io.oz.wnw.ecs.cmp.Word;
 import io.oz.wnw.ecs.cmp.ds.AffineTrans;
 import io.oz.wnw.ecs.cmp.ds.AffineType;
+import io.oz.xv.material.CubeSkin;
+import io.oz.xv.material.XMaterial;
 import io.oz.xv.material.bisheng.GlyphLib;
 import io.oz.xv.utils.XVException;
 
@@ -34,13 +44,17 @@ public class CubeTree {
 
 	private static GlyphLib glyphs;
 
+	private static long uuid = 0;
+	private static long getId() { return uuid++; }
+
+	private static CubeSkin groundSkin;
+
 	/** active lemma index
 	private int lmx = -1; */
 	/** Layer index
 	private int lyx = 0; */
 	/**
 	 * <p>Layer Cubes:<br>
-	
 	 * hypernym, lemma, hyponym</p>
 	 * <p>"lemma" means word base form, see <a href='https://wordnet.princeton.edu/documentation/wngloss7wn'>
 	 * wngloss(7WN) wordnet documentation</a>:</p>
@@ -63,11 +77,8 @@ public class CubeTree {
 
 	public static void init(String font) {
 		glyphs = new GlyphLib(font == null ? GlyphLib.defaultFnt : font, false);
+		groundSkin = new CubeSkin(font, null);
 	}
-
-//	public CubeTree(String font) {
-//		// glyphs = new GlyphLib(font == null ? GlyphLib.defaultFnt : font, false);
-//	}
 
 	public static void create(PooledEngine ecs, ArrayList<SynsetInf> synsets) throws XVException {
 		TreeContext context = new TreeContext(ecs); //.space(20f);
@@ -80,10 +91,39 @@ public class CubeTree {
 		}
 	}
 
-	private static void createGround(TreeContext context) {
-		// TODO Auto-generated method stub
+	/**Create a cube skin box
+	 * @param context
+	 * @return 
+	 */
+	private static TreeContext createGround(TreeContext context) {
+		PooledEngine ecs = (PooledEngine) context.ecs;
+		Entity ground = ecs.createEntity();
+		ecs.addEntity(ground);
 		
+		Obj3 obj3 = ecs.createComponent(Obj3.class);
+
+		// TODO optimize builder usage
+		Vector3 whd = context.space();
+		ModelBuilder builder = new ModelBuilder();
+		builder.begin();
+		MeshPartBuilder mpbuilder = builder.part("ground-" + getId(),
+				GL20.GL_TRIANGLES, Usage.Position | Usage.ColorUnpacked | Usage.TextureCoordinates | Usage.Normal,
+				groundSkin);
+		BoxShapeBuilder.build(mpbuilder, whd.x / 3, whd.y / 5 /*test*/, whd.z);
+		Model model = builder.end();
+		model.calculateTransforms();
+		obj3.modInst = new ModelInstance(model);
+
+		ground.add(obj3);
+
+		Affines aff = ecs.createComponent(Affines.class);
+		aff.transforms = new Array<AffineTrans>();
+		aff.transforms.add(new AffineTrans(AffineType.translate).translate(0, -20, -50));
+		ground.add(aff);
+
+		return context;
 	}
+
 
 	/**Create treemap node of a lemma.
 	 * <p>This method create entity managed by ECS engine, no node returned.</p>
@@ -98,7 +138,6 @@ public class CubeTree {
 		PooledEngine ecs = (PooledEngine) context.ecs;
 		Entity entity = ecs.createEntity();
 		ecs.addEntity(entity);
-
 
 		Word wrd = ecs.createComponent(Word.class);
 		wrd.word = si.lemma();

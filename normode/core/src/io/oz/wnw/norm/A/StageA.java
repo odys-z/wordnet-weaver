@@ -94,8 +94,9 @@ public class StageA {
 
 	void loadMyset() throws XVException {
 		CubeTree.init(null);
-		CubeTree m = new CubeTree();
-		m.create(ecs, synsets);
+		// CubeTree m = new CubeTree();
+		// m.create(ecs, synsets);
+		CubeTree.create(ecs, synsets);
 	}
 
 	/**Create treemap node for a word.

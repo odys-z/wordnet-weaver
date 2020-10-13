@@ -58,6 +58,7 @@ public class Paragraph {
 		// 2, 3: current (w, h) + offset
 		xy = new float[] {0, 0, 0, 0};
 
+		// TODO optimize builder usage
 		ModelBuilder builder = new ModelBuilder();
 		builder.begin();
 		for (int i = 0; i < str.length(); i++) {

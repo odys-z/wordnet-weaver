@@ -58,7 +58,7 @@ public class Glsl {
 		}
 	}
 	
-	/** A cheap texture shader with color for testing */
+	/** A cheap texture shader with blue color (0, 0.2, 0.8, 0.75) for testing */
 	static class Simple extends WShader {
 		static String vs = String.join(delimiter, 
 			"uniform mat4 u_modelMat4;",
@@ -137,6 +137,10 @@ public class Glsl {
 			return this;
 		}
 
+		/**Set white alpha (alpha without texture color)
+		 * @param alpha
+		 * @return
+		 */
 		public Sdfont white(String alpha) {
 			this.whiteAlpha = alpha;
 			String vs = String.format(Gdx.files.internal(String.format("glsl/%s.fs", flag.path())).readString(),
