@@ -91,6 +91,15 @@ project(":html") {
 project(":core") {
     apply plugin: "java-library"
 
+	apply plugin: 'eclipse'
+
+	eclipse {
+		classpath {
+		   downloadSources=true
+		   downloadJavadoc = true
+		}
+	}
+
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
         api "com.badlogicgames.ashley:ashley:$ashleyVersion"

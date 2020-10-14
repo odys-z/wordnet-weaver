@@ -12,13 +12,32 @@ import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.Shader;
+import com.badlogic.gdx.graphics.g3d.utils.BaseShaderProvider;
 import com.badlogic.gdx.graphics.g3d.utils.DefaultShaderProvider;
 
 import io.oz.wnw.ecs.cmp.Affines;
 import io.oz.wnw.ecs.cmp.Obj3;
+import io.oz.wnw.ecs.sys.SysModelRenderer.XShaderProvider;
+import io.oz.xv.glsl.Glsl;
+import io.oz.xv.glsl.Glsl.ShaderFlag;
 import io.oz.xv.material.XMaterial;
 
 public class SysModelRenderer extends EntitySystem {
+	public class XShaderProvider extends BaseShaderProvider {
+		private Shader stub;
+		
+		XShaderProvider() {
+			stub = Glsl.wshader(ShaderFlag.simple);
+		}
+
+		@Override
+		protected Shader createShader(Renderable renderable) {
+			if (renderable.material instanceof XMaterial)
+				return ((XMaterial)renderable.material).shader();
+			else return stub;
+		}
+	}
+
 	static final float FRUSTUM_WIDTH = 10;
 	static final float FRUSTUM_HEIGHT = 15;
 	static final float PIXELS_TO_METRES = 1.0f / 32.0f;
@@ -35,7 +54,13 @@ public class SysModelRenderer extends EntitySystem {
 		
 		mObj3 = ComponentMapper.getFor(Obj3.class);
 		
+		/*
 		modelBatch = new ModelBatch(new DefaultShaderProvider() {
+			@Override
+			public Shader getShader(Renderable randerable) {
+				return super.getShader(randerable);
+			}
+
 			@Override
 			protected Shader createShader (Renderable renderable) {
 				// if (renderable.material.has(TestAttribute.ID)) return new TestShader(renderable);
@@ -44,6 +69,8 @@ public class SysModelRenderer extends EntitySystem {
 				return super.createShader(renderable);
 			}
 		});
+		*/
+		modelBatch = new ModelBatch(new XShaderProvider());
 		
 		this.cam = camera;
 	}
