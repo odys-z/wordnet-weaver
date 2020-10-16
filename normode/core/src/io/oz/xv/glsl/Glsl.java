@@ -27,7 +27,8 @@ public class Glsl {
 		/** shader type of {@link Sdfont} */
 		sdfont("sdfont"),
 		/** shader type of {@link CubeSkin} */
-		cubic("cubeSkin");
+		cubic("cubeSkin"),
+		phong("phong");
 
 		private String p;
 		ShaderFlag(String v) { p = v; };
