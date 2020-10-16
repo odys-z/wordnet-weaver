@@ -6,7 +6,10 @@ import com.badlogic.gdx.graphics.g3d.utils.ShaderProvider;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
+import io.oz.xv.glsl.Glsl;
 import io.oz.xv.glsl.WShader;
+import io.oz.xv.material.XMaterial;
+import io.oz.xv.glsl.Glsl.ShaderFlag;
 
 /**A modifed version of gdx <a href='https://github.com/libgdx/libgdx/blob/master/gdx/src/com/badlogic/gdx/graphics/g3d/utils/BaseShaderProvider.java'>
  * BaseShaderProvider</a>
@@ -14,9 +17,18 @@ import io.oz.xv.glsl.WShader;
  * @author Odys Zhou
  *
  */
-public abstract class XShaderProvider implements ShaderProvider {
+public class XShaderProvider implements ShaderProvider {
+	/** default incase no shader provided by XMaterial */
+	protected static Shader defShader;
+
 	protected Array<Shader> shaders = new Array<Shader>();
 
+	static {
+		if (defShader == null) {
+			defShader = Glsl.wshader(ShaderFlag.simple);
+		}
+	}
+	
 	@Override
 	public Shader getShader (Renderable renderable) {
 		Shader suggestedShader = renderable.shader;
@@ -34,12 +46,17 @@ public abstract class XShaderProvider implements ShaderProvider {
 			else
 				throw new GdxRuntimeException("unable to provide a shader for this renderable");
 
-		shader.init();
+		// shader.init();
 		shaders.add(shader);
 		return shader;
 	}
 
-	protected abstract Shader createShader (final Renderable renderable);
+	protected Shader createShader (final Renderable renderable) {
+		if (renderable.material instanceof XMaterial)
+			return ((XMaterial)renderable.material).shader();
+		else
+			return defShader;
+	}
 
 	@Override
 	public void dispose () {

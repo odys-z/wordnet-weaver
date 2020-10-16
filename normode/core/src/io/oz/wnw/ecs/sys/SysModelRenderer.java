@@ -10,33 +10,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
-import com.badlogic.gdx.graphics.g3d.Renderable;
-import com.badlogic.gdx.graphics.g3d.Shader;
-import com.badlogic.gdx.graphics.g3d.utils.BaseShaderProvider;
-import com.badlogic.gdx.graphics.g3d.utils.DefaultShaderProvider;
 
 import io.oz.wnw.ecs.cmp.Affines;
 import io.oz.wnw.ecs.cmp.Obj3;
-import io.oz.wnw.ecs.sys.SysModelRenderer.XShaderProvider;
-import io.oz.xv.glsl.Glsl;
-import io.oz.xv.glsl.Glsl.ShaderFlag;
-import io.oz.xv.material.XMaterial;
+import io.oz.xv.gdxpatch.XShaderProvider;
 
 public class SysModelRenderer extends EntitySystem {
-	public class XShaderProvider extends BaseShaderProvider {
-		private Shader stub;
-		
-		XShaderProvider() {
-			stub = Glsl.wshader(ShaderFlag.simple);
-		}
-
-		@Override
-		protected Shader createShader(Renderable renderable) {
-			if (renderable.material instanceof XMaterial)
-				return ((XMaterial)renderable.material).shader();
-			else return stub;
-		}
-	}
 
 	static final float FRUSTUM_WIDTH = 10;
 	static final float FRUSTUM_HEIGHT = 15;

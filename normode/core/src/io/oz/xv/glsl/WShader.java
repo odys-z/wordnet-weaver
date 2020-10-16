@@ -42,7 +42,11 @@ public class WShader extends BaseShader implements Shader {
 	@Override
 	public boolean canRender(Renderable instance) {
 		Material mat = instance.material;
-		return mat instanceof XMaterial; // && ((XMaterial)mat).shader() == this;
+
+		// shader provide example:
+		// if (renderable.material.has(TestAttribute.ID)) return new TestShader(renderable);
+		// return mat instanceof XMaterial; // && ((XMaterial)mat).shader() == this;
+		return mat instanceof XMaterial && ((XMaterial)mat).acceptShader(this);
 	}
 
 	@Override

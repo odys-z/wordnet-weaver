@@ -89,8 +89,9 @@
 <li class="toctree-l2"><a class="reference internal" href="#import-anclient-weaver">Import anclient.weaver</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#import-normod">Import normod</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#troublshootings">Troublshootings</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#class-of-depending-project-not-found">Class of Depending Project not Found</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#class-of-dependency-not-found">Class of Dependency not Found</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#installing-universal-tween-engine-on-ubuntu">Installing Universal-tween-engine on Ubuntu</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#can-not-attach-source-to-gdx-jar">Can not attach source to GDX.jar</a></li>
 </ul>
 </li>
 </ul>
@@ -195,8 +196,8 @@ in local maven repository.</p>
 </div>
 <div class="section" id="troublshootings">
 <h2>Troublshootings<a class="headerlink" href="#troublshootings" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="class-of-depending-project-not-found">
-<h3>Class of Depending Project not Found<a class="headerlink" href="#class-of-depending-project-not-found" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="class-of-dependency-not-found">
+<h3>Class of Dependency not Found<a class="headerlink" href="#class-of-dependency-not-found" title="Permalink to this headline">¶</a></h3>
 <p>Error:</p>
 <p>When running desktop, report error message like:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Exception in thread &quot;LWJGL Application&quot; com.badlogic.gdx.utils.GdxRuntimeException: java.lang.NoClassDefFoundError: io/oz/wnw/my/ISettings
@@ -239,7 +240,34 @@ classpath.</p>
 <p>Cause:</p>
 <p>The gradle task script can’t do the job.</p>
 <p>Shooting:</p>
-<p>Try this [modified build.gradle version](<a class="reference external" href="https://github.com/odys-z/universal-tween-engine/blob/master/build.gradle">https://github.com/odys-z/universal-tween-engine/blob/master/build.gradle</a>)</p>
+<p>Try this <a class="reference external" href="https://github.com/odys-z/universal-tween-engine/blob/master/build.gradle">modified build.gradle version</a></p>
+</div>
+<div class="section" id="can-not-attach-source-to-gdx-jar">
+<h3>Can not attach source to GDX.jar<a class="headerlink" href="#can-not-attach-source-to-gdx-jar" title="Permalink to this headline">¶</a></h3>
+<p>This is probably caused by using mavenLocal in gradle project. Just set:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DdownloadSources</span><span class="o">=</span><span class="n">true</span>
+<span class="o">-</span><span class="n">DdownloadJavadocs</span><span class="o">=</span><span class="n">true</span>
+</pre></div>
+</div>
+<p>won’t work. See <a class="reference external" href="https://stackoverflow.com/a/26529202/7362888">similar report</a>.</p>
+<p>It’s a weired behavior <a class="reference external" href="https://stackoverflow.com/a/12836295">reported and solved by Andreas Kuhrwahl</a>.</p>
+<p>To solve the problem, see:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">normode</span><span class="o">/</span><span class="n">core</span><span class="o">/</span><span class="n">gradle</span><span class="o">.</span><span class="n">build</span><span class="p">:</span>
+</pre></div>
+</div>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">eclipse</span><span class="o">.</span><span class="na">classpath</span><span class="o">.</span><span class="na">file</span> <span class="o">{</span>
+    <span class="n">withXml</span> <span class="o">{</span> <span class="n">xml</span> <span class="o">-&gt;</span>
+        <span class="kt">def</span> <span class="n">node</span> <span class="o">=</span> <span class="n">xml</span><span class="o">.</span><span class="na">asNode</span><span class="o">()</span>
+        <span class="n">node</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span> <span class="n">node</span><span class="o">.</span><span class="na">find</span> <span class="o">{</span> <span class="n">it</span><span class="o">.</span><span class="nd">@path</span> <span class="o">==</span> <span class="s1">&#39;org.eclipse.jst.j2ee.internal.web.container&#39;</span> <span class="o">}</span> <span class="o">)</span>
+        <span class="n">node</span><span class="o">.</span><span class="na">appendNode</span><span class="o">(</span> <span class="s1">&#39;classpathentry&#39;</span><span class="o">,</span> <span class="o">[</span> <span class="nl">kind:</span> <span class="s1">&#39;con&#39;</span><span class="o">,</span> <span class="nl">path:</span> <span class="s1">&#39;org.eclipse.jst.j2ee.internal.web.container&#39;</span><span class="o">,</span> <span class="nl">exported:</span> <span class="s1">&#39;true&#39;</span><span class="o">])</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Also source.jar and javadoc.jar can be download manually, e.g.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">repo</span><span class="o">.</span><span class="n">maven</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">maven2</span><span class="o">/</span><span class="n">com</span><span class="o">/</span><span class="n">badlogicgames</span><span class="o">/</span><span class="n">gdx</span><span class="o">/</span><span class="n">gdx</span><span class="o">/</span><span class="mf">1.9</span><span class="o">.</span><span class="mi">11</span><span class="o">/</span><span class="n">gdx</span><span class="o">-</span><span class="mf">1.9</span><span class="o">.</span><span class="mi">11</span><span class="o">-</span><span class="n">sources</span><span class="o">.</span><span class="n">jar</span>
+</pre></div>
+</div>
 </div>
 </div>
 </div>

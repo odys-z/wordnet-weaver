@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.MathUtils;
 
 import io.oz.wnw.norm.Assets;
+import io.oz.xv.glsl.shaders.Cubic;
 
 /**Shader Factory - factory pattern replacing js style x-visual/xglsl.
  * 
@@ -14,7 +15,7 @@ import io.oz.wnw.norm.Assets;
  */
 public class Glsl {
 	/**Line delimiter for joining glsl source string */
-	static final CharSequence delimiter = System.getProperty("line.separator");
+	public static final CharSequence delimiter = System.getProperty("line.separator");
 
 	public static enum ShaderFlag {
 		/** shader type of {@link Test} */
@@ -24,7 +25,9 @@ public class Glsl {
 		/**shader type of {@link Tex0} */
 		tex0("tex0"),
 		/** shader type of {@link Sdfont} */
-		sdfont("sdfont");
+		sdfont("sdfont"),
+		/** shader type of {@link CubeSkin} */
+		cubic("cubeSkin");
 
 		private String p;
 		ShaderFlag(String v) { p = v; };
@@ -160,18 +163,27 @@ public class Glsl {
 	}
 
 	public static WShader wshader(ShaderFlag f) {
+		WShader s;
 		switch (f) {
 			case test:
-				return new Test();
+				s = new Test();
+				break;
 			case simple:
-				return new Simple();
+				s = new Simple();
+				break;
 			case tex0:
-				return new Tex0();
+				s = new Tex0();
+				break;
 			case sdfont:
-				return new Sdfont();
-
+				s = new Sdfont();
+				break;
+			case cubic:
+				s = new Cubic();
+				break;
 			default:
 				throw new IllegalArgumentException("TODO");
 		}
+		s.init();
+		return s;
 	}
 }

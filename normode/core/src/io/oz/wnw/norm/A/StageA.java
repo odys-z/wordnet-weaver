@@ -67,7 +67,7 @@ public class StageA {
 		return mi;
 	}
 
-	/**@deprecated Tried OK for testing ViewA1
+	/**@deprecated Tried OK for testing ViewA1Try
 	 * @return
 	 */
 	Entity loadMysetry() {

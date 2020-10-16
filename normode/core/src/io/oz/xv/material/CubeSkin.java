@@ -16,7 +16,7 @@ public class CubeSkin extends XMaterial {
 	}
 
 	private static WShader cubeSkinShader() {
-		return Glsl.wshader(ShaderFlag.test);
+		return Glsl.wshader(ShaderFlag.cubic);
 	}
 
 }

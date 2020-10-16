@@ -21,7 +21,6 @@ import io.oz.wnw.ecs.cmp.Word;
 import io.oz.wnw.ecs.cmp.ds.AffineTrans;
 import io.oz.wnw.ecs.cmp.ds.AffineType;
 import io.oz.xv.material.CubeSkin;
-import io.oz.xv.material.XMaterial;
 import io.oz.xv.material.bisheng.GlyphLib;
 import io.oz.xv.utils.XVException;
 

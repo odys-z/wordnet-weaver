@@ -63,8 +63,8 @@ If Eclipse doesn't recognize dependency class, this may help::
 Troublshootings
 ---------------
 
-Class of Depending Project not Found
-____________________________________
+Class of Dependency not Found
+_____________________________
 
 Error:
 
@@ -121,4 +121,35 @@ The gradle task script can't do the job.
 
 Shooting:
 
-Try this [modified build.gradle version](https://github.com/odys-z/universal-tween-engine/blob/master/build.gradle)
+Try this `modified build.gradle version <https://github.com/odys-z/universal-tween-engine/blob/master/build.gradle>`_
+
+Can not attach source to GDX.jar
+________________________________
+
+This is probably caused by using mavenLocal in gradle project. Just set::
+
+    DdownloadSources=true
+    -DdownloadJavadocs=true
+
+won't work. See `similar report <https://stackoverflow.com/a/26529202/7362888>`_.
+
+It's a weired behavior `reported and solved by Andreas Kuhrwahl <https://stackoverflow.com/a/12836295>`_.
+
+To solve the problem, see::
+
+    normode/core/gradle.build:
+
+.. code-block:: groovy
+
+    eclipse.classpath.file {
+        withXml { xml ->
+            def node = xml.asNode()
+            node.remove( node.find { it.@path == 'org.eclipse.jst.j2ee.internal.web.container' } )
+            node.appendNode( 'classpathentry', [ kind: 'con', path: 'org.eclipse.jst.j2ee.internal.web.container', exported: 'true'])
+        }
+    }
+..
+
+Also source.jar and javadoc.jar can be download manually, e.g. ::
+
+    wget https://repo.maven.apache.org/maven2/com/badlogicgames/gdx/gdx/1.9.11/gdx-1.9.11-sources.jar

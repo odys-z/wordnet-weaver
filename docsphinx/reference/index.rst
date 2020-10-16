@@ -7,3 +7,4 @@ Hacking GDX
 
    gdx-modelbuilder
    gdx-modelbatch
+   gdx-shadow
