@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.MathUtils;
 
 import io.oz.wnw.norm.Assets;
+import io.oz.xv.glsl.shaders.GlChunks;
 import io.oz.xv.glsl.shaders.Cubic;
 
 /**Shader Factory - factory pattern replacing js style x-visual/xglsl.
@@ -14,8 +15,6 @@ import io.oz.xv.glsl.shaders.Cubic;
  *
  */
 public class Glsl {
-	/**Line delimiter for joining glsl source string */
-	public static final CharSequence delimiter = System.getProperty("line.separator");
 
 	public static enum ShaderFlag {
 		/** shader type of {@link Test} */
@@ -37,7 +36,7 @@ public class Glsl {
 	
 	/** A test texture shader with color shows normal */
 	static class Test extends WShader {
-		static String vs = String.join(delimiter, 
+		static String vs = String.join(GlChunks.delimiter, 
 			"uniform mat4 u_modelMat4;",
 			"uniform mat4 u_vpMat4;",
 
@@ -51,7 +50,7 @@ public class Glsl {
 			"	vColor = a_normal;",
 			"	gl_Position = u_vpMat4 * pos4;",
 			"}");
-		static String fs = String.join(delimiter, 
+		static String fs = String.join(GlChunks.delimiter, 
 			"varying vec3 vColor;",
 			"void main() { gl_FragColor = vec4(abs(vColor), 1.); }"
 		);
@@ -64,7 +63,7 @@ public class Glsl {
 	
 	/** A cheap texture shader with blue color (0, 0.2, 0.8, 0.75) for testing */
 	static class Simple extends WShader {
-		static String vs = String.join(delimiter, 
+		static String vs = String.join(GlChunks.delimiter, 
 			"uniform mat4 u_modelMat4;",
 			"uniform mat4 u_vpMat4;",
 
@@ -83,7 +82,7 @@ public class Glsl {
 
 	/** A cheap texture shader attribute 'a_texCoord0' as sampler */
 	static class Tex0 extends WShader {
-		static String vs = String.join(delimiter, 
+		static String vs = String.join(GlChunks.delimiter, 
 			"uniform mat4 u_modelMat4;",
 			"uniform mat4 u_vpMat4;",
 
@@ -96,7 +95,7 @@ public class Glsl {
 			"    gl_Position = u_vpMat4 * u_modelMat4 * a_position;",
 			"    v_uv = a_texCoord0;",
 			"}");
-		static String fs = String.join(delimiter, 
+		static String fs = String.join(GlChunks.delimiter, 
 			"uniform sampler2D u_texture;",
 			"varying vec2 v_uv;",
 			"void main() {",

@@ -1,6 +1,5 @@
 package io.oz.xv.glsl.shaders;
 
-import io.oz.xv.glsl.Glsl;
 import io.oz.xv.glsl.Glsl.ShaderFlag;
 
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
@@ -9,7 +8,7 @@ import io.oz.xv.glsl.WShader;
 
 public class Cubic extends WShader {
 
-	static String vs = String.join(Glsl.delimiter, 
+	static String vs = String.join(GlChunks.delimiter, 
 			"uniform mat4 u_modelMat4;",
 			"uniform mat4 u_vpMat4;",
 
@@ -23,7 +22,7 @@ public class Cubic extends WShader {
 			"    v_uv = a_texCoord0;",
 			"}");
 
-	static String fs = String.join(Glsl.delimiter, 
+	static String fs = String.join(GlChunks.delimiter, 
 			"uniform float u_alpha;",
 			"uniform float u_t;",
 			"uniform sampler2D u_texture;",
