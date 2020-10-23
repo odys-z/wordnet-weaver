@@ -18,7 +18,7 @@ public class TreeContext {
 	public Engine ecs;
 
 	/**Grid scale*/
-	private Vector3 space = new Vector3(80f, 80f, 80f);
+	private Vector3 space = new Vector3(80f, 20f, 80f);
 	public Vector3 space() { return space; }
 	
 	/**Current level*/

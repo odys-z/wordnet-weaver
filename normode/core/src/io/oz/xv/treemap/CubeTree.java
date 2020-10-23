@@ -20,17 +20,18 @@ import io.oz.wnw.ecs.cmp.Obj3;
 import io.oz.wnw.ecs.cmp.Word;
 import io.oz.wnw.ecs.cmp.ds.AffineTrans;
 import io.oz.wnw.ecs.cmp.ds.AffineType;
-import io.oz.xv.material.CubeSkin;
+import io.oz.xv.material.CubeSkinMat;
 import io.oz.xv.material.bisheng.GlyphLib;
 import io.oz.xv.utils.XVException;
 
 /**
- * <p>Cube with Children of blinking word stars.</p>
- * At the exact positions of hyponyms?
- * And even shape clue of word length?<br>
+ * <p>
+ * Cube with Children of blinking word stars.
+ * </p>
+ * At the exact positions of hyponyms? And even shape clue of word length?<br>
  * 
- * <h6>Design Notes:</h6>
- * A CubeTree has 2 cube layers: the sky and the ground.<br>
+ * <h6>Design Notes:</h6> A CubeTree has 2 cube layers: the sky and the
+ * ground.<br>
  * A Layer has a box of volumetric shading and a group of cubes.<br>
  * CubeTree also has a empty layer used for animation<br>
  * 
@@ -44,43 +45,54 @@ public class CubeTree {
 	private static GlyphLib glyphs;
 
 	private static long uuid = 0;
-	private static long getId() { return uuid++; }
 
-	private static CubeSkin groundSkin;
+	private static long getId() {
+		return uuid++;
+	}
 
-	/** active lemma index
-	private int lmx = -1; */
-	/** Layer index
-	private int lyx = 0; */
+	private static CubeSkinMat groundSkin;
+
 	/**
-	 * <p>Layer Cubes:<br>
-	 * hypernym, lemma, hyponym</p>
-	 * <p>"lemma" means word base form, see <a href='https://wordnet.princeton.edu/documentation/wngloss7wn'>
-	 * wngloss(7WN) wordnet documentation</a>:</p>
-	 * <p>Lower case ASCII text of word as found in the WordNet database index files.</p>
-	 * <p>Cube State:<br>
+	 * active lemma index private int lmx = -1;
+	 */
+	/**
+	 * Layer index private int lyx = 0;
+	 */
+	/**
+	 * <p>
+	 * Layer Cubes:<br>
+	 * hypernym, lemma, hyponym
+	 * </p>
+	 * <p>
+	 * "lemma" means word base form, see
+	 * <a href='https://wordnet.princeton.edu/documentation/wngloss7wn'>
+	 * wngloss(7WN) wordnet documentation</a>:
+	 * </p>
+	 * <p>
+	 * Lower case ASCII text of word as found in the WordNet database index files.
+	 * </p>
+	 * <p>
+	 * Cube State:<br>
 	 * lemma-stable, selected, push-down(hidden), on-sky<br>
-	 * Usually the base form for a word or collocation.</p>
-	private ArrayList<TreemapNode[]>[] layers = (ArrayList<TreemapNode[]>[]) new ArrayList<?>[3];
-
-	public ArrayList<TreemapNode[]> hypernyms() {
-		return (ArrayList<TreemapNode[]>) layers[lyx]; // correct?
-	}
-	public ArrayList<TreemapNode[]> lemmas() {
-		return (ArrayList<TreemapNode[]>) layers[lyx + 1];
-	}
-	public ArrayList<TreemapNode[]> hyponyms() {
-		return (ArrayList<TreemapNode[]>) layers[lyx + 2];
-	}
+	 * Usually the base form for a word or collocation.
+	 * </p>
+	 * private ArrayList<TreemapNode[]>[] layers = (ArrayList<TreemapNode[]>[]) new
+	 * ArrayList<?>[3];
+	 * 
+	 * public ArrayList<TreemapNode[]> hypernyms() { return
+	 * (ArrayList<TreemapNode[]>) layers[lyx]; // correct? } public
+	 * ArrayList<TreemapNode[]> lemmas() { return (ArrayList<TreemapNode[]>)
+	 * layers[lyx + 1]; } public ArrayList<TreemapNode[]> hyponyms() { return
+	 * (ArrayList<TreemapNode[]>) layers[lyx + 2]; }
 	 */
 
 	public static void init(String font) {
 		glyphs = new GlyphLib(font == null ? GlyphLib.defaultFnt : font, false);
-		groundSkin = new CubeSkin(font, null);
+		groundSkin = new CubeSkinMat(font, null);
 	}
 
 	public static void create(PooledEngine ecs, ArrayList<SynsetInf> synsets) throws XVException {
-		TreeContext context = new TreeContext(ecs); //.space(20f);
+		TreeContext context = new TreeContext(ecs); // .space(20f);
 		context.init(synsets);
 
 		createGround(context);
@@ -90,25 +102,26 @@ public class CubeTree {
 		}
 	}
 
-	/**Create a cube skin box
+	/**
+	 * Create a cube skin box
+	 * 
 	 * @param context
-	 * @return 
+	 * @return
 	 */
 	private static TreeContext createGround(TreeContext context) {
 		PooledEngine ecs = (PooledEngine) context.ecs;
 		Entity ground = ecs.createEntity();
 		ecs.addEntity(ground);
-		
+
 		Obj3 obj3 = ecs.createComponent(Obj3.class);
 
 		// TODO optimize builder usage
 		Vector3 whd = context.space();
 		ModelBuilder builder = new ModelBuilder();
 		builder.begin();
-		MeshPartBuilder mpbuilder = builder.part("ground-" + getId(),
-				GL20.GL_TRIANGLES, Usage.Position | Usage.ColorUnpacked | Usage.TextureCoordinates | Usage.Normal,
-				groundSkin);
-		BoxShapeBuilder.build(mpbuilder, whd.x / 3, whd.y / 5 /*test*/, whd.z);
+		MeshPartBuilder mpbuilder = builder.part("ground-" + getId(), GL20.GL_TRIANGLES,
+				Usage.Position | Usage.ColorUnpacked | Usage.TextureCoordinates | Usage.Normal, groundSkin);
+		BoxShapeBuilder.build(mpbuilder, whd.x, whd.y, whd.z); // test size
 		Model model = builder.end();
 		model.calculateTransforms();
 		obj3.modInst = new ModelInstance(model);
@@ -123,16 +136,20 @@ public class CubeTree {
 		return context;
 	}
 
-
-	/**Create treemap node of a lemma.
-	 * <p>This method create entity managed by ECS engine, no node returned.</p>
+	/**
+	 * Create treemap node of a lemma.
+	 * <p>
+	 * This method create entity managed by ECS engine, no node returned.
+	 * </p>
+	 * 
 	 * @param si
 	 * @param context
 	 * @return
-	 * @throws XVException 
+	 * @throws XVException
 	 */
 	private static TreeContext createCube(SynsetInf si, TreeContext context) throws XVException {
-		if (si == null) return context;
+		if (si == null)
+			return context;
 
 		PooledEngine ecs = (PooledEngine) context.ecs;
 		Entity entity = ecs.createEntity();
@@ -145,11 +162,11 @@ public class CubeTree {
 		Obj3 obj3 = ecs.createComponent(Obj3.class);
 		obj3.modInst = glyphs.bindText(wrd.word, context.getColor(wrd.word));
 		entity.add(obj3);
-		
+
 		Affines aff = ecs.createComponent(Affines.class);
 		initAffine(aff, si, context);
 		entity.add(aff);
-		
+
 		ArrayList<SynsetInf> children = si.children();
 		if (children != null) {
 			context.zoomin();

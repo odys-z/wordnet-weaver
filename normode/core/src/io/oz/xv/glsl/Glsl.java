@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.MathUtils;
 
 import io.oz.wnw.norm.Assets;
 import io.oz.xv.glsl.shaders.GlChunks;
-import io.oz.xv.glsl.shaders.Cubic;
+import io.oz.xv.glsl.shaders.PhongShadow;
 
 /**Shader Factory - factory pattern replacing js style x-visual/xglsl.
  * 
@@ -177,9 +177,12 @@ public class Glsl {
 			case sdfont:
 				s = new Sdfont();
 				break;
-			case cubic:
-				s = new Cubic();
+			case phong:
+				s = new PhongShadow();
 				break;
+//			case cubic:
+//				s = new Cubic();
+//				break;
 			default:
 				throw new IllegalArgumentException("TODO");
 		}

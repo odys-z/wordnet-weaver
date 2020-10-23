@@ -13,8 +13,8 @@ import io.oz.xv.glsl.Glsl.ShaderFlag;
 import io.oz.xv.material.XMaterial;
 
 public class WShader extends BaseShader implements Shader {
-	protected int u_vpM4 = register(new Uniform("u_vpMat4"));
-	protected int u_modelM4 = register(new Uniform("u_modelMat4"));
+	protected int u_vpM4 = register("u_vpMat4");
+	protected int u_modelM4 = register("u_modelMat4");
 
 	ShaderFlag flag;
 
@@ -25,9 +25,9 @@ public class WShader extends BaseShader implements Shader {
 		this.flag = flag;
 	}
 
-	public WShader uniforms(XUniforms uniforms) {
-		throw new IllegalArgumentException("Need this?");
-	}
+//	public WShader uniforms(XUniforms uniforms) {
+//		throw new IllegalArgumentException("Need this?");
+//	}
 
 	@Override
 	public void init() {

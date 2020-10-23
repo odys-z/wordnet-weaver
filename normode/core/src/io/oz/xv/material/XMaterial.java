@@ -28,7 +28,7 @@ public class XMaterial extends Material {
 		return (other instanceof XMaterial) && ((other == this) || ((((XMaterial)other).id.equals(id)) && super.equals(other)));
 	}
 
-	private WShader shader;
+	protected WShader shader;
 
 	/**Create XMaterial with shader xshader.
 	 * @param matId material id

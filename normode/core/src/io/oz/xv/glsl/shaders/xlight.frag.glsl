@@ -9,23 +9,22 @@ precision mediump float;
 #define HIGH
 #endif
 
+uniform vec4 u_diffuseColor;
+uniform sampler2D u_shadowTexture;
+uniform float u_shadowPCFOffset;
+// u_tex0?
+uniform sampler2D u_diffuseTexture;
+uniform vec4 u_specularColor;
+
 varying vec3 v_normal;
 varying vec4 v_color;
 varying float v_opacity;
 
-uniform vec4 u_diffuseColor;
-
-// u_tex0?
-uniform sampler2D u_diffuseTexture;
-
-uniform vec4 u_specularColor;
-
 varying vec3 v_lightDiffuse;
 varying vec3 v_lightSpecular;
 
-uniform sampler2D u_shadowTexture;
-uniform float u_shadowPCFOffset;
 varying vec3 v_shadowMapUv;
+varying vec3 v_ambientLight;
 
 float getShadowness(vec2 offset)
 {
@@ -42,7 +41,6 @@ float getShadow()
 			getShadowness(vec2(-u_shadowPCFOffset, -u_shadowPCFOffset))) * 0.25;
 }
 
-varying vec3 v_ambientLight;
 
 void main() {
 	vec3 normal = v_normal;
