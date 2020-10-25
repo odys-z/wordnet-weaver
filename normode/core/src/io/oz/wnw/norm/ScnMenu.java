@@ -26,7 +26,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
-import io.oz.wnw.norm.A.ViewA1Try;
 import io.oz.wnw.norm.C.ViewC1;
 
 public class ScnMenu extends ScreenAdapter {
@@ -74,24 +73,6 @@ public class ScnMenu extends ScreenAdapter {
 				game.setScreen(new ViewC1(game));
 				return;
 			}
-//			if (highscoresBounds.contains(touchPoint.x, touchPoint.y)) {
-//				Assets.playSound(Assets.clickSound);
-//				game.setScreen(new HighscoresScreen(game));
-//				return;
-//			}
-//			if (helpBounds.contains(touchPoint.x, touchPoint.y)) {
-//				Assets.playSound(Assets.clickSound);
-//				game.setScreen(new HelpScreen(game));
-//				return;
-//			}
-//			if (soundBounds.contains(touchPoint.x, touchPoint.y)) {
-//				Assets.playSound(Assets.clickSound);
-//				Settings.soundEnabled = !Settings.soundEnabled;
-//				if (Settings.soundEnabled)
-//					Assets.music.play();
-//				else
-//					Assets.music.pause();
-//			}
 		}
 	}
 
@@ -104,14 +85,11 @@ public class ScnMenu extends ScreenAdapter {
 
 		batcher.disableBlending();
 		batcher.begin();
-//		batcher.draw(Assets.backgroundRegion, 0, 0, 320, 480);
 		batcher.end();
 
 		batcher.enableBlending();
 		batcher.begin();
-//		batcher.draw(Assets.logo, 160 - 274 / 2, 480 - 10 - 142, 274, 142);
 		batcher.draw(mainMenu, 10, 200 - 110 / 2, 300, 110);
-//		batcher.draw(Settings.soundEnabled ? Assets.soundOn : Assets.soundOff, 0, 0, 64, 64);
 		batcher.end();	
 	}
 
