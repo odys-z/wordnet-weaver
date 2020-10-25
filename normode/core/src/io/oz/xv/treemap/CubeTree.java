@@ -20,6 +20,7 @@ import io.oz.wnw.ecs.cmp.Obj3;
 import io.oz.wnw.ecs.cmp.Word;
 import io.oz.wnw.ecs.cmp.ds.AffineTrans;
 import io.oz.wnw.ecs.cmp.ds.AffineType;
+import io.oz.xv.gdxpatch.utils.PlaneShapeBuilder;
 import io.oz.xv.material.CubeSkinMat;
 import io.oz.xv.material.bisheng.GlyphLib;
 import io.oz.xv.utils.XVException;
@@ -88,7 +89,7 @@ public class CubeTree {
 
 	public static void init(String font) {
 		glyphs = new GlyphLib(font == null ? GlyphLib.defaultFnt : font, false);
-		groundSkin = new CubeSkinMat(font, null);
+		groundSkin = new CubeSkinMat(font);
 	}
 
 	public static void create(PooledEngine ecs, ArrayList<SynsetInf> synsets) throws XVException {
@@ -169,23 +170,32 @@ public class CubeTree {
 
 		ArrayList<SynsetInf> children = si.children();
 		if (children != null) {
-			context.zoomin();
+			TreeContext childCtx = new TreeContext(context);
+			ModelBuilder builder = new ModelBuilder();
+			builder.begin();
 			for (SynsetInf child : si.children())
-				createCube(child, context);
-			context.zoomout();
+				addStarVisual(builder, entity, child, childCtx);
+			builder.end();
 		}
 
 		return context;
 	}
 
 	private static void initAffine(Affines aff, SynsetInf si, TreeContext context) throws XVException {
-		TreemapNode n = context.allocatNode(si).rotate(30f, 0, 0f);
+		TreemapNode n = context.allocatNode().rotate(30f, 0, 0f);
 
 		// aff.pos = n.pos();
 		aff.transforms = new Array<AffineTrans>();
 		aff.transforms.add(new AffineTrans(AffineType.scale).scale(si.weight()));
-		aff.transforms.add(new AffineTrans(AffineType.rotation).rotate(n.rotate()));
 		aff.transforms.add(new AffineTrans(AffineType.translate).translate(n.pos().scl(context.space())));
+		aff.transforms.add(new AffineTrans(AffineType.rotation).rotate(n.rotate()));
 		aff.transforms.add(new AffineTrans(AffineType.translate).translate(n.offset()));
+	}
+
+	private static void addStarVisual(ModelBuilder builder, Entity me, SynsetInf child, TreeContext contxt) {
+		MeshPartBuilder mpbuilder = builder.part("ground-" + getId(), GL20.GL_TRIANGLES,
+				Usage.Position | Usage.ColorUnpacked | Usage.TextureCoordinates | Usage.Normal, groundSkin);
+		Vector3 whd = contxt.space();
+		PlaneShapeBuilder.build(mpbuilder, whd.x, whd.y, whd.z); 
 	}
 }

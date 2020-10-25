@@ -8,9 +8,14 @@ public class TreemapNode {
 	private Vector3 cellIx;
 	/** grid distance scale */
 	private float scl;
+
 	private Quaternion q;
-	/** position offset on grid point */
+	public Quaternion rotate() { return q; }
+
+	/** position offset from grid point */
 	private Vector3 offset;
+	/** position offset from grid point */
+	public Vector3 offset() { return offset; }
 
 	/**
 	 * @param cellIx position index
@@ -44,9 +49,4 @@ public class TreemapNode {
 		q.setEulerAngles(yaw, pitch, roll);
 		return this;
 	}
-
-
-
-	public Quaternion rotate() { return q; }
-	public Vector3 offset() { return offset; }
 }

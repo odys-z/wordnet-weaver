@@ -43,6 +43,10 @@ public class TreeContext {
 		freeCol = Integer.MAX_VALUE;
 	}
 	
+	public TreeContext(TreeContext parentCtx) {
+		// TODO Auto-generated constructor stub
+	}
+
 	public Color getColor(String word) {
 		return color;
 	}
@@ -64,10 +68,9 @@ public class TreeContext {
 
 	/**One way allocating a node from pool.
 	 * It's the map's responsibility to prune and reuse resource.
-	 * @param si
 	 * @return
 	 */
-	TreemapNode allocatNode(SynsetInf si) {
+	TreemapNode allocatNode() {
 		// allocate from initial matrix
 		int rx = rowPool.size() - 1;
 		TreemapNode n = new TreemapNode(this, freeCol, -level, rx);
@@ -84,11 +87,18 @@ public class TreeContext {
 		return n;
 	}
 	
+	/**@deprecated
+	 * @return
+	 */
 	TreeContext zoomin() {
 		level++;
 		return this;
 	}
 
+	/**@deprecated
+	 * @return
+	 * @throws XVException
+	 */
 	TreeContext zoomout() throws XVException {
 		level--;
 		if (level < 0) throw new XVException("Level is less than 0.");

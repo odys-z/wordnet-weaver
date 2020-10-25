@@ -26,7 +26,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
-import io.oz.wnw.norm.A.ViewA1Try;
 import io.oz.wnw.norm.C.ViewC1;
 
 public class ScnMenu extends ScreenAdapter {
@@ -74,24 +73,6 @@ public class ScnMenu extends ScreenAdapter {
 				game.setScreen(new ViewC1(game));
 				return;
 			}
-//			if (highscoresBounds.contains(touchPoint.x, touchPoint.y)) {
-//				Assets.playSound(Assets.clickSound);
-//				game.setScreen(new HighscoresScreen(game));
-//				return;
-//			}
-//			if (helpBounds.contains(touchPoint.x, touchPoint.y)) {
-//				Assets.playSound(Assets.clickSound);
-//				game.setScreen(new HelpScreen(game));
-//				return;
-//			}
-//			if (soundBounds.contains(touchPoint.x, touchPoint.y)) {
-//				Assets.playSound(Assets.clickSound);
-//				Settings.soundEnabled = !Settings.soundEnabled;
-//				if (Settings.soundEnabled)
-//					Assets.music.play();
-//				else
-//					Assets.music.pause();
-//			}
 		}
 	}
 
