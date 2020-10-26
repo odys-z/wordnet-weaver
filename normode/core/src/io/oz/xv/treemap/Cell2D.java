@@ -3,7 +3,7 @@ package io.oz.xv.treemap;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 
-public class TreemapNode {
+public class Cell2D {
 
 	private Vector3 cellIx;
 	/** grid distance scale */
@@ -20,7 +20,7 @@ public class TreemapNode {
 	/**
 	 * @param cellIx position index
 	 */
-	public TreemapNode(TreeContext cxt, int x, int y, int z) {
+	public Cell2D(Space2dContext cxt, int x, int y, int z) {
 		this.cellIx = new Vector3(x, y, z);
 		this.scl = 1f;
 		q = new Quaternion();
@@ -33,11 +33,6 @@ public class TreemapNode {
 
 	public Vector3 scale() { return new Vector3(scl, scl, scl); }
 
-//	public TreemapNode scale(float s) {
-//		this.scl = s;
-//		return this;
-//	}
-	
 	/**
 	 * 
 	 * @param yaw the rotation around the y axis in degrees
@@ -45,7 +40,7 @@ public class TreemapNode {
 	 * @param roll the rotation around the z axis degrees
 	 * @return
 	 */
-	public TreemapNode rotate (float yaw, float pitch, float roll) {
+	public Cell2D rotate (float yaw, float pitch, float roll) {
 		q.setEulerAngles(yaw, pitch, roll);
 		return this;
 	}

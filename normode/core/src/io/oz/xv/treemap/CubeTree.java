@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.VertexAttributes.Usage;
 import com.badlogic.gdx.graphics.g3d.Model;
@@ -22,6 +23,7 @@ import io.oz.wnw.ecs.cmp.ds.AffineTrans;
 import io.oz.wnw.ecs.cmp.ds.AffineType;
 import io.oz.xv.gdxpatch.utils.PlaneShapeBuilder;
 import io.oz.xv.material.CubeSkinMat;
+import io.oz.xv.material.WordStar;
 import io.oz.xv.material.bisheng.GlyphLib;
 import io.oz.xv.utils.XVException;
 
@@ -52,6 +54,8 @@ public class CubeTree {
 	}
 
 	private static CubeSkinMat groundSkin;
+
+	private static WordStar starMatrl;
 
 	/**
 	 * active lemma index private int lmx = -1;
@@ -87,14 +91,18 @@ public class CubeTree {
 	 * (ArrayList<TreemapNode[]>) layers[lyx + 2]; }
 	 */
 
+	/**
+	 * @param font
+	 */
 	public static void init(String font) {
 		glyphs = new GlyphLib(font == null ? GlyphLib.defaultFnt : font, false);
-		groundSkin = new CubeSkinMat(font);
+		groundSkin = new CubeSkinMat("cube-skin");
+		starMatrl = new WordStar();
 	}
 
 	public static void create(PooledEngine ecs, ArrayList<SynsetInf> synsets) throws XVException {
-		TreeContext context = new TreeContext(ecs); // .space(20f);
-		context.init(synsets);
+		Space2dContext context = new Space2dContext(ecs); // .space(20f);
+		context.init(synsets.size());
 
 		createGround(context);
 
@@ -109,7 +117,7 @@ public class CubeTree {
 	 * @param context
 	 * @return
 	 */
-	private static TreeContext createGround(TreeContext context) {
+	private static Space2dContext createGround(Space2dContext context) {
 		PooledEngine ecs = (PooledEngine) context.ecs;
 		Entity ground = ecs.createEntity();
 		ecs.addEntity(ground);
@@ -148,7 +156,7 @@ public class CubeTree {
 	 * @return
 	 * @throws XVException
 	 */
-	private static TreeContext createCube(SynsetInf si, TreeContext context) throws XVException {
+	private static Space2dContext createCube(SynsetInf si, Space2dContext context) throws XVException {
 		if (si == null)
 			return context;
 
@@ -157,11 +165,14 @@ public class CubeTree {
 		ecs.addEntity(entity);
 
 		Word wrd = ecs.createComponent(Word.class);
-		wrd.word = si.lemma();
+		// wrd.word = si.lemma();
+		// wrd.color, ...
+		setWord(si, wrd);
+		wrd.children = si.children();
 		entity.add(wrd);
 
 		Obj3 obj3 = ecs.createComponent(Obj3.class);
-		obj3.modInst = glyphs.bindText(wrd.word, context.getColor(wrd.word));
+		obj3.modInst = glyphs.bindText(wrd.word, wrd.color);
 		entity.add(obj3);
 
 		Affines aff = ecs.createComponent(Affines.class);
@@ -170,19 +181,27 @@ public class CubeTree {
 
 		ArrayList<SynsetInf> children = si.children();
 		if (children != null) {
-			TreeContext childCtx = new TreeContext(context);
+			Space2dContext childCtx = new Space2dContext(context);
 			ModelBuilder builder = new ModelBuilder();
 			builder.begin();
 			for (SynsetInf child : si.children())
-				addStarVisual(builder, entity, child, childCtx);
-			builder.end();
+				addStarVisual(builder, child, childCtx);
+
+			Model model = builder.end();
+			model.calculateTransforms();
+			obj3.orthoFace = new ModelInstance(model);
 		}
 
 		return context;
 	}
 
-	private static void initAffine(Affines aff, SynsetInf si, TreeContext context) throws XVException {
-		TreemapNode n = context.allocatNode().rotate(30f, 0, 0f);
+	private static void setWord(SynsetInf si, Word wrd) {
+		wrd.word = si.lemma();
+		wrd.color = new Color(1f, 1f, 0f, 0f);
+	}
+
+	private static void initAffine(Affines aff, SynsetInf si, Space2dContext context) throws XVException {
+		Cell2D n = context.allocatCell().rotate(30f, 0, 0f);
 
 		// aff.pos = n.pos();
 		aff.transforms = new Array<AffineTrans>();
@@ -192,10 +211,10 @@ public class CubeTree {
 		aff.transforms.add(new AffineTrans(AffineType.translate).translate(n.offset()));
 	}
 
-	private static void addStarVisual(ModelBuilder builder, Entity me, SynsetInf child, TreeContext contxt) {
-		MeshPartBuilder mpbuilder = builder.part("ground-" + getId(), GL20.GL_TRIANGLES,
-				Usage.Position | Usage.ColorUnpacked | Usage.TextureCoordinates | Usage.Normal, groundSkin);
-		Vector3 whd = contxt.space();
-		PlaneShapeBuilder.build(mpbuilder, whd.x, whd.y, whd.z); 
+	private static void addStarVisual(ModelBuilder builder, SynsetInf child, Space2dContext contxt) {
+		MeshPartBuilder mpbuilder = builder.part(child.lemma(), GL20.GL_TRIANGLES,
+				Usage.Position | Usage.ColorUnpacked | Usage.TextureCoordinates | Usage.Normal, starMatrl);
+		Cell2D grid = contxt.allocatCell();
+		PlaneShapeBuilder.build(mpbuilder, grid.pos(), 4, 4); 
 	}
 }

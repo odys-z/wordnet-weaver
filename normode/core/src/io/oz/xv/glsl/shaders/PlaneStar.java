@@ -11,7 +11,7 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import io.oz.xv.glsl.Glsl.ShaderFlag;
 import io.oz.xv.glsl.WShader;
 
-public class PlaneStart extends WShader {
+public class PlaneStar extends WShader {
 	protected int u_alpha = register("u_alpha");
 	protected int u_tex0 = register("u_tex0");
 
@@ -24,10 +24,10 @@ public class PlaneStart extends WShader {
 	/** texture of u_tex0 */
 	Texture tex = null;
 
-	public PlaneStart() {
+	public PlaneStar() {
 		super(ShaderFlag.cubic);
-		vs = Gdx.files.classpath("io/oz/xv/glsl/shaders/plane-start.vert.glsl").readString();
-		fs = Gdx.files.classpath("io/oz/xv/glsl/shaders/plane-start.frag.glsl").readString();
+		vs = Gdx.files.classpath("io/oz/xv/glsl/shaders/plane-star.vert.glsl").readString();
+		fs = Gdx.files.classpath("io/oz/xv/glsl/shaders/plane-star.frag.glsl").readString();
 		program = new ShaderProgram(vs, fs);
 	}
 	
