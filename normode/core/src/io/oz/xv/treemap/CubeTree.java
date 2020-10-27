@@ -1,6 +1,7 @@
 package io.oz.xv.treemap;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
@@ -16,6 +17,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
 import io.oz.jwi.SynsetInf;
+import io.oz.jwi.WMemory;
 import io.oz.wnw.ecs.cmp.Affines;
 import io.oz.wnw.ecs.cmp.Obj3;
 import io.oz.wnw.ecs.cmp.Word;
@@ -168,7 +170,7 @@ public class CubeTree {
 		// wrd.word = si.lemma();
 		// wrd.color, ...
 		setWord(si, wrd);
-		wrd.children = si.children();
+		wrd.children = si.getMemory();
 		entity.add(wrd);
 
 		Obj3 obj3 = ecs.createComponent(Obj3.class);
@@ -179,13 +181,13 @@ public class CubeTree {
 		initAffine(aff, si, context);
 		entity.add(aff);
 
-		ArrayList<SynsetInf> children = si.children();
-		if (children != null) {
+		HashMap<String,WMemory> memory = si.getMemory();
+		if (memory != null) {
 			Space2dContext childCtx = new Space2dContext(context);
 			ModelBuilder builder = new ModelBuilder();
 			builder.begin();
-			for (SynsetInf child : si.children())
-				addStarVisual(builder, child, childCtx);
+			for (String w : memory.keySet())
+				addStarVisual(builder, w, memory.get(w), childCtx);
 
 			Model model = builder.end();
 			model.calculateTransforms();
@@ -205,16 +207,16 @@ public class CubeTree {
 
 		// aff.pos = n.pos();
 		aff.transforms = new Array<AffineTrans>();
-		aff.transforms.add(new AffineTrans(AffineType.scale).scale(si.weight()));
+		aff.transforms.add(new AffineTrans(AffineType.scale).scale(si.txtWeight()));
 		aff.transforms.add(new AffineTrans(AffineType.translate).translate(n.pos().scl(context.space())));
 		aff.transforms.add(new AffineTrans(AffineType.rotation).rotate(n.rotate()));
 		aff.transforms.add(new AffineTrans(AffineType.translate).translate(n.offset()));
 	}
 
-	private static void addStarVisual(ModelBuilder builder, SynsetInf child, Space2dContext contxt) {
-		MeshPartBuilder mpbuilder = builder.part(child.lemma(), GL20.GL_TRIANGLES,
+	private static void addStarVisual(ModelBuilder builder, String word, WMemory wMemory, Space2dContext contxt) {
+		MeshPartBuilder mpbuilder = builder.part(word, GL20.GL_TRIANGLES,
 				Usage.Position | Usage.ColorUnpacked | Usage.TextureCoordinates | Usage.Normal, starMatrl);
 		Cell2D grid = contxt.allocatCell();
-		PlaneShapeBuilder.build(mpbuilder, grid.pos(), 4, 4); 
+		PlaneShapeBuilder.build(mpbuilder, grid.pos(), wMemory.memory, 4, 4); 
 	}
 }
