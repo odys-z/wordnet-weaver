@@ -60,12 +60,6 @@ public class CubeTree {
 	private static WordStar starMatrl;
 
 	/**
-	 * active lemma index private int lmx = -1;
-	 */
-	/**
-	 * Layer index private int lyx = 0;
-	 */
-	/**
 	 * <p>
 	 * Layer Cubes:<br>
 	 * hypernym, lemma, hyponym
@@ -103,7 +97,7 @@ public class CubeTree {
 	}
 
 	public static void create(PooledEngine ecs, ArrayList<SynsetInf> synsets) throws XVException {
-		Space2dContext context = new Space2dContext(ecs); // .space(20f);
+		Space2dContext context = new Space2dContext(ecs);
 		context.init(synsets.size());
 
 		createGround(context);
@@ -169,7 +163,7 @@ public class CubeTree {
 		Word wrd = ecs.createComponent(Word.class);
 		// wrd.word = si.lemma();
 		// wrd.color, ...
-		setWord(si, wrd);
+		setWordVisual(si, wrd);
 		wrd.children = si.getMemory();
 		entity.add(wrd);
 
@@ -197,7 +191,11 @@ public class CubeTree {
 		return context;
 	}
 
-	private static void setWord(SynsetInf si, Word wrd) {
+	/**Setup word's visual
+	 * @param si
+	 * @param wrd
+	 */
+	private static void setWordVisual(SynsetInf si, Word wrd) {
 		wrd.word = si.lemma();
 		wrd.color = new Color(1f, 1f, 0f, 0f);
 	}

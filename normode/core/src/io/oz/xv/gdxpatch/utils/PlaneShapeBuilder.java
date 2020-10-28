@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g3d.utils.MeshPartBuilder;
 import com.badlogic.gdx.graphics.g3d.utils.MeshPartBuilder.VertexInfo;
 import com.badlogic.gdx.graphics.g3d.utils.shapebuilders.BaseShapeBuilder;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 /** Helper class with static methods to build rectangle plane using {@link MeshPartBuilder}.
@@ -20,17 +21,17 @@ public class PlaneShapeBuilder extends BaseShapeBuilder {
 
 	/** Add a rect plane. Requires GL_POINTS, GL_LINES or GL_TRIANGLES primitive type.
 	 * @param builder
-	 * @param corner00
-	 * @param corner01
-	 * @param corner10
-	 * @param corner11
+	 * @param v00 v00.z = u.v (0.0)
+	 * @param v01 v00.z = u.v (0.1)
+	 * @param v10 v00.z = u.v (1.0)
+	 * @param v11 v00.z = u.v (1.1)
 	 */
-	public static void build (MeshPartBuilder builder, VertexInfo corner00, VertexInfo corner01, VertexInfo corner10, VertexInfo corner11) {
+	public static void build (MeshPartBuilder builder, VertexInfo v00, VertexInfo v01, VertexInfo v10, VertexInfo v11) {
 		builder.ensureVertices(4);
-		final short i000 = builder.vertex(corner00);
-		final short i100 = builder.vertex(corner10);
-		final short i010 = builder.vertex(corner01);
-		final short i110 = builder.vertex(corner11);
+		final short i000 = builder.vertex(v00);
+		final short i100 = builder.vertex(v10);
+		final short i010 = builder.vertex(v01);
+		final short i110 = builder.vertex(v11);
 
 		final int primitiveType = builder.getPrimitiveType();
 		if (primitiveType == GL20.GL_LINES) {
@@ -50,12 +51,12 @@ public class PlaneShapeBuilder extends BaseShapeBuilder {
 	 * Set a_col = Color(a_memory, 0, 0, 0), normal = pos.
 	 * @param mpbuilder
 	 * @param a_memory 
-	 * @param corner00
-	 * @param corner01
-	 * @param corner10
-	 * @param corner11
+	 * @param v00 v00.z = u.v (0.0)
+	 * @param v01 v00.z = u.v (0.1)
+	 * @param v10 v00.z = u.v (1.0)
+	 * @param v11 v00.z = u.v (1.1)
 	 */
-	public static void build (MeshPartBuilder mpbuilder, Vector3 pos, float a_memory, Vector3 corner00, Vector3 corner01, Vector3 corner10, Vector3 corner11) {
+	public static void build (MeshPartBuilder mpbuilder, Vector3 pos, float a_memory, Vector3 v00, Vector3 v01, Vector3 v10, Vector3 v11) {
 		Color a_col = new Color(a_memory, 0, 0, 0);
 		/*
 		if ((mpbuilder.getAttributes().getMask() & (Usage.Normal | Usage.BiNormal | Usage.Tangent | Usage.TextureCoordinates)) == 0) {
@@ -67,8 +68,11 @@ public class PlaneShapeBuilder extends BaseShapeBuilder {
 			mpbuilder.rect(corner00, corner01, corner11, corner10, pos);
 		}
 		*/
-		build(mpbuilder, vertTmp1.set(corner00, pos, a_col, null), vertTmp2.set(corner01, pos, a_col, null),
-				vertTmp3.set(corner10, pos, a_col, null), vertTmp4.set(corner11, pos, a_col, null));
+		build(mpbuilder,
+			vertTmp1.set(v00, pos, a_col, new Vector2(0, 0)), // uv = vertex-idx, xz-rotation (ccw radian)
+			vertTmp2.set(v01, pos, a_col, new Vector2(1, 0)),
+			vertTmp3.set(v10, pos, a_col, new Vector2(2, 0)),
+			vertTmp4.set(v11, pos, a_col, new Vector2(3, 0)));
 	}
 
 	/** Add a plane given the matrix. Requires GL_POINTS, GL_LINES or GL_TRIANGLES primitive type.
@@ -77,8 +81,9 @@ public class PlaneShapeBuilder extends BaseShapeBuilder {
 	 * @param a_memory 
 	 */
 	public static void build (MeshPartBuilder mpbuilder, Matrix4 transform, float a_memory) {
-		build(mpbuilder, transform.getTranslation(_v3), a_memory, obtainV3().set(-0.5f, -0.5f, -0f).mul(transform), obtainV3().set(-0.5f, 0.5f, -0.f).mul(transform),
-			obtainV3().set(0.5f, -0.5f, -0.f).mul(transform), obtainV3().set(0.5f, 0.5f, -0.f).mul(transform));
+		build(mpbuilder, transform.getTranslation(_v3), a_memory,
+			obtainV3().set(-0.5f, -0.5f, -0.0f).mul(transform), obtainV3().set(-0.5f, 0.5f, -0.1f).mul(transform),
+			obtainV3().set( 0.5f, -0.5f, -1.0f).mul(transform), obtainV3().set( 0.5f, 0.5f, -1.1f).mul(transform));
 		freeAll();
 	}
 
@@ -97,7 +102,9 @@ public class PlaneShapeBuilder extends BaseShapeBuilder {
 		final float hh = height * 0.5f;
 		final float x0 = pos.x - hw, y0 = pos.y - hh, x1 = pos.x + hw, y1 = pos.y + hh;
 		build(mpbuilder, pos, a_memory,
-			obtainV3().set(x0, y0, pos.z), obtainV3().set(x0, y1, pos.z), obtainV3().set(x1, y0, pos.z), obtainV3().set(x1, y1, pos.z));
+			// vec3.z = u.v
+			obtainV3().set(x0, y0, 0.0f), obtainV3().set(x1, y0, 1.0f),
+			obtainV3().set(x0, y1, 0.1f), obtainV3().set(x1, y1, 1.1f));
 		freeAll();
 	}
 }
