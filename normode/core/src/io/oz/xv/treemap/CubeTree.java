@@ -144,15 +144,14 @@ public class CubeTree {
 	/**
 	 * Create treemap node of a lemma.
 	 * <p>
-	 * This method create entity managed by ECS engine, no node returned.
+	 * This method will create an entity managed by ECS engine, no node returned.
 	 * </p>
 	 * 
 	 * @param si
 	 * @param context
-	 * @return
-	 * @throws XVException
+	 * @return context
 	 */
-	private static Space2dContext createCube(SynsetInf si, Space2dContext context) throws XVException {
+	private static Space2dContext createCube(SynsetInf si, Space2dContext context) {
 		if (si == null)
 			return context;
 
@@ -177,7 +176,7 @@ public class CubeTree {
 
 		HashMap<String,WMemory> memory = si.getMemory();
 		if (memory != null) {
-			Space2dContext childCtx = new Space2dContext(context);
+			Space2dContext childCtx = new Space2dContext(context).init(memory.size());
 			ModelBuilder builder = new ModelBuilder();
 			builder.begin();
 			for (String w : memory.keySet())
@@ -200,7 +199,7 @@ public class CubeTree {
 		wrd.color = new Color(1f, 1f, 0f, 0f);
 	}
 
-	private static void initAffine(Affines aff, SynsetInf si, Space2dContext context) throws XVException {
+	private static void initAffine(Affines aff, SynsetInf si, Space2dContext context) {
 		Cell2D n = context.allocatCell().rotate(30f, 0, 0f);
 
 		// aff.pos = n.pos();
@@ -215,6 +214,6 @@ public class CubeTree {
 		MeshPartBuilder mpbuilder = builder.part(word, GL20.GL_TRIANGLES,
 				Usage.Position | Usage.ColorUnpacked | Usage.TextureCoordinates | Usage.Normal, starMatrl);
 		Cell2D grid = contxt.allocatCell();
-		PlaneShapeBuilder.build(mpbuilder, grid.pos(), wMemory.memory, 4, 4); 
+		PlaneShapeBuilder.build(mpbuilder, grid.pos(), wMemory.memory, 2, 2); 
 	}
 }

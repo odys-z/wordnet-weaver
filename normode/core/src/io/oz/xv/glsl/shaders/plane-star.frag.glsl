@@ -1,4 +1,6 @@
 #version 300 es
+precision highp float;
+
 layout (location = 0) out vec4 fragColor;
 
 uniform float u_alpha;
@@ -10,7 +12,7 @@ in float vRoty;
 
 void main() {
 	// vec2 uv = vec2(dot(vec2(0., -cos(vRoty), vUv), dot(vec2(sin(vRoty), 0), vUv);
-	uv = vUv;
+	vec2 uv = vUv;
 	fragColor = texture(u_tex0, uv);
 	fragColor.a = u_alpha;
 	fragColor.g = vRoty;

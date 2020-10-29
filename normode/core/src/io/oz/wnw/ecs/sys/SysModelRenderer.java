@@ -75,6 +75,8 @@ public class SysModelRenderer extends EntitySystem {
 			Entity entity = entities.get(i);
 			Obj3 obj3 = mObj3.get(entity);
 			modelBatch.render(obj3.modInst);
+			if (obj3.orthoFace != null)
+				modelBatch.render(obj3.orthoFace);
 		}
 		modelBatch.end();
 	}

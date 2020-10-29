@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Matrix4;
@@ -57,23 +56,11 @@ public class PlaneStar extends WShader {
 	
 	@Override
 	public void begin(Camera camera, RenderContext context) {
-		super.begin(camera, context);
+		 super.begin(camera, context);
+
 		set(u_alpha, uAlpha);
 		int uTex0 = context.textureBinder.bind(tex);
 		set(u_tex0, uTex0);
 	}
 
-
-	@Override
-	public void render(Renderable renderable) {
-		// https://stackoverflow.com/a/5487981
-		Matrix4 m = renderable.worldTransform;
-		float[] v = m.val;
-		shiftM4.idt()
-			.scl(m.getScaleX(), m.getScaleY(), m.getScaleZ())
-			.translate(v[Matrix4.M03], v[Matrix4.M13], v[Matrix4.M23]);
-		set(u_shiftM4, shiftM4);
-
-		super.render(renderable);
-	}
 }
