@@ -14,7 +14,6 @@ public class MyWeaver {
 	
 	public SynsetInf myset() {
 		return new SynsetInf("Dreamweaver");
-//		return new SynsetInf("RPNMLKJI");
 	}
 
 }
