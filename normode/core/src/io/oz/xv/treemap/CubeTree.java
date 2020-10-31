@@ -60,6 +60,8 @@ public class CubeTree {
 
 	private static WordStar starMatrl;
 
+	private static Color _colr;
+
 	/**
 	 * <p>
 	 * Layer Cubes:<br>
@@ -95,6 +97,7 @@ public class CubeTree {
 		glyphs = new GlyphLib(font == null ? GlyphLib.defaultFnt : font, false);
 		groundSkin = new CubeSkinMat("cube-skin");
 		starMatrl = new WordStar();
+		_colr = new Color();
 	}
 
 	public static void create(PooledEngine ecs, ArrayList<SynsetInf> synsets) throws XVException {
@@ -207,7 +210,7 @@ public class CubeTree {
 		aff.transforms = new Array<AffineTrans>();
 		aff.transforms.add(new AffineTrans(AffineType.scale).scale(si.txtWeight()));
 		aff.transforms.add(new AffineTrans(AffineType.translate).translate(n.pos().scl(context.space())));
-		// aff.transforms.add(new AffineTrans(AffineType.rotation).rotate(n.rotate()));
+		aff.transforms.add(new AffineTrans(AffineType.rotation).rotate(n.rotate()));
 		aff.transforms.add(new AffineTrans(AffineType.translate).translate(n.offset()));
 	}
 
@@ -215,6 +218,7 @@ public class CubeTree {
 		MeshPartBuilder mpbuilder = builder.part(word, GL20.GL_TRIANGLES,
 				Usage.Position | Usage.ColorUnpacked | Usage.TextureCoordinates | Usage.Normal, starMatrl);
 		Cell2D grid = contxt.allocatCell();
-		QuadShapeBuilder.build(mpbuilder, grid.pos(), wMemory.memory, .8f, .8f); 
+		float mem = wMemory.memory;
+		QuadShapeBuilder.build(mpbuilder, grid.pos(), _colr.set(mem, mem / 3, 0, 1), .8f, .8f); 
 	}
 }

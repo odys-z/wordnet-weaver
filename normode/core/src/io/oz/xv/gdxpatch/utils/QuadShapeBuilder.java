@@ -50,14 +50,13 @@ public class QuadShapeBuilder extends BaseShapeBuilder {
 	/** Add a rectangle. Requires GL_POINTS, GL_LINES or GL_TRIANGLES primitive type.<br>
 	 * Set a_col = Color(a_memory, 0, 0, 0), normal = pos.
 	 * @param mpbuilder
-	 * @param a_memory 
+	 * @param a_col 
 	 * @param v00 v00.z = u.v (0.0)
 	 * @param v01 v00.z = u.v (0.1)
 	 * @param v10 v00.z = u.v (1.0)
 	 * @param v11 v00.z = u.v (1.1)
 	 */
-	public static void build(MeshPartBuilder mpbuilder, Vector3 pos, float a_memory, Vector3 v00, Vector3 v01, Vector3 v10, Vector3 v11) {
-		Color a_col = new Color(a_memory, 0, 0, 0);
+	public static void build(MeshPartBuilder mpbuilder, Vector3 pos, Color a_col, Vector3 v00, Vector3 v01, Vector3 v10, Vector3 v11) {
 
 		build(mpbuilder,
 			vertTmp1.set(v00, pos, a_col, new Vector2(0, 0)), // uv = vertex-idx, xz-rotation (ccw radian)
@@ -71,8 +70,8 @@ public class QuadShapeBuilder extends BaseShapeBuilder {
 	 * @param transform
 	 * @param a_memory 
 	 */
-	public static void build (MeshPartBuilder mpbuilder, Matrix4 transform, float a_memory) {
-		build(mpbuilder, transform.getTranslation(_v3), a_memory,
+	public static void build (MeshPartBuilder mpbuilder, Matrix4 transform, Color colr) {
+		build(mpbuilder, transform.getTranslation(_v3), colr,
 			obtainV3().set(-0.5f, -0.5f, -0.0f).mul(transform), obtainV3().set(-0.5f, 0.5f, -0.1f).mul(transform),
 			obtainV3().set( 0.5f, -0.5f, -1.0f).mul(transform), obtainV3().set( 0.5f, 0.5f, -1.1f).mul(transform));
 		freeAll();
@@ -80,22 +79,20 @@ public class QuadShapeBuilder extends BaseShapeBuilder {
 
 	/** Add a plane with the specified dimensions. Requires GL_POINTS, GL_LINES or GL_TRIANGLES primitive type.
 	 * @param builder
-	 * @param a_memory 
+	 * @param colr 
 	 * @param width
 	 * @param height
 	 */
-	public static void build (MeshPartBuilder builder, float a_memory, float width, float height) {
-		build(builder, _v3.set(0, 0, 0), a_memory, width, height);
+	public static void build (MeshPartBuilder builder, Color colr, float width, float height) {
+		build(builder, _v3.set(0, 0, 0), colr, width, height);
 	}
 
-	public static void build(MeshPartBuilder mpbuilder, Vector3 pos, float a_memory, float width, float height) {
+	public static void build(MeshPartBuilder mpbuilder, Vector3 pos, Color colr, float width, float height) {
 		final float hw = width * 0.5f;
 		final float hh = height * 0.5f;
-		final float x0 = pos.x - hw, y0 = pos.y - hh, x1 = pos.x + hw, y1 = pos.y + hh;
-		build(mpbuilder, pos, a_memory,
-			// vec3.z = u.v
-			obtainV3().set(x0, y0, 0.0f), obtainV3().set(x0, y1, 0.1f),
-			obtainV3().set(x1, y0, 1.0f), obtainV3().set(x1, y1, 1.1f));
+		build(mpbuilder, pos, colr,
+			obtainV3().set(-hw, -hh, 0.0f), obtainV3().set(-hw, hh, 0.1f), // vec3.z = u.v
+			obtainV3().set(hw, -hh, 1.0f), obtainV3().set(hw, hh, 1.1f));
 		freeAll();
 	}
 }

@@ -8,7 +8,7 @@ uniform float u_t;
 uniform sampler2D u_tex0;
 
 in vec2 vUv;
-in vec3 vcolor;
+in vec4 vcolor;
 in float vRoty;
 
 void main() {
@@ -16,5 +16,5 @@ void main() {
 	vec2 uv = vUv;
 	fragColor = texture(u_tex0, uv);
 	fragColor.a = u_alpha;
-	fragColor.rgb = vcolor;
+	fragColor = vcolor;
 }
