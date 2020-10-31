@@ -23,7 +23,7 @@ import io.oz.wnw.ecs.cmp.Obj3;
 import io.oz.wnw.ecs.cmp.Word;
 import io.oz.wnw.ecs.cmp.ds.AffineTrans;
 import io.oz.wnw.ecs.cmp.ds.AffineType;
-import io.oz.xv.gdxpatch.utils.PlaneShapeBuilder;
+import io.oz.xv.gdxpatch.utils.QuadShapeBuilder;
 import io.oz.xv.gdxpatch.utils.XModelBuilder;
 import io.oz.xv.material.CubeSkinMat;
 import io.oz.xv.material.WordStar;
@@ -215,6 +215,6 @@ public class CubeTree {
 		MeshPartBuilder mpbuilder = builder.part(word, GL20.GL_TRIANGLES,
 				Usage.Position | Usage.ColorUnpacked | Usage.TextureCoordinates | Usage.Normal, starMatrl);
 		Cell2D grid = contxt.allocatCell();
-		PlaneShapeBuilder.build(mpbuilder, grid.pos(), wMemory.memory, .8f, .8f); 
+		QuadShapeBuilder.build(mpbuilder, grid.pos(), wMemory.memory, .8f, .8f); 
 	}
 }

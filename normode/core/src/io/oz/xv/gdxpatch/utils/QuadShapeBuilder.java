@@ -15,7 +15,7 @@ import com.badlogic.gdx.math.Vector3;
  * 
  * @author Odys Zhou
  */
-public class PlaneShapeBuilder extends BaseShapeBuilder {
+public class QuadShapeBuilder extends BaseShapeBuilder {
 
 	private static Vector3 _v3;
 
