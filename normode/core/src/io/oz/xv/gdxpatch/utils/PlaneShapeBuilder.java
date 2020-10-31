@@ -43,7 +43,7 @@ public class PlaneShapeBuilder extends BaseShapeBuilder {
 			builder.rect(i000, i100, i110, i010);
 		} else { // GL20.GL_TRIANGLES
 			builder.ensureRectangleIndices(1);
-			builder.rect(i000, i010, i110, i100);
+			builder.rect(i000, i100, i110, i010);
 		}
 	}
 
@@ -56,18 +56,9 @@ public class PlaneShapeBuilder extends BaseShapeBuilder {
 	 * @param v10 v00.z = u.v (1.0)
 	 * @param v11 v00.z = u.v (1.1)
 	 */
-	public static void build (MeshPartBuilder mpbuilder, Vector3 pos, float a_memory, Vector3 v00, Vector3 v01, Vector3 v10, Vector3 v11) {
+	public static void build(MeshPartBuilder mpbuilder, Vector3 pos, float a_memory, Vector3 v00, Vector3 v01, Vector3 v10, Vector3 v11) {
 		Color a_col = new Color(a_memory, 0, 0, 0);
-		/*
-		if ((mpbuilder.getAttributes().getMask() & (Usage.Normal | Usage.BiNormal | Usage.Tangent | Usage.TextureCoordinates)) == 0) {
-			build(mpbuilder, vertTmp1.set(corner00, null, null, null), vertTmp2.set(corner01, null, null, null),
-				vertTmp3.set(corner10, null, null, null), vertTmp4.set(corner11, null, null, null));
-		} else {
-			mpbuilder.ensureVertices(4);
-			mpbuilder.ensureRectangleIndices(1);
-			mpbuilder.rect(corner00, corner01, corner11, corner10, pos);
-		}
-		*/
+
 		build(mpbuilder,
 			vertTmp1.set(v00, pos, a_col, new Vector2(0, 0)), // uv = vertex-idx, xz-rotation (ccw radian)
 			vertTmp2.set(v01, pos, a_col, new Vector2(1, 0)),
@@ -103,8 +94,8 @@ public class PlaneShapeBuilder extends BaseShapeBuilder {
 		final float x0 = pos.x - hw, y0 = pos.y - hh, x1 = pos.x + hw, y1 = pos.y + hh;
 		build(mpbuilder, pos, a_memory,
 			// vec3.z = u.v
-			obtainV3().set(x0, y0, 0.0f), obtainV3().set(x1, y0, 1.0f),
-			obtainV3().set(x0, y1, 0.1f), obtainV3().set(x1, y1, 1.1f));
+			obtainV3().set(x0, y0, 0.0f), obtainV3().set(x0, y1, 0.1f),
+			obtainV3().set(x1, y0, 1.0f), obtainV3().set(x1, y1, 1.1f));
 		freeAll();
 	}
 }

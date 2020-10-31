@@ -24,6 +24,7 @@ import io.oz.wnw.ecs.cmp.Word;
 import io.oz.wnw.ecs.cmp.ds.AffineTrans;
 import io.oz.wnw.ecs.cmp.ds.AffineType;
 import io.oz.xv.gdxpatch.utils.PlaneShapeBuilder;
+import io.oz.xv.gdxpatch.utils.XModelBuilder;
 import io.oz.xv.material.CubeSkinMat;
 import io.oz.xv.material.WordStar;
 import io.oz.xv.material.bisheng.GlyphLib;
@@ -177,7 +178,7 @@ public class CubeTree {
 		HashMap<String,WMemory> memory = si.getMemory();
 		if (memory != null) {
 			Space2dContext childCtx = new Space2dContext(context).init(memory.size());
-			ModelBuilder builder = new ModelBuilder();
+			XModelBuilder builder = new XModelBuilder();
 			builder.begin();
 			for (String w : memory.keySet())
 				addStarVisual(builder, w, memory.get(w), childCtx);
@@ -206,14 +207,14 @@ public class CubeTree {
 		aff.transforms = new Array<AffineTrans>();
 		aff.transforms.add(new AffineTrans(AffineType.scale).scale(si.txtWeight()));
 		aff.transforms.add(new AffineTrans(AffineType.translate).translate(n.pos().scl(context.space())));
-		aff.transforms.add(new AffineTrans(AffineType.rotation).rotate(n.rotate()));
+		// aff.transforms.add(new AffineTrans(AffineType.rotation).rotate(n.rotate()));
 		aff.transforms.add(new AffineTrans(AffineType.translate).translate(n.offset()));
 	}
 
-	private static void addStarVisual(ModelBuilder builder, String word, WMemory wMemory, Space2dContext contxt) {
+	private static void addStarVisual(XModelBuilder builder, String word, WMemory wMemory, Space2dContext contxt) {
 		MeshPartBuilder mpbuilder = builder.part(word, GL20.GL_TRIANGLES,
 				Usage.Position | Usage.ColorUnpacked | Usage.TextureCoordinates | Usage.Normal, starMatrl);
 		Cell2D grid = contxt.allocatCell();
-		PlaneShapeBuilder.build(mpbuilder, grid.pos(), wMemory.memory, 2, 2); 
+		PlaneShapeBuilder.build(mpbuilder, grid.pos(), wMemory.memory, .8f, .8f); 
 	}
 }
