@@ -1,9 +1,11 @@
 package io.oz.xv.treemap;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.VertexAttributes.Usage;
 import com.badlogic.gdx.graphics.g3d.Model;
@@ -15,12 +17,16 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
 import io.oz.jwi.SynsetInf;
+import io.oz.jwi.WMemory;
 import io.oz.wnw.ecs.cmp.Affines;
 import io.oz.wnw.ecs.cmp.Obj3;
 import io.oz.wnw.ecs.cmp.Word;
 import io.oz.wnw.ecs.cmp.ds.AffineTrans;
 import io.oz.wnw.ecs.cmp.ds.AffineType;
+import io.oz.xv.gdxpatch.utils.QuadShapeBuilder;
+import io.oz.xv.gdxpatch.utils.XModelBuilder;
 import io.oz.xv.material.CubeSkinMat;
+import io.oz.xv.material.WordStar;
 import io.oz.xv.material.bisheng.GlyphLib;
 import io.oz.xv.utils.XVException;
 
@@ -52,12 +58,10 @@ public class CubeTree {
 
 	private static CubeSkinMat groundSkin;
 
-	/**
-	 * active lemma index private int lmx = -1;
-	 */
-	/**
-	 * Layer index private int lyx = 0;
-	 */
+	private static WordStar starMatrl;
+
+	private static Color _colr;
+
 	/**
 	 * <p>
 	 * Layer Cubes:<br>
@@ -86,14 +90,19 @@ public class CubeTree {
 	 * (ArrayList<TreemapNode[]>) layers[lyx + 2]; }
 	 */
 
+	/**
+	 * @param font
+	 */
 	public static void init(String font) {
 		glyphs = new GlyphLib(font == null ? GlyphLib.defaultFnt : font, false);
-		groundSkin = new CubeSkinMat(font, null);
+		groundSkin = new CubeSkinMat("cube-skin");
+		starMatrl = new WordStar();
+		_colr = new Color();
 	}
 
 	public static void create(PooledEngine ecs, ArrayList<SynsetInf> synsets) throws XVException {
-		TreeContext context = new TreeContext(ecs); // .space(20f);
-		context.init(synsets);
+		Space2dContext context = new Space2dContext(ecs);
+		context.init(synsets.size());
 
 		createGround(context);
 
@@ -108,7 +117,7 @@ public class CubeTree {
 	 * @param context
 	 * @return
 	 */
-	private static TreeContext createGround(TreeContext context) {
+	private static Space2dContext createGround(Space2dContext context) {
 		PooledEngine ecs = (PooledEngine) context.ecs;
 		Entity ground = ecs.createEntity();
 		ecs.addEntity(ground);
@@ -139,15 +148,14 @@ public class CubeTree {
 	/**
 	 * Create treemap node of a lemma.
 	 * <p>
-	 * This method create entity managed by ECS engine, no node returned.
+	 * This method will create an entity managed by ECS engine, no node returned.
 	 * </p>
 	 * 
 	 * @param si
 	 * @param context
-	 * @return
-	 * @throws XVException
+	 * @return context
 	 */
-	private static TreeContext createCube(SynsetInf si, TreeContext context) throws XVException {
+	private static Space2dContext createCube(SynsetInf si, Space2dContext context) {
 		if (si == null)
 			return context;
 
@@ -156,36 +164,61 @@ public class CubeTree {
 		ecs.addEntity(entity);
 
 		Word wrd = ecs.createComponent(Word.class);
-		wrd.word = si.lemma();
+		// wrd.word = si.lemma();
+		// wrd.color, ...
+		setWordVisual(si, wrd);
+		wrd.children = si.getMemory();
 		entity.add(wrd);
 
 		Obj3 obj3 = ecs.createComponent(Obj3.class);
-		obj3.modInst = glyphs.bindText(wrd.word, context.getColor(wrd.word));
+		obj3.modInst = glyphs.bindText(wrd.word, wrd.color);
 		entity.add(obj3);
 
 		Affines aff = ecs.createComponent(Affines.class);
 		initAffine(aff, si, context);
 		entity.add(aff);
 
-		ArrayList<SynsetInf> children = si.children();
-		if (children != null) {
-			context.zoomin();
-			for (SynsetInf child : si.children())
-				createCube(child, context);
-			context.zoomout();
+		HashMap<String,WMemory> memory = si.getMemory();
+		if (memory != null) {
+			Space2dContext childCtx = new Space2dContext(context).init(memory.size());
+			XModelBuilder builder = new XModelBuilder();
+			builder.begin();
+			for (String w : memory.keySet())
+				addStarVisual(builder, w, memory.get(w), childCtx);
+
+			Model model = builder.end();
+			model.calculateTransforms();
+			obj3.orthoFace = new ModelInstance(model);
 		}
 
 		return context;
 	}
 
-	private static void initAffine(Affines aff, SynsetInf si, TreeContext context) throws XVException {
-		TreemapNode n = context.allocatNode(si).rotate(30f, 0, 0f);
+	/**Setup word's visual
+	 * @param si
+	 * @param wrd
+	 */
+	private static void setWordVisual(SynsetInf si, Word wrd) {
+		wrd.word = si.lemma();
+		wrd.color = new Color(1f, 1f, 0f, 0f);
+	}
+
+	private static void initAffine(Affines aff, SynsetInf si, Space2dContext context) {
+		Cell2D n = context.allocatCell().rotate(30f, 0, 0f);
 
 		// aff.pos = n.pos();
 		aff.transforms = new Array<AffineTrans>();
-		aff.transforms.add(new AffineTrans(AffineType.scale).scale(si.weight()));
-		aff.transforms.add(new AffineTrans(AffineType.rotation).rotate(n.rotate()));
+		aff.transforms.add(new AffineTrans(AffineType.scale).scale(si.txtWeight()));
 		aff.transforms.add(new AffineTrans(AffineType.translate).translate(n.pos().scl(context.space())));
+		aff.transforms.add(new AffineTrans(AffineType.rotation).rotate(n.rotate()));
 		aff.transforms.add(new AffineTrans(AffineType.translate).translate(n.offset()));
+	}
+
+	private static void addStarVisual(XModelBuilder builder, String word, WMemory wMemory, Space2dContext contxt) {
+		MeshPartBuilder mpbuilder = builder.part(word, GL20.GL_TRIANGLES,
+				Usage.Position | Usage.ColorUnpacked | Usage.TextureCoordinates | Usage.Normal, starMatrl);
+		Cell2D grid = contxt.allocatCell();
+		float mem = wMemory.memory;
+		QuadShapeBuilder.build(mpbuilder, grid.pos(), _colr.set(mem, mem / 3, 0, 1), .8f, .8f); 
 	}
 }

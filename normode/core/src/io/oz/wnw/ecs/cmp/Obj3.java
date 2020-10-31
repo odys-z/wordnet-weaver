@@ -13,4 +13,6 @@ public class Obj3 implements Component {
 	public Vector3 pos;
 	public Vector3 scl;
 	public ModelInstance modInst;
+	/** Plane meshs that always facing screen */
+	public ModelInstance orthoFace;
 }

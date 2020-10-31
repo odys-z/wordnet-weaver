@@ -42,16 +42,6 @@ public class StageA {
 		ecs = new PooledEngine();
 	}
 
-	/** @deprecated only for ViewA1Try
-	 * @param ecs
-	 * @param me
-	 */
-	public StageA(PooledEngine ecs, MyWeaver me) {
-		this.me = me;
-		glyphs = new GlyphLib(GlyphLib.defaultFnt, false);
-		this.ecs = ecs;
-	}
-
 	public void init(ViewA1 viewA1) {
 		// setup objects
 		ecs.addSystem(new SysAffine());
@@ -94,28 +84,8 @@ public class StageA {
 
 	void loadMyset() throws XVException {
 		CubeTree.init(null);
-		// CubeTree m = new CubeTree();
-		// m.create(ecs, synsets);
 		CubeTree.create(ecs, synsets);
 	}
-
-	/**Create treemap node for a word.
-	 * @param name
-	 * @param context
-	private void wordNode(String word, TreeContext context) {
-		Entity entity = ecs.createEntity();
-		ecs.addEntity(entity);
-
-		Obj3 obj3 = ecs.createComponent(Obj3.class);
-		obj3.modInst = glyphs.bindText(word, context.color(word));
-		entity.add(obj3);
-		
-		Affines aff = ecs.createComponent(Affines.class);
-		
-		context.setAffine(aff, word);
-		entity.add(aff);
-	}
-	 */
 
 	public void update(float delta) {
 		ecs.update(delta);

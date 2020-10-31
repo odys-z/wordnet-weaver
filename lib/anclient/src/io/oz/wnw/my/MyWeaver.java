@@ -13,7 +13,10 @@ public class MyWeaver {
 	}
 	
 	public SynsetInf myset() {
-		return new SynsetInf("Dreamweaver");
+		return new SynsetInf("Dreamweaver")
+				.setMemory("Moana", 1)
+				.setMemory("Tinkle", 3)
+				.setMemory("Coco", 2);
 	}
 
 }
