@@ -34,7 +34,6 @@ public class ViewA1 extends ScreenAdapter {
 		stage = new StageA(game.me());
 
 		// Entities must created before creating EntitySystems
-		// stage.loadMysetry();
 		try {
 			stage.init(this);
 			ecs = stage.engine();
@@ -45,6 +44,7 @@ public class ViewA1 extends ScreenAdapter {
 		}
 
 		camController = new CameraInputController(cam);
+		camController.translateUnits *= 10f;
 		Gdx.input.setInputProcessor(camController);
 	}
 
