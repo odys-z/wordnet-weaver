@@ -10,13 +10,13 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
 import io.oz.jwi.SynsetInf;
-import io.oz.wnw.ecs.sys.SysModelRenderer;
-import io.oz.wnw.ecs.cmp.Affines;
-import io.oz.wnw.ecs.cmp.Obj3;
 import io.oz.wnw.ecs.cmp.ds.AffineTrans;
 import io.oz.wnw.ecs.cmp.ds.AffineType;
-import io.oz.wnw.ecs.sys.SysAffine;
 import io.oz.wnw.my.MyWeaver;
+import io.oz.xv.ecs.c.Affines;
+import io.oz.xv.ecs.c.Obj3;
+import io.oz.xv.ecs.s.SysAffine;
+import io.oz.xv.ecs.s.SysModelRenderer;
 import io.oz.xv.material.bisheng.GlyphLib;
 import io.oz.xv.treemap.CubeTree;
 import io.oz.xv.utils.XVException;

@@ -1,4 +1,4 @@
-package io.oz.wnw.ecs.sys;
+package io.oz.xv.ecs.s;
 
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Engine;
@@ -11,8 +11,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 
-import io.oz.wnw.ecs.cmp.Affines;
-import io.oz.wnw.ecs.cmp.Obj3;
+import io.oz.xv.ecs.c.Affines;
+import io.oz.xv.ecs.c.Obj3;
 import io.oz.xv.gdxpatch.XShaderProvider;
 
 public class SysModelRenderer extends EntitySystem {
@@ -30,27 +30,8 @@ public class SysModelRenderer extends EntitySystem {
 	
 	public SysModelRenderer(PerspectiveCamera camera) {
 		super();
-		
 		mObj3 = ComponentMapper.getFor(Obj3.class);
-		
-		/*
-		modelBatch = new ModelBatch(new DefaultShaderProvider() {
-			@Override
-			public Shader getShader(Renderable randerable) {
-				return super.getShader(randerable);
-			}
-
-			@Override
-			protected Shader createShader (Renderable renderable) {
-				// if (renderable.material.has(TestAttribute.ID)) return new TestShader(renderable);
-				if (renderable.material instanceof XMaterial)
-					return ((XMaterial)renderable.material).shader();
-				return super.createShader(renderable);
-			}
-		});
-		*/
 		modelBatch = new ModelBatch(new XShaderProvider());
-		
 		this.cam = camera;
 	}
 

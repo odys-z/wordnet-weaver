@@ -1,15 +1,15 @@
-package io.oz.wnw.ecs.sys;
+package io.oz.xv.ecs.s;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 
-import io.oz.wnw.ecs.cmp.WTween;
+import io.oz.xv.ecs.c.Tweened;
 
 public class SysTween extends IteratingSystem {
 
 	public SysTween() {
-		super(Family.all(WTween.class).get());
+		super(Family.all(Tweened.class).get());
 	}
 
 	@Override

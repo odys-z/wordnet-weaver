@@ -101,7 +101,6 @@ public class SessionClientTest {
 
 	private void getMenu(String string, String roleId)
 			throws SemanticException, IOException, SQLException, AnsonException {
-		// AnDatasetReq req = new AnDatasetReq(null, "jserv-sample");
 		AnDatasetReq req = new AnDatasetReq(null, "sys-sqlite");
 
 		String t = "menu";

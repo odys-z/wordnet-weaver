@@ -1,4 +1,4 @@
-package io.oz.wnw.ecs.sys;
+package io.oz.xv.ecs.s;
 
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
@@ -7,9 +7,9 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.math.Matrix4;
 
-import io.oz.wnw.ecs.cmp.Affines;
-import io.oz.wnw.ecs.cmp.Obj3;
 import io.oz.wnw.ecs.cmp.ds.AffineTrans;
+import io.oz.xv.ecs.c.Affines;
+import io.oz.xv.ecs.c.Obj3;
 
 public class SysAffine extends IteratingSystem {
 

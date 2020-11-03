@@ -18,11 +18,11 @@ import com.badlogic.gdx.utils.Array;
 
 import io.oz.jwi.SynsetInf;
 import io.oz.jwi.WMemory;
-import io.oz.wnw.ecs.cmp.Affines;
-import io.oz.wnw.ecs.cmp.Obj3;
 import io.oz.wnw.ecs.cmp.Word;
 import io.oz.wnw.ecs.cmp.ds.AffineTrans;
 import io.oz.wnw.ecs.cmp.ds.AffineType;
+import io.oz.xv.ecs.c.Affines;
+import io.oz.xv.ecs.c.Obj3;
 import io.oz.xv.gdxpatch.utils.QuadShapeBuilder;
 import io.oz.xv.gdxpatch.utils.XModelBuilder;
 import io.oz.xv.material.CubeSkinMat;

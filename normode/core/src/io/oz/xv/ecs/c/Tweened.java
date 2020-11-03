@@ -1,4 +1,4 @@
-package io.oz.wnw.ecs.cmp;
+package io.oz.xv.ecs.c;
 
 import com.badlogic.ashley.core.Component;
 
@@ -9,6 +9,6 @@ import aurelienribon.tweenengine.TweenManager;
  * @author Odys Zhou
  *
  */
-public class WTween implements Component {
+public class Tweened implements Component {
 	public TweenManager tween;
 }
