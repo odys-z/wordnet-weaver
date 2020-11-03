@@ -23,6 +23,8 @@ import io.oz.wnw.ecs.cmp.ds.AffineTrans;
 import io.oz.wnw.ecs.cmp.ds.AffineType;
 import io.oz.xv.ecs.c.Affines;
 import io.oz.xv.ecs.c.Obj3;
+import io.oz.xv.ecs.c.RayPickable;
+import io.oz.xv.ecs.s.RayPicker;
 import io.oz.xv.gdxpatch.utils.QuadShapeBuilder;
 import io.oz.xv.gdxpatch.utils.XModelBuilder;
 import io.oz.xv.material.CubeSkinMat;
@@ -160,23 +162,27 @@ public class CubeTree {
 			return context;
 
 		PooledEngine ecs = (PooledEngine) context.ecs;
-		Entity entity = ecs.createEntity();
-		ecs.addEntity(entity);
+		Entity eLemma = ecs.createEntity();
+		ecs.addEntity(eLemma);
 
 		Word wrd = ecs.createComponent(Word.class);
 		// wrd.word = si.lemma();
 		// wrd.color, ...
 		setWordVisual(si, wrd);
 		wrd.children = si.getMemory();
-		entity.add(wrd);
+		eLemma.add(wrd);
 
 		Obj3 obj3 = ecs.createComponent(Obj3.class);
 		obj3.modInst = glyphs.bindText(wrd.word, wrd.color);
-		entity.add(obj3);
+		eLemma.add(obj3);
 
 		Affines aff = ecs.createComponent(Affines.class);
 		initAffine(aff, si, context);
-		entity.add(aff);
+		eLemma.add(aff);
+		
+		RayPickable pickable = ecs.createComponent(RayPickable.class);
+		pickable.id = RayPicker.uuId();
+		eLemma.add(pickable);
 
 		HashMap<String,WMemory> memory = si.getMemory();
 		if (memory != null) {

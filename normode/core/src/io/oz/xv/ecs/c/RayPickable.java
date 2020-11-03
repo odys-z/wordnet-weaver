@@ -13,4 +13,5 @@ import com.badlogic.gdx.math.Vector3;
 public class RayPickable implements Component {
 	public Vector3 center;
 	public Vector3 dimension;
+	public int id;
 }

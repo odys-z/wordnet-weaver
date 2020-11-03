@@ -11,6 +11,11 @@ import io.oz.wnw.ecs.cmp.ds.AffineTrans;
 import io.oz.xv.ecs.c.Affines;
 import io.oz.xv.ecs.c.Obj3;
 
+/**Is this the transformation tweener?
+ * 
+ * @author Odys Zhou
+ *
+ */
 public class SysAffine extends IteratingSystem {
 
 	private ComponentMapper<Affines> mAffine;

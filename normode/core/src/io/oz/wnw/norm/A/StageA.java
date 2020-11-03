@@ -15,13 +15,15 @@ import io.oz.wnw.ecs.cmp.ds.AffineType;
 import io.oz.wnw.my.MyWeaver;
 import io.oz.xv.ecs.c.Affines;
 import io.oz.xv.ecs.c.Obj3;
+import io.oz.xv.ecs.s.RayPicker;
 import io.oz.xv.ecs.s.SysAffine;
 import io.oz.xv.ecs.s.SysModelRenderer;
 import io.oz.xv.material.bisheng.GlyphLib;
 import io.oz.xv.treemap.CubeTree;
 import io.oz.xv.utils.XVException;
 
-/**Scene A's world / objects manager.
+/**
+ * Scene A's world / objects manager.
  * 
  * @author Odys Zhou
  */
@@ -34,7 +36,10 @@ public class StageA {
 	private MyWeaver me;
 
 	private PooledEngine ecs;
-	public PooledEngine engine() { return ecs; }
+
+	public PooledEngine engine() {
+		return ecs;
+	}
 
 	public StageA(MyWeaver me) {
 		this.me = me;
@@ -44,9 +49,11 @@ public class StageA {
 
 	public void init(ViewA1 viewA1) {
 		// setup objects
+		ecs.addSystem(new RayPicker());
+		// tween before affine
 		ecs.addSystem(new SysAffine());
 		ecs.addSystem(new SysModelRenderer(viewA1.cam()));
-		
+
 		synsets = new ArrayList<SynsetInf>();
 		synsets.add(me.myset());
 	}
@@ -57,7 +64,8 @@ public class StageA {
 		return mi;
 	}
 
-	/**@deprecated Tried OK for testing ViewA1Try
+	/**
+	 * @deprecated Tried OK for testing ViewA1Try
 	 * @return
 	 */
 	Entity loadMysetry() {
@@ -65,10 +73,11 @@ public class StageA {
 		ecs.addEntity(entity);
 
 		Obj3 obj3 = ecs.createComponent(Obj3.class);
-		// works: obj3.modInst = Xutils.modelInstance(Geoshape.cube, new Vector3(5, 5, 5));
+		// works: obj3.modInst = Xutils.modelInstance(Geoshape.cube, new Vector3(5, 5,
+		// 5));
 		obj3.modInst = glyphs.bindText(me.myset().lemma(), new Color(1f, 1f, 0f, 1f));
 		entity.add(obj3);
-		
+
 		Affines aff = ecs.createComponent(Affines.class);
 		aff.pos = new Vector3(0f, 0f, 0f);
 
