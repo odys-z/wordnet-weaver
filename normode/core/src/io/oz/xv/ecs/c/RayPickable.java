@@ -14,4 +14,8 @@ public class RayPickable implements Component {
 	public Vector3 center;
 	public Vector3 dimension;
 	public int id;
+	/** on selected events fired */
+	public boolean selectUp;
+	/** on deselected events fired */
+	public boolean deselectDown;
 }

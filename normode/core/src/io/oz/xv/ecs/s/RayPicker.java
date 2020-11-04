@@ -13,23 +13,40 @@ public class RayPicker extends IteratingSystem implements InputProcessor {
 	private static int uuid = 0;
 	public static int uuId() { return ++uuid; }
 
-	protected ComponentMapper<RayPickable> mPickable;
-	protected int currentPcking;
 	protected PerspectiveCamera cam;
+	protected ComponentMapper<RayPickable> mPickable;
+	protected int currentPickId;
+	protected Entity currentPick;
 
 	public RayPicker(PerspectiveCamera camera) {
 		super(Family.all(RayPickable.class).get());
 		mPickable = ComponentMapper.getFor(RayPickable.class);
 
 		cam = camera;
+		currentPickId = -1;
 	}
 
 	@Override
 	protected void processEntity(Entity entity, float deltaTime) {
-		RayPickable pcked = mPickable.get(entity);
+		if (this.currentPickId < 0) {
+			// deselect
+			if (currentPick != null) {
+				RayPickable pickable = currentPick.getComponent(RayPickable.class);
+				pickable.deselectDown = true;
+				currentPick = null;
+			}
+			return;
+		}
 
-		if (currentPcking != pcked.id)
-			;
+		RayPickable pickable = mPickable.get(entity);
+		if (currentPickId == pickable.id)
+			pickable.selectUp = false;  // rising edge
+		else { // currentPickId > 0 and != pickable 
+			RayPickable currentPickable = currentPick.getComponent(RayPickable.class);
+			currentPickable.deselectDown = true; // down edge
+			pickable.selectUp = true;  // rising edge
+			currentPick = entity;
+		}
 	}
 
 	@Override
@@ -42,10 +59,15 @@ public class RayPicker extends IteratingSystem implements InputProcessor {
 	public boolean keyTyped(char character) { return false; }
 
 	@Override
-	public boolean touchDown(int screenX, int screenY, int pointer, int button) { return false; }
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		this.pcked = getObject(screenX, screenY);
+		return this.pcked >= 0;
+	}
 
 	@Override
-	public boolean touchUp(int screenX, int screenY, int pointer, int button) { return false; }
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) { 
+		return false;
+	}
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) { return false; }
