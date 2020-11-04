@@ -2,11 +2,13 @@ package io.oz.wnw.norm.A;
 
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 
 import io.oz.wnw.norm.WGame;
+import io.oz.xv.ecs.s.RayPicker;
 import io.oz.xv.utils.XVException;
 
 /**<p>3d wordnet overview (cubic treemap).</p>
@@ -46,6 +48,8 @@ public class ViewA1 extends ScreenAdapter {
 		camController = new CameraInputController(cam);
 		camController.translateUnits *= 10f;
 		Gdx.input.setInputProcessor(camController);
+		RayPicker rayPicker = stage.rayPicker();
+		Gdx.input.setInputProcessor(new InputMultiplexer(rayPicker, camController));
 	}
 
 	@Override

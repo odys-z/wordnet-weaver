@@ -31,15 +31,16 @@ public class StageA {
 
 	public ArrayList<SynsetInf> synsets;
 
-	private GlyphLib glyphs;
+	protected GlyphLib glyphs;
 
-	private MyWeaver me;
+	protected MyWeaver me;
 
-	private PooledEngine ecs;
+	protected PooledEngine ecs;
+	public PooledEngine engine() { return ecs; }
 
-	public PooledEngine engine() {
-		return ecs;
-	}
+	protected RayPicker rayPicker;
+	public RayPicker rayPicker() { return rayPicker; }
+
 
 	public StageA(MyWeaver me) {
 		this.me = me;
@@ -49,7 +50,9 @@ public class StageA {
 
 	public void init(ViewA1 viewA1) {
 		// setup objects
-		ecs.addSystem(new RayPicker());
+		rayPicker = new RayPicker(viewA1.cam());
+		ecs.addSystem(rayPicker);
+
 		// tween before affine
 		ecs.addSystem(new SysAffine());
 		ecs.addSystem(new SysModelRenderer(viewA1.cam()));
@@ -99,5 +102,6 @@ public class StageA {
 	public void update(float delta) {
 		ecs.update(delta);
 	}
+
 
 }
