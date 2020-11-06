@@ -3,6 +3,8 @@ package io.oz.xv.ecs.c;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.math.Vector3;
 
+import io.oz.xv.ecs.s.RayPicker.PickingShape;
+
 /**Basically the Shape of this <a href='https://xoppa.github.io/blog/using-collision-shapes/'>
  * tutorial</a>'s
  * <a href='https://github.com/xoppa/blog/blob/master/tutorials/src/com/xoppa/blog/libgdx/g3d/shapes/step4/ShapeTest.java'>
@@ -13,6 +15,7 @@ import com.badlogic.gdx.math.Vector3;
 public class RayPickable implements Component {
 	public Vector3 center;
 	public Vector3 dimension;
+	public PickingShape pickingShape;
 	public int id;
 	/** on selected events fired */
 	public boolean selectUp;

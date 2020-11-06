@@ -27,10 +27,6 @@ public class WShader extends BaseShader implements Shader {
 		this.flag = flag;
 	}
 
-//	public WShader uniforms(XUniforms uniforms) {
-//		throw new IllegalArgumentException("Need this?");
-//	}
-
 	@Override
 	public void init() {
 		super.init(program, null);
