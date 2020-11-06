@@ -8,7 +8,9 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 
 import io.oz.xv.ecs.c.Obj3;
@@ -16,7 +18,7 @@ import io.oz.xv.ecs.c.RayPickable;
 
 public class RayPicker extends EntitySystem implements InputProcessor {
 	public enum PickingShape {
-
+		xzRect, xyRect, ellipse, box, sphere, xzHexaprism, ellipsoid
 	}
 
 	private static int uuid = 0;
@@ -61,6 +63,7 @@ public class RayPicker extends EntitySystem implements InputProcessor {
 			lastPickable.deselectDown = false;
 			lastPickable = null;
 		}
+
 		if (currentPicked != null) {
 			currentPicked.selectUp = false;
 			
@@ -78,6 +81,7 @@ public class RayPicker extends EntitySystem implements InputProcessor {
 					if (pickingId == pick.id) {
 						lastPickable = currentPicked;
 						currentPicked = pick;
+						currentPicked.selectUp = true;
 						pickingId = -1;
 						break;
 					}
@@ -115,7 +119,7 @@ public class RayPicker extends EntitySystem implements InputProcessor {
 			if (pickable == null) continue;
 
 			Matrix4 t = obj3.modInst.transform;
-			float dist2 = intersects(ray, t, pickable);
+			float dist2 = intersects(ray, t, pickable, obj3);
 			if (dist2 >= 0 && (distance < 0f || dist2 < distance)) { 
 				result = pickable.id;
 				distance = dist2;
@@ -125,8 +129,25 @@ public class RayPicker extends EntitySystem implements InputProcessor {
 		return result;
 	}
 
-	private float intersects(Ray ray, Matrix4 t, RayPickable p) {
-		return -1;
+	static private Vector3 _v3 = new Vector3();
+	static private float intersects(Ray ray, Matrix4 trans, RayPickable p, Obj3 obj3) {
+		// TODO extending other shapes
+		trans.getTranslation(_v3).add(obj3.pos);
+		final float len = ray.direction.dot(_v3.x - ray.origin.x, _v3.y - ray.origin.y, _v3.z - ray.origin.z);
+		if (len < 0f)
+			return -1f;
+
+		if (p.pickingShape == PickingShape.sphere) {
+			float dist2 = _v3.dst2(ray.origin.x + ray.direction.x * len,
+					ray.origin.y + ray.direction.y * len, ray.origin.z + ray.direction.z * len);
+			return (dist2 <= p.radius * p.radius) ? dist2 : -1f;
+		}
+		else if (p.pickingShape == PickingShape.box) {
+			if (Intersector.intersectRayBoundsFast(ray, _v3, p.whd)) {
+                return _v3.dst2(ray.origin.x + ray.direction.x * len, ray.origin.y + ray.direction.y * len, ray.origin.z + ray.direction.z * len);
+            }
+		}
+		return -1f;
 	}
 
 	@Override

@@ -13,10 +13,12 @@ import io.oz.xv.ecs.s.RayPicker.PickingShape;
  * @author Odys Zhou
  */
 public class RayPickable implements Component {
-	public Vector3 center;
-	public Vector3 dimension;
-	public PickingShape pickingShape;
 	public int id;
+	public PickingShape pickingShape;
+
+	public float radius;
+	public Vector3 whd;
+
 	/** on selected events fired */
 	public boolean selectUp;
 	/** on deselected events fired */
