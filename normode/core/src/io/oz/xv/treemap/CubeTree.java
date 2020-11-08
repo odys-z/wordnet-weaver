@@ -25,6 +25,7 @@ import io.oz.xv.ecs.c.Affines;
 import io.oz.xv.ecs.c.Obj3;
 import io.oz.xv.ecs.c.RayPickable;
 import io.oz.xv.ecs.s.RayPicker;
+import io.oz.xv.ecs.s.RayPicker.PickingShape;
 import io.oz.xv.gdxpatch.utils.QuadShapeBuilder;
 import io.oz.xv.gdxpatch.utils.XModelBuilder;
 import io.oz.xv.material.CubeSkinMat;
@@ -182,6 +183,8 @@ public class CubeTree {
 		
 		RayPickable pickable = ecs.createComponent(RayPickable.class);
 		pickable.id = RayPicker.uuId();
+		pickable.pickingShape = PickingShape.box;
+		pickable.whd = obj3.modInst.calculateBoundingBox(pickable.whd);
 		eLemma.add(pickable);
 
 		HashMap<String,WMemory> memory = si.getMemory();

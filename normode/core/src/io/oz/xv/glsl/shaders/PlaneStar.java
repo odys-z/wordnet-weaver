@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
-import com.badlogic.gdx.math.Matrix4;
 
 import io.oz.xv.glsl.Glsl.ShaderFlag;
 import io.oz.xv.glsl.WShader;
@@ -17,9 +16,10 @@ public class PlaneStar extends WShader {
 	protected int u_tex0 = register("u_tex0");
 
 	/**For translate plane facing scring,
-	 * see https://stackoverflow.com/a/5487981 */
+	 * see https://stackoverflow.com/a/5487981
 	protected int u_shiftM4 = register("u_shiftM4");
 	protected Matrix4 shiftM4 = new Matrix4();
+	 * */
 
 	static String vs;
 	static String fs;

@@ -1,7 +1,7 @@
 package io.oz.xv.ecs.c;
 
 import com.badlogic.ashley.core.Component;
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.BoundingBox;
 
 import io.oz.xv.ecs.s.RayPicker.PickingShape;
 
@@ -17,10 +17,11 @@ public class RayPickable implements Component {
 	public PickingShape pickingShape;
 
 	public float radius;
-	public Vector3 whd;
+	public BoundingBox whd = new BoundingBox();
 
+	public boolean selected = false;
 	/** on selected events fired */
-	public boolean selectUp;
+	public boolean selectUp = false;
 	/** on deselected events fired */
-	public boolean deselectDown;
+	public boolean deselectDown = false;
 }

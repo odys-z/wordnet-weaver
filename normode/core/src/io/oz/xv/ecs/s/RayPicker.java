@@ -56,6 +56,11 @@ public class RayPicker extends EntitySystem implements InputProcessor {
 		entities = null;
 	}
 	
+	/**<p>Set {@link #currentPicked} &amp; {@link #lastPickable}.</p>
+	 * As touching / mouse listening changed {@link #pickingId}, this is where the
+	 * picking events been raised and selected entity changed.
+	 * @see com.badlogic.ashley.core.EntitySystem#update(float)
+	 */
 	@Override
 	public void update(float deltaTime) {
 		// 1. clear events
@@ -79,7 +84,10 @@ public class RayPicker extends EntitySystem implements InputProcessor {
 				for (Entity e : entities) {
 					RayPickable pick = e.getComponent(RayPickable.class);
 					if (pickingId == pick.id) {
+						currentPicked.selected = false;
 						lastPickable = currentPicked;
+						
+						pick.selected = true;
 						currentPicked = pick;
 						currentPicked.selectUp = true;
 						pickingId = -1;
@@ -99,13 +107,21 @@ public class RayPicker extends EntitySystem implements InputProcessor {
 	@Override
 	public boolean keyTyped(char character) { return false; }
 
+	/**Find Pickable.id via ray picking.
+	 * @see com.badlogic.gdx.InputProcessor#touchDown(int, int, int, int)
+	 */
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		pickingId = getObject(screenX, screenY);
 		return this.pickingId >= 0;
 	}
 
-	private int getObject(int screenX, int screenY) {
+	/**Get Pickable.id with ray picking.
+	 * @param screenX
+	 * @param screenY
+	 * @return
+	 */
+	protected int getObject(int screenX, int screenY) {
 		if (entities.size() == 0) return -1;
 		Ray ray = cam.getPickRay(screenX, screenY);
 
@@ -130,20 +146,23 @@ public class RayPicker extends EntitySystem implements InputProcessor {
 	}
 
 	static private Vector3 _v3 = new Vector3();
+	static private Vector3 _v3_1 = new Vector3();
+//	static private Vector3 _v3_2 = new Vector3();
+
 	static private float intersects(Ray ray, Matrix4 trans, RayPickable p, Obj3 obj3) {
-		// TODO extending other shapes
 		trans.getTranslation(_v3).add(obj3.pos);
 		final float len = ray.direction.dot(_v3.x - ray.origin.x, _v3.y - ray.origin.y, _v3.z - ray.origin.z);
 		if (len < 0f)
 			return -1f;
 
+		// TODO extending other shapes
 		if (p.pickingShape == PickingShape.sphere) {
 			float dist2 = _v3.dst2(ray.origin.x + ray.direction.x * len,
 					ray.origin.y + ray.direction.y * len, ray.origin.z + ray.direction.z * len);
 			return (dist2 <= p.radius * p.radius) ? dist2 : -1f;
 		}
 		else if (p.pickingShape == PickingShape.box) {
-			if (Intersector.intersectRayBoundsFast(ray, _v3, p.whd)) {
+			if (Intersector.intersectRayBoundsFast(ray, _v3, p.whd.getDimensions(_v3_1))) {
                 return _v3.dst2(ray.origin.x + ray.direction.x * len, ray.origin.y + ray.direction.y * len, ray.origin.z + ray.direction.z * len);
             }
 		}
