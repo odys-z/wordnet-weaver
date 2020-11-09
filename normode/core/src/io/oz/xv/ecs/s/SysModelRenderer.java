@@ -13,8 +13,6 @@ import com.badlogic.gdx.graphics.g3d.ModelBatch;
 
 import io.oz.xv.ecs.c.Affines;
 import io.oz.xv.ecs.c.Obj3;
-import io.oz.xv.ecs.c.RayPickable;
-import io.oz.xv.ecs.c.Visual;
 import io.oz.xv.gdxpatch.XShaderProvider;
 
 public class SysModelRenderer extends EntitySystem {
@@ -28,16 +26,12 @@ public class SysModelRenderer extends EntitySystem {
 	private PerspectiveCamera cam;
 	
 	private ComponentMapper<Obj3> mObj3;
-	private ComponentMapper<RayPickable> mRaypick;
-	private ComponentMapper<Visual> mVisual;
 
 	private ImmutableArray<Entity> entities;
 	
 	public SysModelRenderer(PerspectiveCamera camera) {
 		super();
 		mObj3 = ComponentMapper.getFor(Obj3.class);
-		mVisual = ComponentMapper.getFor(Visual.class);
-		mRaypick = ComponentMapper.getFor(RayPickable.class);
 
 		modelBatch = new ModelBatch(new XShaderProvider());
 		this.cam = camera;
@@ -50,7 +44,7 @@ public class SysModelRenderer extends EntitySystem {
 	
 	@Override
 	public void update(float deltaTime) {
-		super.update(deltaTime);
+		// super.update(deltaTime);
 
 		Gdx.gl.glViewport(0, 0, Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight());
 		Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -63,27 +57,12 @@ public class SysModelRenderer extends EntitySystem {
 		for (int i = 0; i < entities.size(); ++i) {
 			Entity entity = entities.get(i);
 			Obj3 obj3 = mObj3.get(entity);
-			RayPickable pick = mRaypick.get(entity);
-			Visual visual = mVisual.get(entity);
-			if (pick != null && visual != null)
-				if (pick.selectUp)
-					turnOn(visual);
-				else turnOff(visual);
+
 			modelBatch.render(obj3.modInst);
 			if (obj3.orthoFace != null)
 				modelBatch.render(obj3.orthoFace);
 		}
 		modelBatch.end();
-	}
-
-	private void turnOff(Visual visual) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	private void turnOn(Visual visual) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 }
