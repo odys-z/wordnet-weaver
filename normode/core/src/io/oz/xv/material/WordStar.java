@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g3d.Attribute;
 import com.badlogic.gdx.graphics.g3d.attributes.BlendingAttribute;
 
+import io.oz.xv.ecs.c.Visual;
 import io.oz.xv.glsl.WShader;
 import io.oz.xv.glsl.shaders.PlaneStar;
 
@@ -12,11 +13,16 @@ public class WordStar extends XMaterial {
 	private static final Attribute attr = new BlendingAttribute(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 
 	public WordStar() {
-		super("ws", starShader(), attr);
+		super("ws", attr);
+		// shader(starShader());
 	}
 
-	private static WShader starShader() {
-		PlaneStar s = new PlaneStar();
+	public static WShader starShader(Visual visual) {
+//		Visual wordVisual = new Visual();
+//		wordVisual.uniforms.put(u_alpha, 1f);
+
+		visual.uniforms.put(u_alpha, 1f);
+		PlaneStar s = new PlaneStar(visual);
 		s.init();
 		return s;
 	}

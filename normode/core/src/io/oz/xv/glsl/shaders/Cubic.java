@@ -37,8 +37,6 @@ public class Cubic extends WShader {
 
 		uAlpha = 0.5f;
 
-
-
 		Pixmap pixmap;
 		pixmap = new Pixmap(256, 256, Format.RGBA8888);
 		pixmap.setColor(0.1f, 0.1f, 0.1f, 1);

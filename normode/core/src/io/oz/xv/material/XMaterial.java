@@ -3,7 +3,7 @@ package io.oz.xv.material;
 import com.badlogic.gdx.graphics.g3d.Attribute;
 import com.badlogic.gdx.graphics.g3d.Material;
 
-import io.oz.xv.glsl.Glsl.ShaderFlag;
+import io.oz.xv.ecs.c.Visual;
 import io.oz.xv.glsl.WShader;
 
 /**<p>Design Memo:</p>
@@ -16,7 +16,6 @@ import io.oz.xv.glsl.WShader;
  *
  */
 public class XMaterial extends Material {
-	private ShaderFlag acceptShader;
 
 	@Override
 	public Material copy() {
@@ -28,26 +27,32 @@ public class XMaterial extends Material {
 		return (other instanceof XMaterial) && ((other == this) || ((((XMaterial)other).id.equals(id)) && super.equals(other)));
 	}
 
-	protected WShader shader;
+	// protected WShader shader;
+
+	/** XMaterial new is actually a glue layer of ecs and gdx material */
+	private Visual visual;
 
 	/**Create XMaterial with shader xshader.
 	 * @param matId material id
 	 * @param xshader
 	 * @param attr
 	 */
-	public XMaterial(String matId, WShader xshader, Attribute... attr) {
+	public XMaterial(String matId, Attribute... attr) {
 		super(matId, attr);
-		this.shader = xshader;
-		acceptShader = xshader.flag();
 	}
 
 	public XMaterial(XMaterial from) {
 		super(from.id, from);
-		this.shader = from.shader();
+		this.visual = clone(from.visual);
+	}
+
+	public XMaterial visual(Visual v) {
+		this.visual = v;
+		return this;
 	}
 
 	public WShader shader() {
-		return this.shader;
+		return this.visual.shader;
 	}
 
 	/**Can this material been rendered by wShader?
@@ -56,7 +61,13 @@ public class XMaterial extends Material {
 	 * @return
 	 */
 	public boolean acceptShader(WShader wShader) {
-		return acceptShader == wShader.flag();
+		return visual.acceptShader == wShader.flag();
 	}
 
+	private Visual clone(Visual from) {
+		visual = new Visual();
+		visual.uniforms = from.uniforms; // really?
+		visual.acceptShader = from.acceptShader;
+		return visual;
+	}
 }

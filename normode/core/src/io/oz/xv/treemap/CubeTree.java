@@ -24,6 +24,7 @@ import io.oz.wnw.ecs.cmp.ds.AffineType;
 import io.oz.xv.ecs.c.Affines;
 import io.oz.xv.ecs.c.Obj3;
 import io.oz.xv.ecs.c.RayPickable;
+import io.oz.xv.ecs.c.Visual;
 import io.oz.xv.ecs.s.RayPicker;
 import io.oz.xv.ecs.s.RayPicker.PickingShape;
 import io.oz.xv.gdxpatch.utils.QuadShapeBuilder;
@@ -99,7 +100,12 @@ public class CubeTree {
 	public static void init(String font) {
 		glyphs = new GlyphLib(font == null ? GlyphLib.defaultFnt : font, false);
 		groundSkin = new CubeSkinMat("cube-skin");
+
+		Visual vStar = new Visual();
 		starMatrl = new WordStar();
+		vStar.shader = WordStar.starShader(vStar);
+		starMatrl.visual(vStar);
+
 		_colr = new Color();
 	}
 

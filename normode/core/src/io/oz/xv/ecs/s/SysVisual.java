@@ -8,6 +8,11 @@ import com.badlogic.ashley.utils.ImmutableArray;
 import io.oz.xv.ecs.c.RayPickable;
 import io.oz.xv.ecs.c.Visual;
 
+/**Visual state manager, where {@link Visual} is roughly equivalent of material, but more flexible.
+ * 
+ * @author Odys Zhou
+ *
+ */
 public class SysVisual extends EntitySystem {
 
 	private ImmutableArray<Entity> entities;
@@ -26,9 +31,14 @@ public class SysVisual extends EntitySystem {
 			RayPickable pick = mRaypick.get(entity);
 			Visual visual = mVisual.get(entity);
 			if (pick != null && visual != null)
-				if (pick.selectUp)
+				if (pick.selectUp) {
 					selectOn(visual);
-				else selectOff(visual);
+					break; // should only one
+				}
+				else if (pick.deselectDown) {
+					selectOff(visual);
+					break; // should only one
+				}
 		}
 	}
 
