@@ -17,6 +17,8 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.StreamUtils;
 
+import io.oz.xv.ecs.c.Visual;
+import io.oz.xv.glsl.Glsl;
 import io.oz.xv.glsl.Glsl.ShaderFlag;
 import io.oz.xv.material.XMaterial;
 
@@ -57,15 +59,27 @@ public class GlyphLib implements Disposable {
     /**Bind string characters as a text line (page?) - the plane instance for rendering.<br>
      * - set uv of texture page to vertex info.
      * 
-     * @param str
+     * @param name
      * @param color
      * @param texId OpenGL texture id, parameter of GL20.glActiveTexture(int)
      * @return the text model
      */
-	public ModelInstance bindText(String str, Color color) {
-        XMaterial ink = Inkstone.colorful(str); 
+	public ModelInstance bindText(String name, Color color) {
+        XMaterial ink = Inkstone.colorful(name); 
 
-		Paragraph p = new Paragraph(str, color, ink);
+		Paragraph p = new Paragraph(name, color, ink);
+		return p.buildMesh(data);
+	}
+
+	public ModelInstance bindText(String name, Color color, Visual v) {
+		v.name = name;
+		v.shader = new Glsl.Sdfont(v)
+							.smooth(0.06f).thin(0.5f)
+        					.white(GlyphLib.debug ? "0.5" : "0.0");
+		v.shader.init();
+		XMaterial ink = new XMaterial().visual(v);
+
+		Paragraph p = new Paragraph(name, color, ink);
 		return p.buildMesh(data);
 	}
 

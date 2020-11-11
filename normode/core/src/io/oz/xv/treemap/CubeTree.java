@@ -29,8 +29,9 @@ import io.oz.xv.ecs.s.RayPicker;
 import io.oz.xv.ecs.s.RayPicker.PickingShape;
 import io.oz.xv.gdxpatch.utils.QuadShapeBuilder;
 import io.oz.xv.gdxpatch.utils.XModelBuilder;
-import io.oz.xv.material.CubeSkinMat;
-import io.oz.xv.material.WordStar;
+import io.oz.xv.glsl.shaders.Cubic;
+import io.oz.xv.glsl.shaders.PlaneStar;
+import io.oz.xv.material.XMaterial;
 import io.oz.xv.material.bisheng.GlyphLib;
 import io.oz.xv.utils.XVException;
 
@@ -60,9 +61,9 @@ public class CubeTree {
 		return uuid++;
 	}
 
-	private static CubeSkinMat groundSkin;
+	private static XMaterial groundSkin;
 
-	private static WordStar starMatrl;
+	private static XMaterial starMatrl;
 
 	private static Color _colr;
 
@@ -99,12 +100,18 @@ public class CubeTree {
 	 */
 	public static void init(String font) {
 		glyphs = new GlyphLib(font == null ? GlyphLib.defaultFnt : font, false);
-		groundSkin = new CubeSkinMat("cube-skin");
+
+		Visual vCubic = new Visual();
+		Cubic c = new Cubic(vCubic);
+		c.init();
+		vCubic.shader = c;
+		groundSkin = new XMaterial("cube-skin").visual(vCubic);
 
 		Visual vStar = new Visual();
-		starMatrl = new WordStar();
-		vStar.shader = WordStar.starShader(vStar);
-		starMatrl.visual(vStar);
+		PlaneStar s = new PlaneStar(vStar);
+		s.init();
+		vStar.shader = s;
+		starMatrl = new XMaterial().visual(vStar);
 
 		_colr = new Color();
 	}
@@ -164,7 +171,7 @@ public class CubeTree {
 	 * @param context
 	 * @return context
 	 */
-	private static Space2dContext createCube(SynsetInf si, Space2dContext context) {
+	static Space2dContext createCube(SynsetInf si, Space2dContext context) {
 		if (si == null)
 			return context;
 
@@ -180,7 +187,8 @@ public class CubeTree {
 		eLemma.add(wrd);
 
 		Obj3 obj3 = ecs.createComponent(Obj3.class);
-		obj3.modInst = glyphs.bindText(wrd.word, wrd.color);
+		Visual lemVis = new Visual();
+		obj3.modInst = glyphs.bindText(wrd.word, wrd.color, lemVis );
 		eLemma.add(obj3);
 
 		Affines aff = ecs.createComponent(Affines.class);

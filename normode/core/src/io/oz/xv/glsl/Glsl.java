@@ -6,8 +6,10 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.MathUtils;
 
 import io.oz.wnw.norm.Assets;
+import io.oz.xv.ecs.c.Visual;
 import io.oz.xv.glsl.shaders.GlChunks;
 import io.oz.xv.glsl.shaders.PhongShadow;
+import io.oz.xv.glsl.shaders.WShader;
 
 /**Shader Factory - factory pattern replacing js style x-visual/xglsl.
  * 
@@ -56,7 +58,7 @@ public class Glsl {
 		);
 
 		public Test() {
-			super(ShaderFlag.test);
+			super(ShaderFlag.test, null);
 			program = new ShaderProgram(vs, fs);
 		}
 	}
@@ -75,7 +77,7 @@ public class Glsl {
 			"void main() { gl_FragColor = vec4(0.0, 0.2, 0.8, 0.75); }";
 
 		public Simple() {
-			super(ShaderFlag.simple);
+			super(ShaderFlag.simple, null);
 			program = new ShaderProgram(vs, fs);
 		}
 	}
@@ -104,7 +106,7 @@ public class Glsl {
 			"}");
 
 		public Tex0( ) {
-			super(ShaderFlag.tex0);
+			super(ShaderFlag.tex0, null);
 			program = new ShaderProgram(vs, fs);
 		}
 	}
@@ -121,8 +123,8 @@ public class Glsl {
 		/** White area alpha - for debug */
 		private String whiteAlpha = "0.0";
 
-		public Sdfont() {
-			super(ShaderFlag.sdfont);
+		public Sdfont(Visual visual) {
+			super(ShaderFlag.sdfont, visual);
 
 			String vs = String.format(Gdx.files.internal(String.format("glsl/%s.fs", flag.path())).readString(),
 							whiteAlpha);
@@ -175,16 +177,14 @@ public class Glsl {
 				s = new Tex0();
 				break;
 			case sdfont:
-				s = new Sdfont();
+				// don't use this if in ECS mode - must providing a Visual instance
+				s = new Sdfont(null);
 				break;
 			case phong:
 				s = new PhongShadow();
 				break;
-//			case cubic:
-//				s = new Cubic();
-//				break;
 			default:
-				throw new IllegalArgumentException("TODO");
+				throw new IllegalArgumentException("Not supported shader type - may be user should create the shader.");
 		}
 		s.init();
 		return s;

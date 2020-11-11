@@ -1,4 +1,4 @@
-package io.oz.xv.glsl;
+package io.oz.xv.glsl.shaders;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g3d.Shader;
 import com.badlogic.gdx.graphics.g3d.shaders.BaseShader;
 import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
 
+import io.oz.xv.ecs.c.Visual;
 import io.oz.xv.glsl.Glsl.ShaderFlag;
 import io.oz.xv.material.XMaterial;
 
@@ -18,13 +19,26 @@ public class WShader extends BaseShader implements Shader {
 	protected int u_vM4 = -1;
 	protected int u_modelM4 = register("u_modelMat4");
 
-	ShaderFlag flag;
+	protected ShaderFlag flag;
+	Visual visual;
+	XUniforms unis;
 
 	public ShaderFlag flag() { return flag; }
 	
-	public WShader(ShaderFlag flag) {
+	/**
+	 * @param flag shader flag for testing with {@link #canRender(Renderable)}.
+	 * @param visual given Visual that ecs tweening, moving or updating
+	 * - can be null if not for ECS pattern.
+	 */
+	public WShader(ShaderFlag flag, Visual visual) {
 		super();
 		this.flag = flag;
+		if (visual == null) {
+			// this is not a ECS material
+			this.visual = new Visual();
+		}
+		this.visual = visual;
+		this.unis = new XUniforms(this, visual);
 	}
 
 	@Override
@@ -58,9 +72,11 @@ public class WShader extends BaseShader implements Shader {
 		context.setDepthTest(GL20.GL_LEQUAL, 0f, 1f);
 		context.setDepthMask(true);
 		camera.update();
-		set(u_vpM4, camera.combined);
-		if (u_vM4 >= 0)
-			set(u_vM4, camera.view);
+
+//		set(u_vpM4, camera.combined);
+//		if (u_vM4 >= 0)
+//			set(u_vM4, camera.view);
+		unis.m4(u_vpM4, camera.combined);
 	}
 	
 	@Override

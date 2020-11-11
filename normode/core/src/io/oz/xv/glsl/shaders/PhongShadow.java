@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
 
 import io.oz.xv.glsl.Glsl.ShaderFlag;
-import io.oz.xv.glsl.WShader;
+
 import static net.andreinc.aleph.AlephFormatter.str;
 
 /**General Blinn-Phong shader reduced from gdx DefaultShader with:<pre>
@@ -35,8 +35,8 @@ public class PhongShadow extends WShader {
 	private String vs;
 	private String fs;
 
-	public PhongShadow( ) {
-		super(ShaderFlag.phong);
+	public PhongShadow() {
+		super(ShaderFlag.phong, null);
 		// https://github.com/nomemory/aleph-formatter
 		vs = Gdx.files.classpath("io/oz/xv/glsl/shaders/xlight.vert.glsl").readString();
 		fs = Gdx.files.classpath("io/oz/xv/glsl/shaders/xlight.frag.glsl").readString();

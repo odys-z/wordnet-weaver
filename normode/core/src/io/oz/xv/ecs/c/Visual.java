@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.utils.IntMap;
 
 import io.oz.xv.glsl.Glsl.ShaderFlag;
-import io.oz.xv.glsl.WShader;
+import io.oz.xv.glsl.shaders.WShader;
 
 /**A equivalent and extension of material.
  * 
@@ -16,5 +16,7 @@ public class Visual implements Component {
 
 	public ShaderFlag acceptShader;
 	public WShader shader;
+
+	public String name;
 
 }

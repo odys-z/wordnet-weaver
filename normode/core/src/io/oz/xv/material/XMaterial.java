@@ -1,10 +1,13 @@
 package io.oz.xv.material;
 
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g3d.Attribute;
 import com.badlogic.gdx.graphics.g3d.Material;
+import com.badlogic.gdx.graphics.g3d.attributes.BlendingAttribute;
+import com.badlogic.gdx.utils.IntMap;
 
 import io.oz.xv.ecs.c.Visual;
-import io.oz.xv.glsl.WShader;
+import io.oz.xv.glsl.shaders.WShader;
 
 /**<p>Design Memo:</p>
  * 1. Material has a default shader. <br>
@@ -27,8 +30,6 @@ public class XMaterial extends Material {
 		return (other instanceof XMaterial) && ((other == this) || ((((XMaterial)other).id.equals(id)) && super.equals(other)));
 	}
 
-	// protected WShader shader;
-
 	/** XMaterial new is actually a glue layer of ecs and gdx material */
 	private Visual visual;
 
@@ -44,6 +45,10 @@ public class XMaterial extends Material {
 	public XMaterial(XMaterial from) {
 		super(from.id, from);
 		this.visual = clone(from.visual);
+	}
+
+	public XMaterial() {
+		super(new BlendingAttribute(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA));
 	}
 
 	public XMaterial visual(Visual v) {
@@ -66,8 +71,12 @@ public class XMaterial extends Material {
 
 	private Visual clone(Visual from) {
 		visual = new Visual();
-		visual.uniforms = from.uniforms; // really?
-		visual.acceptShader = from.acceptShader;
+		if (from != null) {
+			visual.uniforms = new IntMap<Object>(from.uniforms);
+			visual.acceptShader = from.acceptShader;
+			visual.shader = from.shader;
+			visual.name = new String(from.name == null ? "" : from.name);
+		}
 		return visual;
 	}
 }

@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 
 import io.oz.xv.ecs.c.Visual;
 import io.oz.xv.glsl.Glsl.ShaderFlag;
-import io.oz.xv.glsl.WShader;
 
 public class PlaneStar extends WShader {
 	protected int u_alpha = register("u_alpha");
@@ -36,7 +35,7 @@ public class PlaneStar extends WShader {
 	 * @param visual given Visual that ecs tweening, moving or updating
 	 */
 	public PlaneStar(Visual visual) {
-		super(ShaderFlag.cubic);
+		super(ShaderFlag.cubic, visual);
 		vs = Gdx.files.classpath("io/oz/xv/glsl/shaders/plane-star2.vert.glsl").readString();
 		fs = Gdx.files.classpath("io/oz/xv/glsl/shaders/plane-star.frag.glsl").readString();
 
@@ -50,9 +49,6 @@ public class PlaneStar extends WShader {
 		enableViewM4();
 		super.init();
 
-		// uAlpha = 1.0f;
-		xuni.f1(visual, u_alpha, 1f);
-
 		Pixmap pixmap;
 		pixmap = new Pixmap(256, 256, Format.RGBA8888);
 		pixmap.setColor(0.0f, 0.0f, 1f, 1);
@@ -61,7 +57,12 @@ public class PlaneStar extends WShader {
 		pixmap.drawLine(0, 0, 256, 256);
 		pixmap.drawLine(256, 0, 0, 256);
 		tex = new Texture(pixmap);
+
 		// int uTex0 = context.textureBinder.bind(tex);
+		// uAlpha = 1.0f;
+		xuni.f1(u_alpha, 1f);
+//			.sampler2D(u_tex0, tex);
+
 		pixmap.dispose();
 	}
 	
@@ -69,12 +70,13 @@ public class PlaneStar extends WShader {
 	public void begin(Camera camera, RenderContext context) {
 		super.begin(camera, context);
 
-		// set(u_alpha, uAlpha);
-
-		// int uTex0 = context.textureBinder.bind(tex);
-		// set(u_tex0, uTex0);
+		// a shader is updating it's uniforms
+		xuni.f1(u_alpha);
 		
-		xuni.f1(u_alpha)
-			.sampler2D(u_tex0, tex);
+		if (tex != null) {
+			xuni.sampler2D(u_tex0, tex, context); // now shader has context
+			tex = null;
+		}
+		else xuni.sampler2D(u_tex0);
 	}
 }

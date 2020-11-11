@@ -7,9 +7,9 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import io.oz.xv.glsl.Glsl;
-import io.oz.xv.glsl.WShader;
 import io.oz.xv.material.XMaterial;
 import io.oz.xv.glsl.Glsl.ShaderFlag;
+import io.oz.xv.glsl.shaders.WShader;
 
 /**A modifed version of gdx <a href='https://github.com/libgdx/libgdx/blob/master/gdx/src/com/badlogic/gdx/graphics/g3d/utils/BaseShaderProvider.java'>
  * BaseShaderProvider</a>

@@ -1,8 +1,6 @@
 package io.oz.xv.material.bisheng;
 
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g3d.attributes.BlendingAttribute;
-
+import io.oz.xv.ecs.c.Visual;
 import io.oz.xv.glsl.Glsl;
 import io.oz.xv.glsl.Glsl.Sdfont;
 import io.oz.xv.glsl.Glsl.ShaderFlag;
@@ -14,12 +12,17 @@ import io.oz.xv.material.XMaterial;
  */
 public class Inkstone {
 
+	/** Generate a default material with visual not exposed to ecs.
+	 * @param name
+	 * @return
+	 */
 	public static XMaterial colorful(String name) {
-		return new XMaterial(name,
-        		((Sdfont) Glsl.wshader(ShaderFlag.sdfont)).smooth(0.06f).thin(0.5f)
-        					  .white(GlyphLib.debug ? "0.5" : "0.0"),
-        		new BlendingAttribute(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA));
-
+		Visual v = new Visual();
+		v.name = name;
+		v.shader = ((Sdfont) Glsl.wshader(ShaderFlag.sdfont)).smooth(0.06f).thin(0.5f)
+        					  .white(GlyphLib.debug ? "0.5" : "0.0");
+		v.shader.init();
+		return new XMaterial().visual(v);
 	}
 
 	/**TODO
@@ -27,9 +30,10 @@ public class Inkstone {
 	 * @return
 	 */
 	public static XMaterial pixel(String color) {
-		return new XMaterial(color,
-        		Glsl.wshader(ShaderFlag.test),
-        		new BlendingAttribute(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA));
+		Visual v = new Visual();
+		v.shader = Glsl.wshader(ShaderFlag.test);
+		v.shader.init();
+		return new XMaterial().visual(v);
 	}
 
 }

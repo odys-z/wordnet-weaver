@@ -8,8 +8,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 
+import io.oz.xv.ecs.c.Visual;
 import io.oz.xv.glsl.Glsl.ShaderFlag;
-import io.oz.xv.glsl.WShader;
 
 public class Cubic extends WShader {
 	protected int u_alpha = register("u_alpha");
@@ -24,8 +24,8 @@ public class Cubic extends WShader {
 	/** texture of u_tex0 */
 	Texture tex = null;
 
-	public Cubic() {
-		super(ShaderFlag.cubic);
+	public Cubic(Visual visual) {
+		super(ShaderFlag.cubic, visual);
 		vs = Gdx.files.classpath("io/oz/xv/glsl/shaders/cube-skin.vert.glsl").readString();
 		fs = Gdx.files.classpath("io/oz/xv/glsl/shaders/cube-skin.frag.glsl").readString();
 		program = new ShaderProgram(vs, fs);

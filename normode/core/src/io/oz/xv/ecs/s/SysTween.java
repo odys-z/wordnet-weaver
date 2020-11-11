@@ -6,6 +6,10 @@ import com.badlogic.ashley.systems.IteratingSystem;
 
 import io.oz.xv.ecs.c.Tweened;
 
+/**Tween driver for updating uniforms, transformation, time tick in shaders, and more.
+ * @author Odys Zhou
+ *
+ */
 public class SysTween extends IteratingSystem {
 
 	public SysTween() {
