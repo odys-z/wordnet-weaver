@@ -81,12 +81,17 @@ public class WShader extends BaseShader implements Shader {
 	
 	@Override
 	public void render(Renderable renderable) {
-		set(u_modelM4, renderable.worldTransform);
+		// set(u_modelM4, renderable.worldTransform);
+		unis.m4(u_modelM4, renderable.worldTransform);
 
 		// https://stackoverflow.com/questions/8594703/lwjgl-transparency
 		Gdx.gl.glEnable(GL20.GL_BLEND);
 		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 		renderable.meshPart.render(program);	
+	}
+
+	public void turnOn() {
+		// should been ovrriden by subclass
 	}
 
 }

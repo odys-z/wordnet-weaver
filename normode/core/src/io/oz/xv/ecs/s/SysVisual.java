@@ -7,9 +7,12 @@ import com.badlogic.ashley.utils.ImmutableArray;
 
 import io.oz.xv.ecs.c.RayPickable;
 import io.oz.xv.ecs.c.Visual;
+import io.oz.xv.glsl.Glsl.ShaderFlag;
 
-/**Visual state manager, where {@link Visual} is roughly equivalent of material, but more flexible.
+/**Visual state manager, where {@link Visual} is roughly equivalent of material,
+ * but with some extension.
  * 
+ * This system is not the only one modifying Visual component.
  * @author Odys Zhou
  *
  */
@@ -43,10 +46,10 @@ public class SysVisual extends EntitySystem {
 	}
 
 	private void selectOff(Visual visual) {
-		
 	}
 
 	private void selectOn(Visual visual) {
-		
+		// cheap solution: change color
+		visual.shader.turnOn();
 	}
 }
