@@ -90,8 +90,11 @@ public class WShader extends BaseShader implements Shader {
 		renderable.meshPart.render(program);	
 	}
 
-	public void turnOn() {
-		// should been ovrriden by subclass
+	/**Update visual, e.g. turn on when selected, should been ovrriden by subclasses.
+	 * @return
+	 */
+	public WShader setVisual(int cmd, float val) {
+		return this;
 	}
 
 }

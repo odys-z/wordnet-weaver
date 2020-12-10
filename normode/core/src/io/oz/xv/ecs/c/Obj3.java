@@ -18,6 +18,7 @@ import com.badlogic.gdx.math.Vector3;
 public class Obj3 implements Component {
 	/** needs to be decomposed and re-composed */
 	public boolean dirty = true;
+	/** Offsets ? */
 	public Vector3 pos = new Vector3();
 	public Vector3 scl = new Vector3(1f, 1f, 1f);
 	public Quaternion rot = new Quaternion();

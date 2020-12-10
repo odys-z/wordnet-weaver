@@ -10,7 +10,7 @@ import io.oz.xv.ecs.c.Visual;
  * 
  * @author Odys Zhou
  */
-class XUniforms {
+public class XUniforms {
 	/** the component usually used for driven by {@link io.oz.xv.ecs.s.SysTween SysTween}, etc. */
 	private Visual vis;
 	private WShader shader;
@@ -65,4 +65,9 @@ class XUniforms {
 		Matrix4 m = (Matrix4) vis.uniforms.get(name);
 		shader.set(name, m);
 	}
+
+//	public static Visual f1(Visual vis, int cmd, float val) {
+//		vis.shader.set(cmd, val);
+//		return vis;
+//	}
 }

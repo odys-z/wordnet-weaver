@@ -7,10 +7,10 @@ import com.badlogic.ashley.utils.ImmutableArray;
 
 import io.oz.xv.ecs.c.RayPickable;
 import io.oz.xv.ecs.c.Visual;
-import io.oz.xv.glsl.Glsl.ShaderFlag;
+import io.oz.xv.glsl.shaders.Cubic;
 
 /**Visual state manager, where {@link Visual} is roughly equivalent of material,
- * but with some extension.
+ * but with some extension (denotation).
  * 
  * This system is not the only one modifying Visual component.
  * @author Odys Zhou
@@ -18,9 +18,9 @@ import io.oz.xv.glsl.Glsl.ShaderFlag;
  */
 public class SysVisual extends EntitySystem {
 
-	private ImmutableArray<Entity> entities;
-	private ComponentMapper<RayPickable> mRaypick;
-	private ComponentMapper<Visual> mVisual;
+	ImmutableArray<Entity> entities;
+	ComponentMapper<RayPickable> mRaypick;
+	ComponentMapper<Visual> mVisual;
 	
 	SysVisual() {
 		mVisual = ComponentMapper.getFor(Visual.class);
@@ -46,10 +46,10 @@ public class SysVisual extends EntitySystem {
 	}
 
 	private void selectOff(Visual visual) {
+		 visual.shader.setVisual(Cubic.cmdTurnOn, 0);
 	}
 
 	private void selectOn(Visual visual) {
-		// cheap solution: change color
-		visual.shader.turnOn();
+		 visual.shader.setVisual(Cubic.cmdTurnOn, 1);
 	}
 }

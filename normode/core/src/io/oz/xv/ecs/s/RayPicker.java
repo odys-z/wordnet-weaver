@@ -69,6 +69,7 @@ public class RayPicker extends EntitySystem implements InputProcessor {
 			lastPickable = null;
 		}
 
+		// change selection
 		if (currentPicked != null) {
 			currentPicked.selectUp = false;
 			
@@ -81,18 +82,25 @@ public class RayPicker extends EntitySystem implements InputProcessor {
 			// change selection (pickingId >= 0)
 			else if (pickingId == currentPicked.id) {
 				currentPicked.deselectDown = true;
-				for (Entity e : entities) {
-					RayPickable pick = e.getComponent(RayPickable.class);
-					if (pickingId == pick.id) {
+			}
+		}
+		
+		if (pickingId > 0) {
+			for (Entity e : entities) {
+				// FIXME
+				// TODO dosn't have to do like this
+				RayPickable pick = e.getComponent(RayPickable.class);
+				if (pickingId == pick.id) {
+					if (currentPicked != null) {
 						currentPicked.selected = false;
 						lastPickable = currentPicked;
-						
-						pick.selected = true;
-						currentPicked = pick;
-						currentPicked.selectUp = true;
-						pickingId = -1;
-						break;
 					}
+					
+					pick.selected = true;
+					currentPicked = pick;
+					currentPicked.selectUp = true;
+					pickingId = -1;
+					break;
 				}
 			}
 		}
@@ -145,24 +153,24 @@ public class RayPicker extends EntitySystem implements InputProcessor {
 		return result;
 	}
 
-	static private Vector3 _v3 = new Vector3();
-	static private Vector3 _v3_1 = new Vector3();
+	static private Vector3 _v3a = new Vector3();
+	static private Vector3 _v3b = new Vector3();
 
 	static private float intersects(Ray ray, Matrix4 trans, RayPickable p, Obj3 obj3) {
-		trans.getTranslation(_v3).add(obj3.pos);
-		final float len = ray.direction.dot(_v3.x - ray.origin.x, _v3.y - ray.origin.y, _v3.z - ray.origin.z);
+		trans.getTranslation(_v3a).add(obj3.pos);
+		final float len = ray.direction.dot(_v3a.x - ray.origin.x, _v3a.y - ray.origin.y, _v3a.z - ray.origin.z);
 		if (len < 0f)
 			return -1f;
 
 		// TODO extending other shapes
 		if (p.pickingShape == PickingShape.sphere) {
-			float dist2 = _v3.dst2(ray.origin.x + ray.direction.x * len,
+			float dist2 = _v3a.dst2(ray.origin.x + ray.direction.x * len,
 					ray.origin.y + ray.direction.y * len, ray.origin.z + ray.direction.z * len);
 			return (dist2 <= p.radius * p.radius) ? dist2 : -1f;
 		}
 		else if (p.pickingShape == PickingShape.box) {
-			if (Intersector.intersectRayBoundsFast(ray, _v3, p.whd.getDimensions(_v3_1))) {
-                return _v3.dst2(ray.origin.x + ray.direction.x * len, ray.origin.y + ray.direction.y * len, ray.origin.z + ray.direction.z * len);
+			if (Intersector.intersectRayBoundsFast(ray, _v3a, p.whd.getDimensions(_v3b))) {
+                return _v3a.dst2(ray.origin.x + ray.direction.x * len, ray.origin.y + ray.direction.y * len, ray.origin.z + ray.direction.z * len);
             }
 		}
 		return -1f;

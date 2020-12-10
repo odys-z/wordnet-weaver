@@ -167,7 +167,9 @@ public class MultipleRenderTargetTest extends GdxTest {
 			light.vx = MathUtils.random(-10f, 10f);
 			light.vz = MathUtils.random(-10f, 10f);
 
-			MeshPartBuilder meshPartBuilder = modelBuilder.part("light", GL20.GL_TRIANGLES, VertexAttributes.Usage.Position | VertexAttributes.Usage.ColorPacked | VertexAttributes.Usage.Normal, new Material());
+			MeshPartBuilder meshPartBuilder = modelBuilder.part("light", GL20.GL_TRIANGLES,
+					VertexAttributes.Usage.Position | VertexAttributes.Usage.ColorPacked | VertexAttributes.Usage.Normal,
+					new Material());
 			meshPartBuilder.setColor(light.color.x, light.color.y, light.color.z, 1f);
 			meshPartBuilder.sphere(0.2f, 0.2f, 0.2f, 10, 10);
 
@@ -176,7 +178,9 @@ public class MultipleRenderTargetTest extends GdxTest {
 		}
 
 		modelBuilder.begin();
-		MeshPartBuilder meshPartBuilder = modelBuilder.part("floor", GL20.GL_TRIANGLES, VertexAttributes.Usage.Position | VertexAttributes.Usage.ColorPacked | VertexAttributes.Usage.Normal, new Material());
+		MeshPartBuilder meshPartBuilder = modelBuilder.part("floor", GL20.GL_TRIANGLES,
+				VertexAttributes.Usage.Position | VertexAttributes.Usage.ColorPacked | VertexAttributes.Usage.Normal,
+				new Material());
 		meshPartBuilder.setColor(0.2f, 0.2f, 0.2f, 1f);
 		meshPartBuilder.box(0, -0.1f, 0f, 20f, 0.1f, 20f);
 		floorInstance = new ModelInstance(modelBuilder.end());
