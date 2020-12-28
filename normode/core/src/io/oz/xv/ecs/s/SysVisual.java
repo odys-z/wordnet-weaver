@@ -8,7 +8,8 @@ import com.badlogic.ashley.utils.ImmutableArray;
 import io.oz.xv.ecs.c.RayPickable;
 import io.oz.xv.ecs.c.Visual;
 
-/**Visual state manager, where {@link Visual} is roughly equivalent of material, but more flexible.
+/**Visual state manager, where {@link Visual} is roughly equivalent of material,
+ * but with extended attributes like shader states, etc.
  * 
  * @author Odys Zhou
  *
@@ -43,10 +44,12 @@ public class SysVisual extends EntitySystem {
 	}
 
 	private void selectOff(Visual visual) {
-		
+		visual.uniforms.put(visual.shader.u_selected, 1);
+		visual.needsUpdateUniforms = true;
 	}
 
 	private void selectOn(Visual visual) {
-		
+		visual.uniforms.put(visual.shader.u_selected, 0);
+		visual.needsUpdateUniforms = true;
 	}
 }

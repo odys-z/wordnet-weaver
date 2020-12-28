@@ -31,6 +31,11 @@ class XUniforms {
 		return this;
 	}
 
+	/**FIXME what's this for?
+	 * @param name
+	 * @param f
+	 * @return
+	 */
 	public XUniforms f1(int name, float f) {
 		vis.uniforms.put(name, (Float)f);
 		shader.set(name, f );
@@ -50,6 +55,10 @@ class XUniforms {
 		return this;
 	}
 
+	/**FIXME what's this for?
+	 * @param texName
+	 * @return
+	 */
 	public XUniforms sampler2D(int texName) {
 		int texBound = (int)vis.uniforms.get(texName);
 		shader.set(texName, texBound);
@@ -61,6 +70,9 @@ class XUniforms {
 		shader.set(name, m);
 	}
 
+	/**FIXME what's this for?
+	 * @param name
+	 */
 	public void m4(int name) {
 		Matrix4 m = (Matrix4) vis.uniforms.get(name);
 		shader.set(name, m);

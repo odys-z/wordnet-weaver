@@ -14,8 +14,11 @@ import io.oz.xv.glsl.Glsl.ShaderFlag;
 import io.oz.xv.material.XMaterial;
 
 public class WShader extends BaseShader implements Shader {
+	/** uniform name of 'int u_selected' */
+	public int u_selected = -1;
+
 	protected int u_vpM4 = register("u_vpMat4");
-	/** u_viewM4 */
+	/** u_viewM4, enabled via {@link #enableViewM4()} */
 	protected int u_vM4 = -1;
 	protected int u_modelM4 = register("u_modelMat4");
 
@@ -39,6 +42,8 @@ public class WShader extends BaseShader implements Shader {
 		}
 		this.visual = visual;
 		this.unis = new XUniforms(this, visual);
+
+		u_selected = register("u_selected");
 	}
 
 	@Override

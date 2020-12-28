@@ -94,6 +94,9 @@ public class StageA {
 		return entity;
 	}
 
+	/**Create cubic tree of synsets.
+	 * @throws XVException
+	 */
 	void loadMyset() throws XVException {
 		CubeTree.init(null);
 		CubeTree.create(ecs, synsets);
