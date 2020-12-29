@@ -28,7 +28,7 @@ public class PlaneStar extends WShader {
 	static String vs;
 	static String fs;
 
-	XUniforms xuni;
+	XUniformer xuni;
 	public Visual visual;
 	// no obj3?
 
@@ -45,7 +45,7 @@ public class PlaneStar extends WShader {
 
 		this.visual = visual;
 		program = new ShaderProgram(vs, fs);
-		this.xuni = new XUniforms(this, visual);
+		this.xuni = new XUniformer(this, visual);
 	}
 	
 	@Override

@@ -33,23 +33,19 @@ public class SysVisual extends EntitySystem {
 			Visual visual = mVisual.get(entity);
 			if (pick != null && visual != null)
 				if (pick.selectUp) {
-					selectOn(visual);
+					uselect(visual, 1);
 					break; // should only one
 				}
 				else if (pick.deselectDown) {
-					selectOff(visual);
+					uselect(visual, 0);
 					break; // should only one
 				}
 		}
 	}
 
-	private void selectOff(Visual visual) {
-		visual.uniforms.put(visual.shader.u_selected, 1);
+	private void uselect(Visual visual, float selection) {
+		visual.uniforms.put(visual.shader.u_selected, selection);
 		visual.needsUpdateUniforms = true;
 	}
 
-	private void selectOn(Visual visual) {
-		visual.uniforms.put(visual.shader.u_selected, 0);
-		visual.needsUpdateUniforms = true;
-	}
 }

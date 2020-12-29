@@ -162,7 +162,7 @@ public class CubeTree {
 	}
 
 	/**
-	 * Create treemap node of a lemma.
+	 * Create lemma node of stars, word, etc.
 	 * <p>
 	 * This method will create an entity managed by ECS engine, no node returned.
 	 * </p>

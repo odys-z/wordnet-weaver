@@ -13,6 +13,13 @@ import io.oz.xv.ecs.c.Visual;
 import io.oz.xv.glsl.Glsl.ShaderFlag;
 import io.oz.xv.material.XMaterial;
 
+/**Common uniforms:
+ * 1. u_vpMat4
+ * 2. u_modelMat4
+ * 3, u_selected
+ * @author Odys Zhou
+ *
+ */
 public class WShader extends BaseShader implements Shader {
 	/** uniform name of 'int u_selected' */
 	public int u_selected = -1;
@@ -24,7 +31,7 @@ public class WShader extends BaseShader implements Shader {
 
 	protected ShaderFlag flag;
 	Visual visual;
-	XUniforms unis;
+	XUniformer unis;
 
 	public ShaderFlag flag() { return flag; }
 	
@@ -41,7 +48,7 @@ public class WShader extends BaseShader implements Shader {
 			this.visual = new Visual();
 		}
 		this.visual = visual;
-		this.unis = new XUniforms(this, visual);
+		this.unis = new XUniformer(this, visual);
 
 		u_selected = register("u_selected");
 	}
@@ -81,7 +88,10 @@ public class WShader extends BaseShader implements Shader {
 //		set(u_vpM4, camera.combined);
 //		if (u_vM4 >= 0)
 //			set(u_vM4, camera.view);
+
 		unis.m4(u_vpM4, camera.combined);
+		if (this.visual.needsUpdateUniforms)
+			unis.f1(u_selected);
 	}
 	
 	@Override
