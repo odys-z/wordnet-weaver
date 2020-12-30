@@ -43,6 +43,10 @@ public class SysVisual extends EntitySystem {
 		}
 	}
 
+	/**Set/reset uniform u_select.
+	 * @param visual
+	 * @param selection
+	 */
 	private void uselect(Visual visual, float selection) {
 		visual.uniforms.put(visual.shader.u_selected, selection);
 		visual.needsUpdateUniforms = true;
