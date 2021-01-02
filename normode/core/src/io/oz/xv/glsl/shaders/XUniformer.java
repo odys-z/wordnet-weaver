@@ -10,34 +10,39 @@ import io.oz.xv.ecs.c.Visual;
  * 
  * @author Odys Zhou
  */
-public class XUniforms {
+class XUniformer {
 	/** the component usually used for driven by {@link io.oz.xv.ecs.s.SysTween SysTween}, etc. */
 	private Visual vis;
 	private WShader shader;
 
-	public XUniforms(WShader shader, Visual visual) {
+	public XUniformer(WShader shader, Visual visual) {
 		this.shader = shader;
 		this.vis = visual;
 	}
 
-	public XUniforms f1(int name, Float f) {
+	public XUniformer f1(int name, Float f) {
 		vis.uniforms.put(name, (Float)f);
 		return this;
 	}
 
-	public XUniforms f1(int name) {
+	public XUniformer f1(int name) {
 		float f = (float)vis.uniforms.get(name);
 		shader.set(name, f );
 		return this;
 	}
 
-	public XUniforms f1(int name, float f) {
+	/**FIXME what's this for?
+	 * @param name
+	 * @param f
+	 * @return
+	 */
+	public XUniformer f1(int name, float f) {
 		vis.uniforms.put(name, (Float)f);
 		shader.set(name, f );
 		return this;
 	}
 
-	public XUniforms sampler2D(int texName, Texture tex, RenderContext context) {
+	public XUniformer sampler2D(int texName, Texture tex, RenderContext context) {
 		int texBound; 
 		if (!vis.uniforms.containsKey(texName)) {
 			texBound = context.textureBinder.bind(tex);
@@ -50,7 +55,11 @@ public class XUniforms {
 		return this;
 	}
 
-	public XUniforms sampler2D(int texName) {
+	/**FIXME what's this for?
+	 * @param texName
+	 * @return
+	 */
+	public XUniformer sampler2D(int texName) {
 		int texBound = (int)vis.uniforms.get(texName);
 		shader.set(texName, texBound);
 		return this;
@@ -61,6 +70,9 @@ public class XUniforms {
 		shader.set(name, m);
 	}
 
+	/**FIXME what's this for?
+	 * @param name
+	 */
 	public void m4(int name) {
 		Matrix4 m = (Matrix4) vis.uniforms.get(name);
 		shader.set(name, m);

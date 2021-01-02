@@ -13,6 +13,7 @@ import io.oz.xv.glsl.shaders.WShader;
  */
 public class Visual implements Component {
 	public IntMap<Object> uniforms = new IntMap<Object>();
+	public boolean needsUpdateUniforms = false;
 
 	public ShaderFlag acceptShader;
 	public WShader shader;

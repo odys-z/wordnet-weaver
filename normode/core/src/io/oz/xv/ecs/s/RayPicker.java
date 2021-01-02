@@ -157,7 +157,7 @@ public class RayPicker extends EntitySystem implements InputProcessor {
 	static private Vector3 _v3b = new Vector3();
 
 	static private float intersects(Ray ray, Matrix4 trans, RayPickable p, Obj3 obj3) {
-		trans.getTranslation(_v3a).add(obj3.pos);
+		trans.getTranslation(_v3a); // m4.col[3]
 		final float len = ray.direction.dot(_v3a.x - ray.origin.x, _v3a.y - ray.origin.y, _v3a.z - ray.origin.z);
 		if (len < 0f)
 			return -1f;

@@ -13,15 +13,25 @@ import io.oz.xv.ecs.c.Visual;
 import io.oz.xv.glsl.Glsl.ShaderFlag;
 import io.oz.xv.material.XMaterial;
 
+/**Common uniforms:
+ * 1. u_vpMat4
+ * 2. u_modelMat4
+ * 3, u_selected
+ * @author Odys Zhou
+ *
+ */
 public class WShader extends BaseShader implements Shader {
+	/** uniform name of 'float u_mode' - float be cause no bitwise operation */
+	public int u_mode = -1;
+
 	protected int u_vpM4 = register("u_vpMat4");
-	/** u_viewM4 */
+	/** u_viewM4, enabled via {@link #enableViewM4()} */
 	protected int u_vM4 = -1;
 	protected int u_modelM4 = register("u_modelMat4");
 
 	protected ShaderFlag flag;
 	Visual visual;
-	XUniforms unis;
+	XUniformer unis;
 
 	public ShaderFlag flag() { return flag; }
 	
@@ -38,7 +48,9 @@ public class WShader extends BaseShader implements Shader {
 			this.visual = new Visual();
 		}
 		this.visual = visual;
-		this.unis = new XUniforms(this, visual);
+		this.unis = new XUniformer(this, visual);
+
+		u_mode = register("u_mode");
 	}
 
 	@Override
@@ -73,15 +85,13 @@ public class WShader extends BaseShader implements Shader {
 		context.setDepthMask(true);
 		camera.update();
 
-//		set(u_vpM4, camera.combined);
-//		if (u_vM4 >= 0)
-//			set(u_vM4, camera.view);
 		unis.m4(u_vpM4, camera.combined);
+		if (this.visual.needsUpdateUniforms)
+			unis.f1(u_mode);
 	}
 	
 	@Override
 	public void render(Renderable renderable) {
-		// set(u_modelM4, renderable.worldTransform);
 		unis.m4(u_modelM4, renderable.worldTransform);
 
 		// https://stackoverflow.com/questions/8594703/lwjgl-transparency

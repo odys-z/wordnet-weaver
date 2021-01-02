@@ -12,12 +12,8 @@ import io.oz.xv.ecs.c.Visual;
 import io.oz.xv.glsl.Glsl.ShaderFlag;
 
 public class Cubic extends WShader {
-	public static final int cmdTurnOn = 0;
-
 	protected int u_alpha = register("u_alpha");
 	protected int u_tex0 = register("u_tex0");
-	private int u_mode = register("u_mode");
-
 
 	static String vs;
 	static String fs;
@@ -62,7 +58,7 @@ public class Cubic extends WShader {
 
 	@Override
 	public WShader setVisual(int cmd, float val) {
-		if (cmd == cmdTurnOn) {
+		if (cmd == u_mode) {
 			set(u_mode, val);
 		}
 		return this;

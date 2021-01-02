@@ -7,10 +7,9 @@ import com.badlogic.ashley.utils.ImmutableArray;
 
 import io.oz.xv.ecs.c.RayPickable;
 import io.oz.xv.ecs.c.Visual;
-import io.oz.xv.glsl.shaders.Cubic;
 
 /**Visual state manager, where {@link Visual} is roughly equivalent of material,
- * but with some extension (denotation).
+ * but with extended attributes like shader states, etc.
  * 
  * This system is not the only one modifying Visual component.
  * @author Odys Zhou
@@ -35,21 +34,30 @@ public class SysVisual extends EntitySystem {
 			Visual visual = mVisual.get(entity);
 			if (pick != null && visual != null)
 				if (pick.selectUp) {
-					selectOn(visual);
+					uselect(visual, 1);
 					break; // should only one
 				}
 				else if (pick.deselectDown) {
-					selectOff(visual);
+					uselect(visual, 0);
 					break; // should only one
 				}
 		}
 	}
 
-	private void selectOff(Visual visual) {
-		 visual.shader.setVisual(Cubic.cmdTurnOn, 0);
-	}
+//	private void selectOff(Visual visual) {
+//		 visual.shader.setVisual(Cubic.cmdTurnOn, 0);
+//	}
+//
+//	private void selectOn(Visual visual) {
+//		 visual.shader.setVisual(Cubic.cmdTurnOn, 1);
+//	}
 
-	private void selectOn(Visual visual) {
-		 visual.shader.setVisual(Cubic.cmdTurnOn, 1);
+	/**Set/reset uniform u_select.
+	 * @param visual
+	 * @param selection
+	 */
+	private void uselect(Visual visual, float selection) {
+		visual.uniforms.put(visual.shader.u_mode, selection);
+		visual.needsUpdateUniforms = true;
 	}
 }

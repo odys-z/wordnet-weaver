@@ -11,6 +11,10 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import io.oz.xv.ecs.c.Visual;
 import io.oz.xv.glsl.Glsl.ShaderFlag;
 
+/**Shader of word's star rendered in a plane facing screen.
+ * @author Odys Zhou
+ *
+ */
 public class PlaneStar extends WShader {
 	protected int u_alpha = register("u_alpha");
 	protected int u_tex0 = register("u_tex0");
@@ -24,7 +28,7 @@ public class PlaneStar extends WShader {
 	static String vs;
 	static String fs;
 
-	XUniforms xuni;
+	XUniformer xuni;
 	public Visual visual;
 	// no obj3?
 
@@ -41,7 +45,7 @@ public class PlaneStar extends WShader {
 
 		this.visual = visual;
 		program = new ShaderProgram(vs, fs);
-		this.xuni = new XUniforms(this, visual);
+		this.xuni = new XUniformer(this, visual);
 	}
 	
 	@Override
