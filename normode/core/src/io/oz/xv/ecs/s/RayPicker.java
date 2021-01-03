@@ -35,7 +35,7 @@ public class RayPicker extends EntitySystem implements InputProcessor {
 
 	/** picked and handling by ecs */
 	protected RayPickable currentPicked;
-	private RayPickable lastPickable;
+	RayPickable lastPickable;
 
 	public RayPicker(PerspectiveCamera camera) {
 		super();

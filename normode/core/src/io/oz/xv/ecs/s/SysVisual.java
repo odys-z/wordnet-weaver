@@ -20,15 +20,22 @@ public class SysVisual extends EntitySystem {
 	ImmutableArray<Entity> entities;
 	ComponentMapper<RayPickable> mRaypick;
 	ComponentMapper<Visual> mVisual;
+
+	RayPicker picker;
 	
-	SysVisual() {
+	/**
+	 * @param rayPicker FIXME Should been merged with RayPicker?
+	 */
+	public SysVisual(RayPicker rayPicker) {
 		mVisual = ComponentMapper.getFor(Visual.class);
 		mRaypick = ComponentMapper.getFor(RayPickable.class);
+
+		picker = rayPicker;
 	}
 
 	@Override
 	public void update(float deltaTime) {
-		// FIXME this is not correct - use the entity directly
+		/* FIXME this is not correct - use the entity directly
 		for (int i = 0; i < entities.size(); ++i) {
 			Entity entity = entities.get(i);
 			RayPickable pick = mRaypick.get(entity);
@@ -42,6 +49,17 @@ public class SysVisual extends EntitySystem {
 					uselect(visual, 0);
 					break; // should only one
 				}
+		}
+		*/
+
+		if (picker.currentPicked != null && picker.currentPicked.selectUp) {
+			Visual v = mVisual.get(picker.currentPicked.entity);
+			uselect(v, 1);
+		}
+
+		if (picker.lastPickable != null && picker.currentPicked.deselectDown) {
+			Visual v = mVisual.get(picker.currentPicked.entity);
+			uselect(v, 0);
 		}
 	}
 

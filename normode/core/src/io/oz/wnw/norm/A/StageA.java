@@ -18,6 +18,7 @@ import io.oz.xv.ecs.c.Obj3;
 import io.oz.xv.ecs.s.RayPicker;
 import io.oz.xv.ecs.s.SysAffine;
 import io.oz.xv.ecs.s.SysModelRenderer;
+import io.oz.xv.ecs.s.SysVisual;
 import io.oz.xv.material.bisheng.GlyphLib;
 import io.oz.xv.treemap.CubeTree;
 import io.oz.xv.utils.XVException;
@@ -39,8 +40,11 @@ public class StageA {
 	public PooledEngine engine() { return ecs; }
 
 	protected RayPicker rayPicker;
+
 	public RayPicker rayPicker() { return rayPicker; }
 
+	private SysVisual visualsys;
+	public SysVisual visualsys() { return visualsys; }
 
 	public StageA(MyWeaver me) {
 		this.me = me;
@@ -51,6 +55,9 @@ public class StageA {
 	public void init(ViewA1 viewA1) {
 		// setup objects
 		rayPicker = new RayPicker(viewA1.cam());
+		ecs.addSystem(rayPicker);
+
+		visualsys = new SysVisual(rayPicker);
 		ecs.addSystem(rayPicker);
 
 		// tween before affine
