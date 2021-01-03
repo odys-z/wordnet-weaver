@@ -28,6 +28,7 @@ public class SysVisual extends EntitySystem {
 
 	@Override
 	public void update(float deltaTime) {
+		// FIXME this is not correct - use the entity directly
 		for (int i = 0; i < entities.size(); ++i) {
 			Entity entity = entities.get(i);
 			RayPickable pick = mRaypick.get(entity);
@@ -43,14 +44,6 @@ public class SysVisual extends EntitySystem {
 				}
 		}
 	}
-
-//	private void selectOff(Visual visual) {
-//		 visual.shader.setVisual(Cubic.cmdTurnOn, 0);
-//	}
-//
-//	private void selectOn(Visual visual) {
-//		 visual.shader.setVisual(Cubic.cmdTurnOn, 1);
-//	}
 
 	/**Set/reset uniform u_select.
 	 * @param visual

@@ -18,7 +18,7 @@ import io.oz.xv.ecs.c.RayPickable;
 
 public class RayPicker extends EntitySystem implements InputProcessor {
 	public enum PickingShape {
-		xzRect, xyRect, ellipse, box, sphere, xzHexaprism, ellipsoid
+		xzRect, xyRect, xyEllipse, box, sphere, xzHexaprism, ellipsoid
 	}
 
 	private static int uuid = 0;
@@ -80,7 +80,7 @@ public class RayPicker extends EntitySystem implements InputProcessor {
 				currentPicked = null;
 			}
 			// change selection (pickingId >= 0)
-			else if (pickingId == currentPicked.id) {
+			else if (pickingId == currentPicked.uuid) {
 				currentPicked.deselectDown = true;
 			}
 		}
@@ -90,7 +90,7 @@ public class RayPicker extends EntitySystem implements InputProcessor {
 				// FIXME
 				// TODO dosn't have to do like this
 				RayPickable pick = e.getComponent(RayPickable.class);
-				if (pickingId == pick.id) {
+				if (pickingId == pick.uuid) {
 					if (currentPicked != null) {
 						currentPicked.selected = false;
 						lastPickable = currentPicked;
@@ -103,6 +103,7 @@ public class RayPicker extends EntitySystem implements InputProcessor {
 					break;
 				}
 			}
+			System.out.println(currentPicked);
 		}
 	}
 
@@ -127,7 +128,7 @@ public class RayPicker extends EntitySystem implements InputProcessor {
 	/**Get Pickable.id with ray picking.
 	 * @param screenX
 	 * @param screenY
-	 * @return
+	 * @return RayPickalble.id
 	 */
 	protected int getObject(int screenX, int screenY) {
 		if (entities.size() == 0) return -1;
@@ -145,7 +146,7 @@ public class RayPicker extends EntitySystem implements InputProcessor {
 			Matrix4 t = obj3.modInst.transform;
 			float dist2 = intersects(ray, t, pickable, obj3);
 			if (dist2 >= 0 && (distance < 0f || dist2 < distance)) { 
-				result = pickable.id;
+				result = pickable.uuid;
 				distance = dist2;
 			}
 		}

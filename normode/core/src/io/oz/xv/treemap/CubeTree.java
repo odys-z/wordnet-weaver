@@ -196,7 +196,7 @@ public class CubeTree {
 		eLemma.add(aff);
 		
 		RayPickable pickable = ecs.createComponent(RayPickable.class);
-		pickable.id = RayPicker.uuId();
+		pickable.uuid = RayPicker.uuId();
 		pickable.pickingShape = PickingShape.box;
 		pickable.whd = obj3.modInst.calculateBoundingBox(pickable.whd);
 		eLemma.add(pickable);

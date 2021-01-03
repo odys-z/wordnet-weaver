@@ -60,7 +60,7 @@ import com.badlogic.gdx.utils.Pool;
 /** MRT test compliant with GLES 3.0, with per pixel lighting and normal and specular mapping.
  * Thanks to http://www.blendswap.com/blends/view/73922 for the cannon model, licensed under CC-BY-SA
  *
- /** @author Tomski */
+ * @author Tomski */
 public class MultipleRenderTargetTest extends GdxTest {
 
 	RenderContext renderContext;
