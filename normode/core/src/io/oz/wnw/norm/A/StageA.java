@@ -58,7 +58,7 @@ public class StageA {
 		ecs.addSystem(rayPicker);
 
 		visualsys = new SysVisual(rayPicker);
-		ecs.addSystem(rayPicker);
+		ecs.addSystem(visualsys);
 
 		// tween before affine
 		ecs.addSystem(new SysAffine());

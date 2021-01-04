@@ -35,31 +35,16 @@ public class SysVisual extends EntitySystem {
 
 	@Override
 	public void update(float deltaTime) {
-		/* FIXME this is not correct - use the entity directly
-		for (int i = 0; i < entities.size(); ++i) {
-			Entity entity = entities.get(i);
-			RayPickable pick = mRaypick.get(entity);
-			Visual visual = mVisual.get(entity);
-			if (pick != null && visual != null)
-				if (pick.selectUp) {
-					uselect(visual, 1);
-					break; // should only one
-				}
-				else if (pick.deselectDown) {
-					uselect(visual, 0);
-					break; // should only one
-				}
-		}
-		*/
-
 		if (picker.currentPicked != null && picker.currentPicked.selectUp) {
 			Visual v = mVisual.get(picker.currentPicked.entity);
-			uselect(v, 1);
+			if (v != null)
+				uselect(v, 1);
 		}
 
-		if (picker.lastPickable != null && picker.currentPicked.deselectDown) {
-			Visual v = mVisual.get(picker.currentPicked.entity);
-			uselect(v, 0);
+		if (picker.lastPickable != null && picker.lastPickable.deselectDown) {
+			Visual v = mVisual.get(picker.lastPickable.entity);
+			if (v != null)
+				uselect(v, 0);
 		}
 	}
 

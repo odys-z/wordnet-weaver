@@ -150,8 +150,14 @@ public class CubeTree {
 		Model model = builder.end();
 		model.calculateTransforms();
 		obj3.modInst = new ModelInstance(model);
-
 		ground.add(obj3);
+
+		RayPickable pickable = ecs.createComponent(RayPickable.class);
+		pickable.uuid = RayPicker.uuId();
+		pickable.pickingShape = PickingShape.box;
+		pickable.whd = obj3.modInst.calculateBoundingBox(pickable.whd);
+		pickable.entity = ground;
+		ground.add(pickable);
 
 		Affines aff = ecs.createComponent(Affines.class);
 		aff.transforms = new Array<AffineTrans>();
@@ -186,8 +192,10 @@ public class CubeTree {
 		wrd.children = si.getMemory();
 		eLemma.add(wrd);
 
-		Obj3 obj3 = ecs.createComponent(Obj3.class);
 		Visual lemVis = new Visual();
+		eLemma.add(lemVis);
+
+		Obj3 obj3 = ecs.createComponent(Obj3.class);
 		obj3.modInst = glyphs.bindText(wrd.word, wrd.color, lemVis );
 		eLemma.add(obj3);
 
@@ -199,6 +207,7 @@ public class CubeTree {
 		pickable.uuid = RayPicker.uuId();
 		pickable.pickingShape = PickingShape.box;
 		pickable.whd = obj3.modInst.calculateBoundingBox(pickable.whd);
+		pickable.entity = eLemma;
 		eLemma.add(pickable);
 
 		HashMap<String,WMemory> memory = si.getMemory();
