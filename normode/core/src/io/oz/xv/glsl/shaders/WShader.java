@@ -92,6 +92,7 @@ public class WShader extends BaseShader implements Shader {
 	
 	@Override
 	public void render(Renderable renderable) {
+		// unis.f1(u_mode);
 		unis.m4(u_modelM4, renderable.worldTransform);
 
 		// https://stackoverflow.com/questions/8594703/lwjgl-transparency

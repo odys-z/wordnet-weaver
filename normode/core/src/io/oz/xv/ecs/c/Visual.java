@@ -12,6 +12,9 @@ import io.oz.xv.glsl.shaders.WShader;
  *
  */
 public class Visual implements Component {
+	/**
+	 * Uniforms values. Don't confused this with {@link com.badlogic.gdx.graphics.g3d.shaders.BaseShader}'s private field uniforms.
+	 */
 	public IntMap<Object> uniforms = new IntMap<Object>();
 	public boolean needsUpdateUniforms = false;
 

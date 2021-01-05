@@ -26,8 +26,9 @@ class XUniformer {
 	}
 
 	public XUniformer f1(int name) {
-		float f = (float)vis.uniforms.get(name);
-		shader.set(name, f );
+		Float f = (Float) vis.uniforms.get(name);
+		if (f != null)
+			shader.set(name, f);
 		return this;
 	}
 

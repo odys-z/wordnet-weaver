@@ -40,7 +40,7 @@ public class Cubic extends WShader {
 		pixmap = new Pixmap(256, 256, Format.RGBA8888);
 		pixmap.setColor(0.1f, 0.1f, 0.1f, 1);
 		pixmap.fill();
-		pixmap.setColor(0, 0, 0, 1);
+		pixmap.setColor(1, 0, 0, 1);
 		pixmap.drawLine(0, 0, 256, 256);
 		pixmap.drawLine(256, 0, 0, 256);
 		tex = new Texture(pixmap);
