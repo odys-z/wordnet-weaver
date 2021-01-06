@@ -36,6 +36,7 @@ public class RayPicker extends EntitySystem implements InputProcessor {
 	/** picked and handling by ecs */
 	protected RayPickable currentPicked;
 	RayPickable lastPickable;
+	private boolean dirty;
 
 	public RayPicker(PerspectiveCamera camera) {
 		super();
@@ -63,6 +64,8 @@ public class RayPicker extends EntitySystem implements InputProcessor {
 	 */
 	@Override
 	public void update(float deltaTime) {
+		if (!this.dirty) return;
+
 		// 1. clear events
 		if (lastPickable != null) {
 			lastPickable.deselectDown = false;
@@ -88,7 +91,7 @@ public class RayPicker extends EntitySystem implements InputProcessor {
 		if (pickingId > 0) {
 			for (Entity e : entities) {
 				// FIXME
-				// TODO dosn't have to do like this
+				// TODO really have to do like this?
 				RayPickable pick = e.getComponent(RayPickable.class);
 				if (pickingId == pick.uuid) {
 					if (currentPicked != null) {
@@ -105,6 +108,7 @@ public class RayPicker extends EntitySystem implements InputProcessor {
 			}
 			System.out.println(currentPicked);
 		}
+		this.dirty = false;
 	}
 
 	@Override
@@ -122,6 +126,7 @@ public class RayPicker extends EntitySystem implements InputProcessor {
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		pickingId = getObject(screenX, screenY);
+		this.dirty = true;
 		return this.pickingId >= 0;
 	}
 
@@ -178,9 +183,7 @@ public class RayPicker extends EntitySystem implements InputProcessor {
 	}
 
 	@Override
-	public boolean touchUp(int screenX, int screenY, int pointer, int button) { 
-		return false;
-	}
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) { return false; }
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) { return false; }

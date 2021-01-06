@@ -56,11 +56,11 @@ public class Cubic extends WShader {
 		set(u_tex0, uTex0);
 	}
 
-	@Override
-	public WShader setVisual(int cmd, float val) {
-		if (cmd == u_mode) {
-			set(u_mode, val);
-		}
-		return this;
-	}
+//	@Override
+//	public WShader setVisual(int cmd, float val) {
+//		if (cmd == u_mode) {
+//			set(u_mode, val);
+//		}
+//		return this;
+//	}
 }

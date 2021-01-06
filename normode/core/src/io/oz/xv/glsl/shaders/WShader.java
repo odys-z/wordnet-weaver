@@ -86,8 +86,10 @@ public class WShader extends BaseShader implements Shader {
 		camera.update();
 
 		unis.m4(u_vpM4, camera.combined);
-		if (this.visual.needsUpdateUniforms)
+		if (this.visual.needsUpdateUniforms) {
 			unis.f1(u_mode);
+			this.visual.needsUpdateUniforms = false;
+		}
 	}
 	
 	@Override
@@ -103,9 +105,9 @@ public class WShader extends BaseShader implements Shader {
 
 	/**Update visual, e.g. turn on when selected, should been ovrriden by subclasses.
 	 * @return
-	 */
 	public WShader setVisual(int cmd, float val) {
 		return this;
 	}
+	 */
 
 }

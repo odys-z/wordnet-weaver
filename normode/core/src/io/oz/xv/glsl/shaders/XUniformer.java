@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Matrix4;
 
 import io.oz.xv.ecs.c.Visual;
 
-/**Uniforms helper, in ecs &amp; xv style, not gdx's.
+/**Uniforms helper, in ecs &amp; xv style, not gdx's uniforms.
  * 
  * @author Odys Zhou
  */
