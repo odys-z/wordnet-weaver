@@ -60,8 +60,8 @@ If Eclipse doesn't recognize dependency class, this may help::
 
     right click build.gradle -> gradle -> refresh project
 
-Troublshootings
----------------
+Troubleshootings
+----------------
 
 Class of Dependency not Found
 _____________________________
@@ -140,6 +140,9 @@ It's recommended use the forked version on Ubuntu.
 	gradle
 
 The defualt task is configure as installing local repo.
+
+Also, `the question and answer at stackoverflow <https://stackoverflow.com/questions/32107205/gradle-does-not-use-the-maven-local-repository-for-a-new-dependency>_`
+might be useful.
 
 Installing Universal-tween-engine on Ubuntu
 ___________________________________________
