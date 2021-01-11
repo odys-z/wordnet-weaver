@@ -25,7 +25,7 @@ public class XShaderProvider implements ShaderProvider {
 
 	static {
 		if (defShader == null) {
-			defShader = Glsl.wshader(ShaderFlag.simple);
+			defShader = Glsl.wshader(ShaderFlag.simple, null);
 		}
 	}
 	

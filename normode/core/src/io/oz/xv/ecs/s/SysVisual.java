@@ -11,35 +11,40 @@ import io.oz.xv.ecs.c.Visual;
 /**Visual state manager, where {@link Visual} is roughly equivalent of material,
  * but with extended attributes like shader states, etc.
  * 
+ * This system is not the only one modifying Visual component.
  * @author Odys Zhou
  *
  */
 public class SysVisual extends EntitySystem {
 
-	private ImmutableArray<Entity> entities;
-	private ComponentMapper<RayPickable> mRaypick;
-	private ComponentMapper<Visual> mVisual;
+	ImmutableArray<Entity> entities;
+	ComponentMapper<RayPickable> mRaypick;
+	ComponentMapper<Visual> mVisual;
+
+	RayPicker picker;
 	
-	SysVisual() {
+	/**
+	 * @param rayPicker FIXME Should been merged with RayPicker?
+	 */
+	public SysVisual(RayPicker rayPicker) {
 		mVisual = ComponentMapper.getFor(Visual.class);
 		mRaypick = ComponentMapper.getFor(RayPickable.class);
+
+		picker = rayPicker;
 	}
 
 	@Override
 	public void update(float deltaTime) {
-		for (int i = 0; i < entities.size(); ++i) {
-			Entity entity = entities.get(i);
-			RayPickable pick = mRaypick.get(entity);
-			Visual visual = mVisual.get(entity);
-			if (pick != null && visual != null)
-				if (pick.selectUp) {
-					uselect(visual, 1);
-					break; // should only one
-				}
-				else if (pick.deselectDown) {
-					uselect(visual, 0);
-					break; // should only one
-				}
+		if (picker.currentPicked != null && picker.currentPicked.selectUp) {
+			Visual v = mVisual.get(picker.currentPicked.entity);
+			if (v != null)
+				umode(v, 1);
+		}
+
+		if (picker.lastPickable != null && picker.lastPickable.deselectDown) {
+			Visual v = mVisual.get(picker.lastPickable.entity);
+			if (v != null)
+				umode(v, 0);
 		}
 	}
 
@@ -47,9 +52,8 @@ public class SysVisual extends EntitySystem {
 	 * @param visual
 	 * @param selection
 	 */
-	private void uselect(Visual visual, float selection) {
-		visual.uniforms.put(visual.shader.u_selected, selection);
+	private void umode(Visual visual, float selection) {
+		visual.uniforms.put(visual.shader.u_mode, selection);
 		visual.needsUpdateUniforms = true;
 	}
-
 }

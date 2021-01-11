@@ -19,7 +19,7 @@ public class Inkstone {
 	public static XMaterial colorful(String name) {
 		Visual v = new Visual();
 		v.name = name;
-		v.shader = ((Sdfont) Glsl.wshader(ShaderFlag.sdfont)).smooth(0.06f).thin(0.5f)
+		v.shader = ((Sdfont) Glsl.wshader(ShaderFlag.sdfont, v)).smooth(0.06f).thin(0.5f)
         					  .white(GlyphLib.debug ? "0.5" : "0.0");
 		v.shader.init();
 		return new XMaterial().visual(v);
@@ -31,7 +31,7 @@ public class Inkstone {
 	 */
 	public static XMaterial pixel(String color) {
 		Visual v = new Visual();
-		v.shader = Glsl.wshader(ShaderFlag.test);
+		v.shader = Glsl.wshader(ShaderFlag.test, v);
 		v.shader.init();
 		return new XMaterial().visual(v);
 	}

@@ -21,8 +21,8 @@ import io.oz.xv.material.XMaterial;
  *
  */
 public class WShader extends BaseShader implements Shader {
-	/** uniform name of 'int u_selected' */
-	public int u_selected = -1;
+	/** uniform name of 'float u_mode' - float be cause no bitwise operation */
+	public int u_mode = -1;
 
 	protected int u_vpM4 = register("u_vpMat4");
 	/** u_viewM4, enabled via {@link #enableViewM4()} */
@@ -50,7 +50,7 @@ public class WShader extends BaseShader implements Shader {
 		this.visual = visual;
 		this.unis = new XUniformer(this, visual);
 
-		u_selected = register("u_selected");
+		u_mode = register("u_mode");
 	}
 
 	@Override
@@ -85,23 +85,29 @@ public class WShader extends BaseShader implements Shader {
 		context.setDepthMask(true);
 		camera.update();
 
-//		set(u_vpM4, camera.combined);
-//		if (u_vM4 >= 0)
-//			set(u_vM4, camera.view);
-
 		unis.m4(u_vpM4, camera.combined);
-		if (this.visual.needsUpdateUniforms)
-			unis.f1(u_selected);
+		if (this.visual.needsUpdateUniforms) {
+			unis.f1(u_mode);
+			this.visual.needsUpdateUniforms = false;
+		}
 	}
 	
 	@Override
 	public void render(Renderable renderable) {
-		set(u_modelM4, renderable.worldTransform);
+		// unis.f1(u_mode);
+		unis.m4(u_modelM4, renderable.worldTransform);
 
 		// https://stackoverflow.com/questions/8594703/lwjgl-transparency
 		Gdx.gl.glEnable(GL20.GL_BLEND);
 		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 		renderable.meshPart.render(program);	
 	}
+
+	/**Update visual, e.g. turn on when selected, should been ovrriden by subclasses.
+	 * @return
+	public WShader setVisual(int cmd, float val) {
+		return this;
+	}
+	 */
 
 }
