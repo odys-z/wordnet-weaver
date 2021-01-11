@@ -136,7 +136,7 @@ public class RayPicker extends EntitySystem implements InputProcessor {
 	 * @return RayPickalble.id
 	 */
 	protected int getObject(int screenX, int screenY) {
-		if (entities.size() == 0) return -1;
+		if (entities == null || entities.size() == 0) return -1;
 		Ray ray = cam.getPickRay(screenX, screenY);
 
 		int result = -1;

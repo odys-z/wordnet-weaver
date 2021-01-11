@@ -35,7 +35,6 @@ public class ViewA1 extends ScreenAdapter {
 
 		stage = new StageA(game.me());
 
-		// Entities must been created before creating EntitySystems
 		try {
 			stage.init(this);
 			ecs = stage.engine();

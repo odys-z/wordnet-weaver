@@ -38,13 +38,13 @@ public class SysVisual extends EntitySystem {
 		if (picker.currentPicked != null && picker.currentPicked.selectUp) {
 			Visual v = mVisual.get(picker.currentPicked.entity);
 			if (v != null)
-				uselect(v, 1);
+				umode(v, 1);
 		}
 
 		if (picker.lastPickable != null && picker.lastPickable.deselectDown) {
 			Visual v = mVisual.get(picker.lastPickable.entity);
 			if (v != null)
-				uselect(v, 0);
+				umode(v, 0);
 		}
 	}
 
@@ -52,7 +52,7 @@ public class SysVisual extends EntitySystem {
 	 * @param visual
 	 * @param selection
 	 */
-	private void uselect(Visual visual, float selection) {
+	private void umode(Visual visual, float selection) {
 		visual.uniforms.put(visual.shader.u_mode, selection);
 		visual.needsUpdateUniforms = true;
 	}
