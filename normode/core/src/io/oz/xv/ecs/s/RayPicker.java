@@ -13,6 +13,7 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 
+import io.oz.xv.XWorld;
 import io.oz.xv.ecs.c.Obj3;
 import io.oz.xv.ecs.c.RayPickable;
 
@@ -106,8 +107,14 @@ public class RayPicker extends EntitySystem implements InputProcessor {
 					break;
 				}
 			}
-			System.out.println(currentPicked);
+			if (XWorld.log(5))
+				System.out.println("[5] " + currentPicked.uuid);
 		}
+		else if (XWorld.log(5))
+			System.out.println("[5]");
+		TO BE CONTINUED:
+		Change current selection doesn't deselect previous
+
 		this.dirty = false;
 	}
 
