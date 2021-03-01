@@ -63,6 +63,21 @@ If Eclipse doesn't recognize dependency class, this may help::
 Troubleshootings
 ----------------
 
+Can not resolve Ashley 1.7.0
+____________________________
+
+Error::
+
+    The container 'Project and External Dependencies' references non existing
+	library '/home/ody/.gradle/caches/modules-2/files-2.1/com.badlogicgames.ashley/ashley/1.7.0/a7c4083c0a42027a3c03ba7ccecef6cbe1c5f0a4/ashley-1.7.0.jar'
+
+Cause:
+
+Wordnet-weaver/normal module depends on Ashley v1.7.0. The desktop(Eclipse) project
+depend it locally.
+
+Install Ashley 1.7.0 locally ...
+
 Class of Dependency not Found
 _____________________________
 
@@ -90,7 +105,8 @@ In core/gradle.build, add compile dependency after applied Java plugin. (
 	    compile 'io.github.odys-z:anclient.weaver:0.0.1-SNAPSHOT'
     }
 
-Update anclient.weaver dependency or install it to local repository::
+Update anclient.weaver dependency or install it to local repository. In sub-folder
+wn-serv::
 
     mvn install
 
