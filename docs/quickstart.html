@@ -88,8 +88,10 @@
 <li class="toctree-l2"><a class="reference internal" href="#import-wn-server">Import wn-server</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#import-anclient-weaver">Import anclient.weaver</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#import-normod">Import normod</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#troublshootings">Troublshootings</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#troubleshootings">Troubleshootings</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#can-not-resolve-ashley-1-7-0">Can not resolve Ashley 1.7.0</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#class-of-dependency-not-found">Class of Dependency not Found</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gradle-failed-on-resolving-tween-engine-api">Gradle failed on Resolving tween-engine-api</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#installing-universal-tween-engine-on-ubuntu">Installing Universal-tween-engine on Ubuntu</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#can-not-attach-source-to-gdx-jar">Can not attach source to GDX.jar</a></li>
 </ul>
@@ -182,18 +184,47 @@ and the file path needing to be changed in configure file.</p>
 <p>Note: According to the author’s experience, you better run desktop project in
 Eclipse and run Android project from Android Studio.</p>
 <p><em>Note</em></p>
-<p>The normal project depends on Ashley and [Universal-tween-engine](<a class="reference external" href="https://github.com/AurelienRibon/universal-tween-engine">https://github.com/AurelienRibon/universal-tween-engine</a>).
-Both have some problem for newest GDX version to depends on. Have to be installed
+<ol class="arabic simple">
+<li>About Install Ashley Locally</li>
+</ol>
+<p>The normal project depends on Ashley and <a class="reference external" href="https://github.com/AurelienRibon/universal-tween-engine">Universal-tween-engine</a>.
+Both have some problem for newest GDX version to depends on. And have to be installed
 in local maven repository.</p>
-<p>To install Ashley locally, see Ashely issue #279.</p>
+<p>To install Ashley locally, see <a class="reference external" href="https://github.com/libgdx/ashley/pull/279">Ashely issue #279</a>.</p>
 <p>To install Universal-tween-engine, run it’s gradle task.</p>
 <p>If Eclipse doesn’t recognize dependency class, this may help:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">right</span> <span class="n">click</span> <span class="n">build</span><span class="o">.</span><span class="n">gradle</span> <span class="o">-&gt;</span> <span class="n">gradle</span> <span class="o">-&gt;</span> <span class="n">refresh</span> <span class="n">project</span>
 </pre></div>
 </div>
+<ol class="arabic simple" start="2">
+<li>Add gradle mirror repository as defualt by gdx-setup</li>
+</ol>
+<p>The default gdx-setup doesn’t use any mirror repository. The experimenting version
+may be helpful at <a class="reference external" href="https://github.com/odys-z/hello/tree/master/GDX/gdx-setup">odys-z/hello</a>.</p>
 </div>
-<div class="section" id="troublshootings">
-<h2>Troublshootings<a class="headerlink" href="#troublshootings" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="troubleshootings">
+<h2>Troubleshootings<a class="headerlink" href="#troubleshootings" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="can-not-resolve-ashley-1-7-0">
+<h3>Can not resolve Ashley 1.7.0<a class="headerlink" href="#can-not-resolve-ashley-1-7-0" title="Permalink to this headline">¶</a></h3>
+<div class="admonition attention">
+<p class="first admonition-title">Attention</p>
+<p class="last">This will be changed using Ashley 1.7.4.
+see <a class="reference external" href="https://github.com/libgdx/ashley/issues/278">Ashley issue #278</a>
+&amp; <a class="reference external" href="https://github.com/libgdx/ashley/pull/279">#279</a></p>
+</div>
+<p>Error:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">The</span> <span class="n">container</span> <span class="s1">&#39;Project and External Dependencies&#39;</span> <span class="n">references</span> <span class="n">non</span> <span class="n">existing</span> <span class="n">library</span>
+<span class="s1">&#39;/home/ody/.gradle/caches/modules-2/files-2.1/com.badlogicgames.ashley/ashley/1.7.0/a7c4083c0a42027a3c03ba7ccecef6cbe1c5f0a4/ashley-1.7.0.jar&#39;</span>
+</pre></div>
+</div>
+<p>Cause:</p>
+<p>Wordnet-weaver/normal module depends on Ashley v1.7.0. The desktop(Eclipse) project
+depend it locally.</p>
+<p>Install Ashley 1.7.0 to local maven:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gradlew</span> <span class="n">install</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="class-of-dependency-not-found">
 <h3>Class of Dependency not Found<a class="headerlink" href="#class-of-dependency-not-found" title="Permalink to this headline">¶</a></h3>
 <p>Error:</p>
@@ -207,7 +238,7 @@ Caused by: java.lang.NoClassDefFoundError: io/oz/wnw/my/ISettings
 <p>Cause:</p>
 <p>The normode/core gradle sub-project depends on another maven project, anclient.weaver.
 The desktop application can’t find it’s class in run time environment.</p>
-<p>Shooting:</p>
+<p>Solution:</p>
 <p>In core/gradle.build, add compile dependency after applied Java plugin. (
 <a class="reference external" href="https://stackoverflow.com/questions/23796404/could-not-find-method-compile-for-arguments-gradle">Otherwise the compile command will failed</a>.)</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dependencies</span> <span class="p">{</span>
@@ -215,7 +246,8 @@ The desktop application can’t find it’s class in run time environment.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Update anclient.weaver dependency or install it to local repository:</p>
+<p>Update anclient.weaver dependency or install it to local repository. In sub-folder
+wn-serv:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mvn</span> <span class="n">install</span>
 </pre></div>
 </div>
@@ -231,13 +263,43 @@ The desktop application can’t find it’s class in run time environment.</p>
 classpath.</p>
 <img alt="_images/002-mvn-prj-dependency.png" src="_images/002-mvn-prj-dependency.png" />
 </div>
+<div class="section" id="gradle-failed-on-resolving-tween-engine-api">
+<h3>Gradle failed on Resolving tween-engine-api<a class="headerlink" href="#gradle-failed-on-resolving-tween-engine-api" title="Permalink to this headline">¶</a></h3>
+<p>Error:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FAILURE</span><span class="p">:</span> <span class="n">Build</span> <span class="n">failed</span> <span class="k">with</span> <span class="n">an</span> <span class="n">exception</span><span class="o">.</span>
+
+<span class="o">*</span> <span class="n">What</span> <span class="n">went</span> <span class="n">wrong</span><span class="p">:</span>
+<span class="n">A</span> <span class="n">problem</span> <span class="n">occurred</span> <span class="n">configuring</span> <span class="n">root</span> <span class="n">project</span> <span class="s1">&#39;normode&#39;</span><span class="o">.</span>
+<span class="o">&gt;</span> <span class="n">Could</span> <span class="ow">not</span> <span class="n">resolve</span> <span class="nb">all</span> <span class="n">artifacts</span> <span class="k">for</span> <span class="n">configuration</span> <span class="s1">&#39;:classpath&#39;</span><span class="o">.</span>
+   <span class="o">&gt;</span> <span class="n">Could</span> <span class="ow">not</span> <span class="n">resolve</span> <span class="n">com</span><span class="o">.</span><span class="n">aurelienribon</span><span class="p">:</span><span class="n">tween</span><span class="o">-</span><span class="n">engine</span><span class="o">-</span><span class="n">api</span><span class="p">:</span><span class="mf">6.3</span><span class="o">.</span><span class="mf">3.</span>
+     <span class="n">Required</span> <span class="n">by</span><span class="p">:</span>
+         <span class="n">project</span> <span class="p">:</span>
+      <span class="o">&gt;</span> <span class="n">Could</span> <span class="ow">not</span> <span class="n">resolve</span> <span class="n">com</span><span class="o">.</span><span class="n">aurelienribon</span><span class="p">:</span><span class="n">tween</span><span class="o">-</span><span class="n">engine</span><span class="o">-</span><span class="n">api</span><span class="p">:</span><span class="mf">6.3</span><span class="o">.</span><span class="mf">3.</span>
+         <span class="o">&gt;</span> <span class="n">Could</span> <span class="ow">not</span> <span class="n">get</span> <span class="n">resource</span> <span class="s1">&#39;https://repo.maven.apache.org/maven2/com/aurelienribon/tween-engine-api/6.3.3/tween-engine-api-6.3.3.pom&#39;</span><span class="o">.</span>
+            <span class="o">&gt;</span> <span class="n">Could</span> <span class="ow">not</span> <span class="n">GET</span> <span class="s1">&#39;https://repo.maven.apache.org/maven2/com/aurelienribon/tween-engine-api/6.3.3/tween-engine-api-6.3.3.pom&#39;</span><span class="o">.</span>
+               <span class="o">&gt;</span> <span class="n">No</span> <span class="n">route</span> <span class="n">to</span> <span class="n">host</span> <span class="p">(</span><span class="n">Host</span> <span class="n">unreachable</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Solution:</p>
+<p>Install <a class="reference external" href="https://github.com/AurelienRibon/universal-tween-engine">universal-tween-engine</a>
+locally.</p>
+<p>It’s recommended use the forked version on Ubuntu.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">odys</span><span class="o">-</span><span class="n">z</span><span class="o">/</span><span class="n">universal</span><span class="o">-</span><span class="n">tween</span><span class="o">-</span><span class="n">engine</span><span class="o">.</span><span class="n">git</span>
+    <span class="n">cd</span> <span class="n">universal</span><span class="o">-</span><span class="n">tween</span><span class="o">-</span><span class="n">engine</span>
+    <span class="n">gradle</span>
+</pre></div>
+</div>
+<p>The defualt task is configure as installing local repo.</p>
+<p>Also, <cite>the question and answer at stackoverflow &lt;https://stackoverflow.com/questions/32107205/gradle-does-not-use-the-maven-local-repository-for-a-new-dependency&gt;_</cite>
+might be useful.</p>
+</div>
 <div class="section" id="installing-universal-tween-engine-on-ubuntu">
 <h3>Installing Universal-tween-engine on Ubuntu<a class="headerlink" href="#installing-universal-tween-engine-on-ubuntu" title="Permalink to this headline">¶</a></h3>
 <p>Error</p>
 <p>Gradle complain about command not found while installing to local repository.</p>
 <p>Cause:</p>
-<p>The gradle task script can’t do the job.</p>
-<p>Shooting:</p>
+<p>The gradle task script can’t do the job of installing tween-engine locally.</p>
+<p>Solution:</p>
 <p>Try this <a class="reference external" href="https://github.com/odys-z/universal-tween-engine/blob/master/build.gradle">modified build.gradle version</a></p>
 </div>
 <div class="section" id="can-not-attach-source-to-gdx-jar">

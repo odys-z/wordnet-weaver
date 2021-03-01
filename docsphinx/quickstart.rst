@@ -48,7 +48,9 @@ Eclipse and run Android project from Android Studio.
 
 *Note*
 
-The normal project depends on Ashley and `Universal-tween-engine <https://github.com/AurelienRibon/universal-tween-engine`_.
+1. About Install Ashley Locally
+
+The normal project depends on Ashley and `Universal-tween-engine <https://github.com/AurelienRibon/universal-tween-engine>`_.
 Both have some problem for newest GDX version to depends on. And have to be installed
 in local maven repository.
 
@@ -60,23 +62,34 @@ If Eclipse doesn't recognize dependency class, this may help::
 
     right click build.gradle -> gradle -> refresh project
 
+2. Add gradle mirror repository as defualt by gdx-setup
+
+The default gdx-setup doesn't use any mirror repository. The experimenting version
+may be helpful at `odys-z/hello <https://github.com/odys-z/hello/tree/master/GDX/gdx-setup>`_.
+
 Troubleshootings
 ----------------
 
 Can not resolve Ashley 1.7.0
 ____________________________
 
+.. attention:: This will be changed using Ashley 1.7.4.
+    see `Ashley issue #278 <https://github.com/libgdx/ashley/issues/278>`_
+    & `#279 <https://github.com/libgdx/ashley/pull/279>`_
+
 Error::
 
-    The container 'Project and External Dependencies' references non existing
-	library '/home/ody/.gradle/caches/modules-2/files-2.1/com.badlogicgames.ashley/ashley/1.7.0/a7c4083c0a42027a3c03ba7ccecef6cbe1c5f0a4/ashley-1.7.0.jar'
+    The container 'Project and External Dependencies' references non existing library
+    '/home/ody/.gradle/caches/modules-2/files-2.1/com.badlogicgames.ashley/ashley/1.7.0/a7c4083c0a42027a3c03ba7ccecef6cbe1c5f0a4/ashley-1.7.0.jar'
 
 Cause:
 
 Wordnet-weaver/normal module depends on Ashley v1.7.0. The desktop(Eclipse) project
 depend it locally.
 
-Install Ashley 1.7.0 locally ...
+Install Ashley 1.7.0 to local maven::
+
+    gradlew install
 
 Class of Dependency not Found
 _____________________________
