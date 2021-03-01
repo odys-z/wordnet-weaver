@@ -18,7 +18,7 @@ import io.oz.xv.ecs.c.RayPickable;
 
 public class RayPicker extends EntitySystem implements InputProcessor {
 	public enum PickingShape {
-		xzRect, xyRect, ellipse, box, sphere, xzHexaprism, ellipsoid
+		xzRect, xyRect, xyEllipse, box, sphere, xzHexaprism, ellipsoid
 	}
 
 	private static int uuid = 0;
@@ -35,7 +35,8 @@ public class RayPicker extends EntitySystem implements InputProcessor {
 
 	/** picked and handling by ecs */
 	protected RayPickable currentPicked;
-	private RayPickable lastPickable;
+	RayPickable lastPickable;
+	private boolean dirty;
 
 	public RayPicker(PerspectiveCamera camera) {
 		super();
@@ -63,12 +64,15 @@ public class RayPicker extends EntitySystem implements InputProcessor {
 	 */
 	@Override
 	public void update(float deltaTime) {
+		if (!this.dirty) return;
+
 		// 1. clear events
 		if (lastPickable != null) {
 			lastPickable.deselectDown = false;
 			lastPickable = null;
 		}
 
+		// change selection
 		if (currentPicked != null) {
 			currentPicked.selectUp = false;
 			
@@ -79,23 +83,32 @@ public class RayPicker extends EntitySystem implements InputProcessor {
 				currentPicked = null;
 			}
 			// change selection (pickingId >= 0)
-			else if (pickingId == currentPicked.id) {
+			else if (pickingId == currentPicked.uuid) {
 				currentPicked.deselectDown = true;
-				for (Entity e : entities) {
-					RayPickable pick = e.getComponent(RayPickable.class);
-					if (pickingId == pick.id) {
-						currentPicked.selected = false;
-						lastPickable = currentPicked;
-						
-						pick.selected = true;
-						currentPicked = pick;
-						currentPicked.selectUp = true;
-						pickingId = -1;
-						break;
-					}
-				}
 			}
 		}
+		
+		if (pickingId > 0) {
+			for (Entity e : entities) {
+				// FIXME
+				// TODO really have to do like this?
+				RayPickable pick = e.getComponent(RayPickable.class);
+				if (pickingId == pick.uuid) {
+					if (currentPicked != null) {
+						currentPicked.selected = false;
+						lastPickable = currentPicked;
+					}
+					
+					pick.selected = true;
+					currentPicked = pick;
+					currentPicked.selectUp = true;
+					pickingId = -1;
+					break;
+				}
+			}
+			System.out.println(currentPicked);
+		}
+		this.dirty = false;
 	}
 
 	@Override
@@ -113,16 +126,17 @@ public class RayPicker extends EntitySystem implements InputProcessor {
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		pickingId = getObject(screenX, screenY);
+		this.dirty = true;
 		return this.pickingId >= 0;
 	}
 
 	/**Get Pickable.id with ray picking.
 	 * @param screenX
 	 * @param screenY
-	 * @return
+	 * @return RayPickalble.id
 	 */
 	protected int getObject(int screenX, int screenY) {
-		if (entities.size() == 0) return -1;
+		if (entities == null || entities.size() == 0) return -1;
 		Ray ray = cam.getPickRay(screenX, screenY);
 
 		int result = -1;
@@ -137,7 +151,7 @@ public class RayPicker extends EntitySystem implements InputProcessor {
 			Matrix4 t = obj3.modInst.transform;
 			float dist2 = intersects(ray, t, pickable, obj3);
 			if (dist2 >= 0 && (distance < 0f || dist2 < distance)) { 
-				result = pickable.id;
+				result = pickable.uuid;
 				distance = dist2;
 			}
 		}
@@ -145,34 +159,31 @@ public class RayPicker extends EntitySystem implements InputProcessor {
 		return result;
 	}
 
-	static private Vector3 _v3 = new Vector3();
-	static private Vector3 _v3_1 = new Vector3();
-//	static private Vector3 _v3_2 = new Vector3();
+	static private Vector3 _v3a = new Vector3();
+	static private Vector3 _v3b = new Vector3();
 
 	static private float intersects(Ray ray, Matrix4 trans, RayPickable p, Obj3 obj3) {
-		trans.getTranslation(_v3).add(obj3.pos);
-		final float len = ray.direction.dot(_v3.x - ray.origin.x, _v3.y - ray.origin.y, _v3.z - ray.origin.z);
+		trans.getTranslation(_v3a); // m4.col[3]
+		final float len = ray.direction.dot(_v3a.x - ray.origin.x, _v3a.y - ray.origin.y, _v3a.z - ray.origin.z);
 		if (len < 0f)
 			return -1f;
 
 		// TODO extending other shapes
 		if (p.pickingShape == PickingShape.sphere) {
-			float dist2 = _v3.dst2(ray.origin.x + ray.direction.x * len,
+			float dist2 = _v3a.dst2(ray.origin.x + ray.direction.x * len,
 					ray.origin.y + ray.direction.y * len, ray.origin.z + ray.direction.z * len);
 			return (dist2 <= p.radius * p.radius) ? dist2 : -1f;
 		}
 		else if (p.pickingShape == PickingShape.box) {
-			if (Intersector.intersectRayBoundsFast(ray, _v3, p.whd.getDimensions(_v3_1))) {
-                return _v3.dst2(ray.origin.x + ray.direction.x * len, ray.origin.y + ray.direction.y * len, ray.origin.z + ray.direction.z * len);
+			if (Intersector.intersectRayBoundsFast(ray, _v3a, p.whd.getDimensions(_v3b))) {
+                return _v3a.dst2(ray.origin.x + ray.direction.x * len, ray.origin.y + ray.direction.y * len, ray.origin.z + ray.direction.z * len);
             }
 		}
 		return -1f;
 	}
 
 	@Override
-	public boolean touchUp(int screenX, int screenY, int pointer, int button) { 
-		return false;
-	}
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) { return false; }
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) { return false; }

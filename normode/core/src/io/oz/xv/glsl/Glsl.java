@@ -57,8 +57,8 @@ public class Glsl {
 			"void main() { gl_FragColor = vec4(abs(vColor), 1.); }"
 		);
 
-		public Test() {
-			super(ShaderFlag.test, null);
+		public Test(Visual v) {
+			super(ShaderFlag.test, v);
 			program = new ShaderProgram(vs, fs);
 		}
 	}
@@ -73,11 +73,15 @@ public class Glsl {
 			"attribute vec3 a_normal;",
 
 			"void main() { gl_Position = u_vpMat4 * u_modelMat4 * a_position; }");
-		static String fs = 
-			"void main() { gl_FragColor = vec4(0.0, 0.2, 0.8, 0.75); }";
+		static String fs = String.join(GlChunks.delimiter,
+			"uniform float u_mode;",
+			"void main() {",
+			"    if (u_mode > 0.5) gl_FragColor = vec4(0.0, 0.2, 0.8, 0.75);",
+			"    else gl_FragColor = vec4(0.8, 0.2, 0.0, 1.);",
+			"}");
 
-		public Simple() {
-			super(ShaderFlag.simple, null);
+		public Simple(Visual v) {
+			super(ShaderFlag.simple, v);
 			program = new ShaderProgram(vs, fs);
 		}
 	}
@@ -105,8 +109,8 @@ public class Glsl {
 			"	if (gl_FragColor.a == 0.) discard;",
 			"}");
 
-		public Tex0( ) {
-			super(ShaderFlag.tex0, null);
+		public Tex0(Visual v ) {
+			super(ShaderFlag.tex0, v);
 			program = new ShaderProgram(vs, fs);
 		}
 	}
@@ -164,21 +168,21 @@ public class Glsl {
 		}
 	}
 
-	public static WShader wshader(ShaderFlag f) {
+	public static WShader wshader(ShaderFlag f, Visual v) {
 		WShader s;
 		switch (f) {
 			case test:
-				s = new Test();
+				s = new Test(v);
 				break;
 			case simple:
-				s = new Simple();
+				s = new Simple(v);
 				break;
 			case tex0:
-				s = new Tex0();
+				s = new Tex0(v);
 				break;
 			case sdfont:
 				// don't use this if in ECS mode - must providing a Visual instance
-				s = new Sdfont(null);
+				s = new Sdfont(v);
 				break;
 			case phong:
 				s = new PhongShadow();

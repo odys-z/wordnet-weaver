@@ -2,22 +2,13 @@ package io.oz.wnw.norm.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.badlogic.gdx.tests.g3d.MultipleRenderTargetTest;
-import com.badlogic.gdx.tests.g3d.ShadowMappingTest;
 
-import io.oz.wnw.norm.WGame;
 import io.oz.xv.ecs.s.RayPickerTest;
 
-@SuppressWarnings("unused")
-public class DesktopLauncher {
+public class DesktopTest {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.useGL30 = true;
-		new LwjglApplication(new
-				// ViewHome(),
-				 WGame(),
-//				ShadowMappingTest(),
-//				MultipleRenderTargetTest(),
-				config);
+		new LwjglApplication(new RayPickerTest(), config);
 	}
 }

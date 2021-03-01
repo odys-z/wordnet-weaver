@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Matrix4;
 
 import io.oz.xv.ecs.c.Visual;
 
-/**Uniforms helper, in ecs &amp; xv style, not gdx's.
+/**Uniforms helper, in ecs &amp; xv style, not gdx's uniforms.
  * 
  * @author Odys Zhou
  */
@@ -26,8 +26,9 @@ class XUniformer {
 	}
 
 	public XUniformer f1(int name) {
-		float f = (float)vis.uniforms.get(name);
-		shader.set(name, f );
+		Float f = (Float) vis.uniforms.get(name);
+		if (f != null)
+			shader.set(name, f);
 		return this;
 	}
 
@@ -77,4 +78,9 @@ class XUniformer {
 		Matrix4 m = (Matrix4) vis.uniforms.get(name);
 		shader.set(name, m);
 	}
+
+//	public static Visual f1(Visual vis, int cmd, float val) {
+//		vis.shader.set(cmd, val);
+//		return vis;
+//	}
 }

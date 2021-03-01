@@ -15,7 +15,6 @@ public class Cubic extends WShader {
 	protected int u_alpha = register("u_alpha");
 	protected int u_tex0 = register("u_tex0");
 
-
 	static String vs;
 	static String fs;
 
@@ -41,7 +40,7 @@ public class Cubic extends WShader {
 		pixmap = new Pixmap(256, 256, Format.RGBA8888);
 		pixmap.setColor(0.1f, 0.1f, 0.1f, 1);
 		pixmap.fill();
-		pixmap.setColor(0, 0, 0, 1);
+		pixmap.setColor(1, 0, 0, 1);
 		pixmap.drawLine(0, 0, 256, 256);
 		pixmap.drawLine(256, 0, 0, 256);
 		tex = new Texture(pixmap);
@@ -57,4 +56,11 @@ public class Cubic extends WShader {
 		set(u_tex0, uTex0);
 	}
 
+//	@Override
+//	public WShader setVisual(int cmd, float val) {
+//		if (cmd == u_mode) {
+//			set(u_mode, val);
+//		}
+//		return this;
+//	}
 }
