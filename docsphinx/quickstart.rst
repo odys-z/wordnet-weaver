@@ -106,6 +106,10 @@ Search here for available gradle version, in normod/build.gradle:
 
 *Note* gradle 7 needs JDK 11.
 
+gradle.properties::
+
+    org.gradle.java.home=/home/ody/progs/jdk-15
+	
 Gradle version not supported
 _____________________________
 
