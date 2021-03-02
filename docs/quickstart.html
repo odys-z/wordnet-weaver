@@ -32,9 +32,6 @@
   
 
   
-        <link rel="index" title="Index"
-              href="genindex.html"/>
-        <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="wordnet weaver 1.0 documentation" href="index.html"/>
         <link rel="next" title="Hacking GDX" href="reference/index.html"/>
         <link rel="prev" title="Welcome to wordnet weaver’s documentation!" href="index.html"/> 
@@ -84,11 +81,13 @@
             
                 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Start from sources</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Start from sources</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#import-wn-server">Import wn-server</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#import-anclient-weaver">Import anclient.weaver</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#import-normod">Import normod</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#troubleshootings">Troubleshootings</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#can-not-clean-with-gradle">Can not clean with gradle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gradle-version-not-supported">Gradle version not supported</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#can-not-resolve-ashley-1-7-0">Can not resolve Ashley 1.7.0</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#class-of-dependency-not-found">Class of Dependency not Found</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#gradle-failed-on-resolving-tween-engine-api">Gradle failed on Resolving tween-engine-api</a></li>
@@ -144,20 +143,20 @@
   <div class="section" id="start-from-sources">
 <h1>Start from sources<a class="headerlink" href="#start-from-sources" title="Permalink to this headline">¶</a></h1>
 <p>Clone project:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">odys</span><span class="o">-</span><span class="n">z</span><span class="o">/</span><span class="n">wordnet</span><span class="o">-</span><span class="n">weaver</span><span class="o">.</span><span class="n">git</span> <span class="n">wnw</span>
+<div class="highlight-python"><div class="highlight"><pre>git clone https://github.com/odys-z/wordnet-weaver.git wnw
 </pre></div>
 </div>
 <div class="section" id="import-wn-server">
 <h2>Import wn-server<a class="headerlink" href="#import-wn-server" title="Permalink to this headline">¶</a></h2>
 <p>In Eclipse (tested on Oxygen):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="o">-&gt;</span> <span class="n">existing</span> <span class="n">maven</span> <span class="n">project</span> <span class="o">-&gt;</span> <span class="n">browse</span> <span class="n">to</span> <span class="n">file</span><span class="p">:</span><span class="o">//</span><span class="n">wnw</span><span class="o">/</span><span class="n">wn</span><span class="o">-</span><span class="n">serv</span>
+<div class="highlight-python"><div class="highlight"><pre>import -&gt; existing maven project -&gt; browse to file://wnw/wn-serv
 </pre></div>
 </div>
 </div>
 <div class="section" id="import-anclient-weaver">
 <h2>Import anclient.weaver<a class="headerlink" href="#import-anclient-weaver" title="Permalink to this headline">¶</a></h2>
 <p>In Eclipse (tested on Oxygen):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="o">-&gt;</span> <span class="n">existing</span> <span class="n">maven</span> <span class="n">project</span> <span class="o">-&gt;</span> <span class="n">browse</span> <span class="n">to</span> <span class="n">file</span><span class="p">:</span><span class="o">//</span><span class="n">wnw</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">anclient</span>
+<div class="highlight-python"><div class="highlight"><pre>import -&gt; existing maven project -&gt; browse to file://wnw/lib/anclient
 </pre></div>
 </div>
 </div>
@@ -165,23 +164,23 @@
 <h2>Import normod<a class="headerlink" href="#import-normod" title="Permalink to this headline">¶</a></h2>
 <p>The normod is a <a class="reference external" href="https://libgdx.badlogicgames.com/">libGDX</a> gradle project with
 sub-prorjects <a class="reference external" href="https://libgdx.badlogicgames.com/documentation/gettingstarted/Creating%20Projects.html">created with gdx-setup</a>.</p>
-<p>The default gradle project is been set using gradle wrapper’s local mode. If your
+<p>The default gradle project is been set using gradle wrapper&#8217;s local mode. If your
 need a newer version, or using gradle online mode, change this file:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wnw</span><span class="o">/</span><span class="n">normode</span><span class="o">/</span><span class="n">gradle</span><span class="o">/</span><span class="n">wrapper</span><span class="o">/</span><span class="n">gradle</span><span class="o">-</span><span class="n">wrapper</span><span class="o">.</span><span class="n">properties</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">wnw</span><span class="o">/</span><span class="n">normode</span><span class="o">/</span><span class="n">gradle</span><span class="o">/</span><span class="n">wrapper</span><span class="o">/</span><span class="n">gradle</span><span class="o">-</span><span class="n">wrapper</span><span class="o">.</span><span class="n">properties</span>
 </pre></div>
 </div>
 <p>comment out line 5 and use this line:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">distributionUrl</span><span class="o">=</span><span class="n">https</span>\<span class="p">:</span><span class="o">//</span><span class="n">services</span><span class="o">.</span><span class="n">gradle</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">distributions</span><span class="o">/</span><span class="n">gradle</span><span class="o">-</span><span class="mf">5.4</span><span class="o">.</span><span class="mi">1</span><span class="o">-</span><span class="nb">bin</span><span class="o">.</span><span class="n">zip</span>
+<div class="highlight-python"><div class="highlight"><pre>distributionUrl=https\://services.gradle.org/distributions/gradle-5.4.1-bin.zip
 </pre></div>
 </div>
 <p>If using local mode, the gradle binary zip must been downloaded and saved locally,
 and the file path needing to be changed in configure file.</p>
 <p>Gradle.bin.zip can be <a class="reference external" href="https://gradle.org/releases/">download from gradle home page</a>.</p>
 <p>To import normod, in Eclipse:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="o">-&gt;</span> <span class="n">existing</span> <span class="n">gradle</span> <span class="n">project</span> <span class="o">-&gt;</span> <span class="n">browse</span> <span class="n">to</span> <span class="n">wnw</span><span class="o">/</span><span class="n">normode</span>
+<div class="highlight-python"><div class="highlight"><pre>import -&gt; existing gradle project -&gt; browse to wnw/normode
 </pre></div>
 </div>
-<p>Note: According to the author’s experience, you better run desktop project in
+<p>Note: According to the author&#8217;s experience, you better run desktop project in
 Eclipse and run Android project from Android Studio.</p>
 <p><em>Note</em></p>
 <ol class="arabic simple">
@@ -191,37 +190,85 @@ Eclipse and run Android project from Android Studio.</p>
 Both have some problem for newest GDX version to depends on. And have to be installed
 in local maven repository.</p>
 <p>To install Ashley locally, see <a class="reference external" href="https://github.com/libgdx/ashley/pull/279">Ashely issue #279</a>.</p>
-<p>To install Universal-tween-engine, run it’s gradle task.</p>
-<p>If Eclipse doesn’t recognize dependency class, this may help:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">right</span> <span class="n">click</span> <span class="n">build</span><span class="o">.</span><span class="n">gradle</span> <span class="o">-&gt;</span> <span class="n">gradle</span> <span class="o">-&gt;</span> <span class="n">refresh</span> <span class="n">project</span>
+<p>To install Universal-tween-engine, run it&#8217;s gradle task.</p>
+<p>If Eclipse doesn&#8217;t recognize dependency class, this may help:</p>
+<div class="highlight-python"><div class="highlight"><pre>right click build.gradle -&gt; gradle -&gt; refresh project
 </pre></div>
 </div>
 <ol class="arabic simple" start="2">
 <li>Add gradle mirror repository as defualt by gdx-setup</li>
 </ol>
-<p>The default gdx-setup doesn’t use any mirror repository. The experimenting version
+<p>The default gdx-setup doesn&#8217;t use any mirror repository. The experimenting version
 may be helpful at <a class="reference external" href="https://github.com/odys-z/hello/tree/master/GDX/gdx-setup">odys-z/hello</a>.</p>
 </div>
 <div class="section" id="troubleshootings">
 <h2>Troubleshootings<a class="headerlink" href="#troubleshootings" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="can-not-clean-with-gradle">
+<h3>Can not clean with gradle<a class="headerlink" href="#can-not-clean-with-gradle" title="Permalink to this headline">¶</a></h3>
+<p>Error:</p>
+<div class="highlight-python"><div class="highlight"><pre>FAILURE: Build failed with an exception.
+
+* What went wrong:
+A problem occurred configuring root project &#39;normode&#39;.
+&gt; Could not resolve all artifacts for configuration &#39;:classpath&#39;.
+&gt; Could not find com.android.tools.build:gradle:7.0.0-beta05.
+ Searched in the following locations:
+   - file:/home/user/.m2/repository/com/android/tools/build/gradle/7.0.0-beta05/gradle-7.0.0-beta05.pom
+   - https://repo.maven.apache.org/maven2/com/android/tools/build/gradle/7.0.0-beta05/gradle-7.0.0-beta05.pom
+   - https://plugins.gradle.org/m2/com/android/tools/build/gradle/7.0.0-beta05/gradle-7.0.0-beta05.pom
+   - https://oss.sonatype.org/content/repositories/snapshots/com/android/tools/build/gradle/7.0.0-beta05/gradle-7.0.0-beta05.pom
+   - https://jcenter.bintray.com/com/android/tools/build/gradle/7.0.0-beta05/gradle-7.0.0-beta05.pom
+   - https://dl.google.com/dl/android/maven2/com/android/tools/build/gradle/7.0.0-beta05/gradle-7.0.0-beta05.pom
+ Required by:
+     project :
+</pre></div>
+</div>
+<p>Solution:</p>
+<p>Search here for available gradle version, in normod/build.gradle:</p>
+<div class="highlight-groovy"><div class="highlight"><pre><span class="n">dependencies</span> <span class="o">{</span>
+    <span class="n">classpath</span> <span class="s1">&#39;org.wisepersist:gwt-gradle-plugin:1.0.9&#39;</span>
+    <span class="n">classpath</span> <span class="s1">&#39;com.android.tools.build:gradle:7.0.0-alpha08&#39;</span>
+    <span class="o">...</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p><em>Note</em> gradle 7 needs JDK 11.</p>
+</div>
+<div class="section" id="gradle-version-not-supported">
+<h3>Gradle version not supported<a class="headerlink" href="#gradle-version-not-supported" title="Permalink to this headline">¶</a></h3>
+<p>Error:</p>
+<div class="highlight-python"><div class="highlight"><pre>FAILURE: Build failed with an exception.
+
+* Where:
+Build file &#39;/home/user/git/wnw/normode/build.gradle&#39; line: 62
+
+* What went wrong:
+A problem occurred evaluating root project &#39;normode&#39;.
+&gt; Failed to apply plugin &#39;com.android.internal.version-check&#39;.
+&gt; Minimum supported Gradle version is 6.8.2. Current version is 6.6.1. If using the gradle wrapper, try editing the distributionUrl in /home/ody/git/wnw/normode/gradle/wrapper/gradle-wrapper.properties to gradle-6.8.2-all.zip
+</pre></div>
+</div>
+<p>Solution:</p>
+<p>Download at <a class="reference external" href="https://gradle.org/releases/">Gradle Release</a>.</p>
+</div>
 <div class="section" id="can-not-resolve-ashley-1-7-0">
 <h3>Can not resolve Ashley 1.7.0<a class="headerlink" href="#can-not-resolve-ashley-1-7-0" title="Permalink to this headline">¶</a></h3>
 <div class="admonition attention">
 <p class="first admonition-title">Attention</p>
-<p class="last">This will be changed using Ashley 1.7.4.
+<p class="last">This will be changed to use Ashley 1.7.4.
 see <a class="reference external" href="https://github.com/libgdx/ashley/issues/278">Ashley issue #278</a>
 &amp; <a class="reference external" href="https://github.com/libgdx/ashley/pull/279">#279</a></p>
 </div>
 <p>Error:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">The</span> <span class="n">container</span> <span class="s1">&#39;Project and External Dependencies&#39;</span> <span class="n">references</span> <span class="n">non</span> <span class="n">existing</span> <span class="n">library</span>
-<span class="s1">&#39;/home/ody/.gradle/caches/modules-2/files-2.1/com.badlogicgames.ashley/ashley/1.7.0/a7c4083c0a42027a3c03ba7ccecef6cbe1c5f0a4/ashley-1.7.0.jar&#39;</span>
+<div class="highlight-python"><div class="highlight"><pre>The container &#39;Project and External Dependencies&#39; references non existing library
+&#39;/home/ody/.gradle/caches/modules-2/files-2.1/com.badlogicgames.ashley/ashley/1.7.0/a7c4083c0a42027a3c03ba7ccecef6cbe1c5f0a4/ashley-1.7.0.jar&#39;
 </pre></div>
 </div>
 <p>Cause:</p>
 <p>Wordnet-weaver/normal module depends on Ashley v1.7.0. The desktop(Eclipse) project
 depend it locally.</p>
 <p>Install Ashley 1.7.0 to local maven:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gradlew</span> <span class="n">install</span>
+<div class="highlight-python"><div class="highlight"><pre>gradlew install
 </pre></div>
 </div>
 </div>
@@ -229,7 +276,7 @@ depend it locally.</p>
 <h3>Class of Dependency not Found<a class="headerlink" href="#class-of-dependency-not-found" title="Permalink to this headline">¶</a></h3>
 <p>Error:</p>
 <p>When running desktop, report error message like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Exception in thread &quot;LWJGL Application&quot; com.badlogic.gdx.utils.GdxRuntimeException: java.lang.NoClassDefFoundError: io/oz/wnw/my/ISettings
+<div class="highlight-python"><div class="highlight"><pre>Exception in thread &quot;LWJGL Application&quot; com.badlogic.gdx.utils.GdxRuntimeException: java.lang.NoClassDefFoundError: io/oz/wnw/my/ISettings
 at com.badlogic.gdx.backends.lwjgl.LwjglApplication$1.run(LwjglApplication.java:135)
 Caused by: java.lang.NoClassDefFoundError: io/oz/wnw/my/ISettings
 ...
@@ -237,25 +284,25 @@ Caused by: java.lang.NoClassDefFoundError: io/oz/wnw/my/ISettings
 </div>
 <p>Cause:</p>
 <p>The normode/core gradle sub-project depends on another maven project, anclient.weaver.
-The desktop application can’t find it’s class in run time environment.</p>
+The desktop application can&#8217;t find it&#8217;s class in run time environment.</p>
 <p>Solution:</p>
 <p>In core/gradle.build, add compile dependency after applied Java plugin. (
 <a class="reference external" href="https://stackoverflow.com/questions/23796404/could-not-find-method-compile-for-arguments-gradle">Otherwise the compile command will failed</a>.)</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dependencies</span> <span class="p">{</span>
-        <span class="nb">compile</span> <span class="s1">&#39;io.github.odys-z:anclient.weaver:0.0.1-SNAPSHOT&#39;</span>
-<span class="p">}</span>
+<div class="highlight-python"><div class="highlight"><pre>dependencies {
+        compile &#39;io.github.odys-z:anclient.weaver:0.0.1-SNAPSHOT&#39;
+}
 </pre></div>
 </div>
 <p>Update anclient.weaver dependency or install it to local repository. In sub-folder
 wn-serv:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mvn</span> <span class="n">install</span>
+<div class="highlight-python"><div class="highlight"><pre>mvn install
 </pre></div>
 </div>
 <p>then have normal/gradle.build use mavenLocal:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">repositories</span> <span class="p">{</span>
-    <span class="n">mavenLocal</span><span class="p">()</span>
-    <span class="o">...</span>
-<span class="p">}</span>
+<div class="highlight-python"><div class="highlight"><pre>repositories {
+    mavenLocal()
+    ...
+}
 </pre></div>
 </div>
 <p>Now the gradlew run task should start the desktop application.</p>
@@ -266,31 +313,31 @@ classpath.</p>
 <div class="section" id="gradle-failed-on-resolving-tween-engine-api">
 <h3>Gradle failed on Resolving tween-engine-api<a class="headerlink" href="#gradle-failed-on-resolving-tween-engine-api" title="Permalink to this headline">¶</a></h3>
 <p>Error:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FAILURE</span><span class="p">:</span> <span class="n">Build</span> <span class="n">failed</span> <span class="k">with</span> <span class="n">an</span> <span class="n">exception</span><span class="o">.</span>
+<div class="highlight-python"><div class="highlight"><pre>FAILURE: Build failed with an exception.
 
-<span class="o">*</span> <span class="n">What</span> <span class="n">went</span> <span class="n">wrong</span><span class="p">:</span>
-<span class="n">A</span> <span class="n">problem</span> <span class="n">occurred</span> <span class="n">configuring</span> <span class="n">root</span> <span class="n">project</span> <span class="s1">&#39;normode&#39;</span><span class="o">.</span>
-<span class="o">&gt;</span> <span class="n">Could</span> <span class="ow">not</span> <span class="n">resolve</span> <span class="nb">all</span> <span class="n">artifacts</span> <span class="k">for</span> <span class="n">configuration</span> <span class="s1">&#39;:classpath&#39;</span><span class="o">.</span>
-   <span class="o">&gt;</span> <span class="n">Could</span> <span class="ow">not</span> <span class="n">resolve</span> <span class="n">com</span><span class="o">.</span><span class="n">aurelienribon</span><span class="p">:</span><span class="n">tween</span><span class="o">-</span><span class="n">engine</span><span class="o">-</span><span class="n">api</span><span class="p">:</span><span class="mf">6.3</span><span class="o">.</span><span class="mf">3.</span>
-     <span class="n">Required</span> <span class="n">by</span><span class="p">:</span>
-         <span class="n">project</span> <span class="p">:</span>
-      <span class="o">&gt;</span> <span class="n">Could</span> <span class="ow">not</span> <span class="n">resolve</span> <span class="n">com</span><span class="o">.</span><span class="n">aurelienribon</span><span class="p">:</span><span class="n">tween</span><span class="o">-</span><span class="n">engine</span><span class="o">-</span><span class="n">api</span><span class="p">:</span><span class="mf">6.3</span><span class="o">.</span><span class="mf">3.</span>
-         <span class="o">&gt;</span> <span class="n">Could</span> <span class="ow">not</span> <span class="n">get</span> <span class="n">resource</span> <span class="s1">&#39;https://repo.maven.apache.org/maven2/com/aurelienribon/tween-engine-api/6.3.3/tween-engine-api-6.3.3.pom&#39;</span><span class="o">.</span>
-            <span class="o">&gt;</span> <span class="n">Could</span> <span class="ow">not</span> <span class="n">GET</span> <span class="s1">&#39;https://repo.maven.apache.org/maven2/com/aurelienribon/tween-engine-api/6.3.3/tween-engine-api-6.3.3.pom&#39;</span><span class="o">.</span>
-               <span class="o">&gt;</span> <span class="n">No</span> <span class="n">route</span> <span class="n">to</span> <span class="n">host</span> <span class="p">(</span><span class="n">Host</span> <span class="n">unreachable</span><span class="p">)</span>
+* What went wrong:
+A problem occurred configuring root project &#39;normode&#39;.
+&gt; Could not resolve all artifacts for configuration &#39;:classpath&#39;.
+   &gt; Could not resolve com.aurelienribon:tween-engine-api:6.3.3.
+     Required by:
+         project :
+      &gt; Could not resolve com.aurelienribon:tween-engine-api:6.3.3.
+         &gt; Could not get resource &#39;https://repo.maven.apache.org/maven2/com/aurelienribon/tween-engine-api/6.3.3/tween-engine-api-6.3.3.pom&#39;.
+            &gt; Could not GET &#39;https://repo.maven.apache.org/maven2/com/aurelienribon/tween-engine-api/6.3.3/tween-engine-api-6.3.3.pom&#39;.
+               &gt; No route to host (Host unreachable)
 </pre></div>
 </div>
 <p>Solution:</p>
 <p>Install <a class="reference external" href="https://github.com/AurelienRibon/universal-tween-engine">universal-tween-engine</a>
 locally.</p>
-<p>It’s recommended use the forked version on Ubuntu.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">odys</span><span class="o">-</span><span class="n">z</span><span class="o">/</span><span class="n">universal</span><span class="o">-</span><span class="n">tween</span><span class="o">-</span><span class="n">engine</span><span class="o">.</span><span class="n">git</span>
-    <span class="n">cd</span> <span class="n">universal</span><span class="o">-</span><span class="n">tween</span><span class="o">-</span><span class="n">engine</span>
-    <span class="n">gradle</span>
+<p>It&#8217;s recommended use the forked version on Ubuntu.</p>
+<div class="highlight-python"><div class="highlight"><pre>git clone https://github.com/odys-z/universal-tween-engine.git
+    cd universal-tween-engine
+    gradle
 </pre></div>
 </div>
 <p>The defualt task is configure as installing local repo.</p>
-<p>Also, <cite>the question and answer at stackoverflow &lt;https://stackoverflow.com/questions/32107205/gradle-does-not-use-the-maven-local-repository-for-a-new-dependency&gt;_</cite>
+<p>Also, <a class="reference external" href="https://stackoverflow.com/questions/32107205/gradle-does-not-use-the-maven-local-repository-for-a-new-dependency">the question and answer at stackoverflow</a>
 might be useful.</p>
 </div>
 <div class="section" id="installing-universal-tween-engine-on-ubuntu">
@@ -305,17 +352,17 @@ might be useful.</p>
 <div class="section" id="can-not-attach-source-to-gdx-jar">
 <h3>Can not attach source to GDX.jar<a class="headerlink" href="#can-not-attach-source-to-gdx-jar" title="Permalink to this headline">¶</a></h3>
 <p>This is probably caused by using mavenLocal in gradle project. Just set:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DdownloadSources</span><span class="o">=</span><span class="n">true</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">DdownloadSources</span><span class="o">=</span><span class="n">true</span>
 <span class="o">-</span><span class="n">DdownloadJavadocs</span><span class="o">=</span><span class="n">true</span>
 </pre></div>
 </div>
-<p>won’t work. See <a class="reference external" href="https://stackoverflow.com/a/26529202/7362888">similar report</a>.</p>
-<p>It’s a weired behavior <a class="reference external" href="https://stackoverflow.com/a/12836295">reported and solved by Andreas Kuhrwahl</a>.</p>
+<p>won&#8217;t work. See <a class="reference external" href="https://stackoverflow.com/a/26529202/7362888">similar report</a>.</p>
+<p>It&#8217;s a weired behavior <a class="reference external" href="https://stackoverflow.com/a/12836295">reported and solved by Andreas Kuhrwahl</a>.</p>
 <p>To solve the problem, see:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">normode</span><span class="o">/</span><span class="n">core</span><span class="o">/</span><span class="n">gradle</span><span class="o">.</span><span class="n">build</span><span class="p">:</span>
+<div class="highlight-python"><div class="highlight"><pre>normode/core/gradle.build:
 </pre></div>
 </div>
-<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">eclipse</span><span class="o">.</span><span class="na">classpath</span><span class="o">.</span><span class="na">file</span> <span class="o">{</span>
+<div class="highlight-groovy"><div class="highlight"><pre><span class="n">eclipse</span><span class="o">.</span><span class="na">classpath</span><span class="o">.</span><span class="na">file</span> <span class="o">{</span>
     <span class="n">withXml</span> <span class="o">{</span> <span class="n">xml</span> <span class="o">-&gt;</span>
         <span class="kt">def</span> <span class="n">node</span> <span class="o">=</span> <span class="n">xml</span><span class="o">.</span><span class="na">asNode</span><span class="o">()</span>
         <span class="n">node</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span> <span class="n">node</span><span class="o">.</span><span class="na">find</span> <span class="o">{</span> <span class="n">it</span><span class="o">.</span><span class="nd">@path</span> <span class="o">==</span> <span class="s1">&#39;org.eclipse.jst.j2ee.internal.web.container&#39;</span> <span class="o">}</span> <span class="o">)</span>
@@ -325,7 +372,7 @@ might be useful.</p>
 </pre></div>
 </div>
 <p>Also source.jar and javadoc.jar can be download manually, e.g.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">repo</span><span class="o">.</span><span class="n">maven</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">maven2</span><span class="o">/</span><span class="n">com</span><span class="o">/</span><span class="n">badlogicgames</span><span class="o">/</span><span class="n">gdx</span><span class="o">/</span><span class="n">gdx</span><span class="o">/</span><span class="mf">1.9</span><span class="o">.</span><span class="mi">11</span><span class="o">/</span><span class="n">gdx</span><span class="o">-</span><span class="mf">1.9</span><span class="o">.</span><span class="mi">11</span><span class="o">-</span><span class="n">sources</span><span class="o">.</span><span class="n">jar</span>
+<div class="highlight-python"><div class="highlight"><pre>wget https://repo.maven.apache.org/maven2/com/badlogicgames/gdx/gdx/1.9.11/gdx-1.9.11-sources.jar
 </pre></div>
 </div>
 </div>
@@ -382,7 +429,7 @@ might be useful.</p>
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="_static/language_data.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
