@@ -70,10 +70,65 @@ may be helpful at `odys-z/hello <https://github.com/odys-z/hello/tree/master/GDX
 Troubleshootings
 ----------------
 
+Can not clean with gradle
+_________________________
+
+Error::
+
+    FAILURE: Build failed with an exception.
+
+    * What went wrong:
+    A problem occurred configuring root project 'normode'.
+    > Could not resolve all artifacts for configuration ':classpath'.
+    > Could not find com.android.tools.build:gradle:7.0.0-beta05.
+     Searched in the following locations:
+       - file:/home/user/.m2/repository/com/android/tools/build/gradle/7.0.0-beta05/gradle-7.0.0-beta05.pom
+       - https://repo.maven.apache.org/maven2/com/android/tools/build/gradle/7.0.0-beta05/gradle-7.0.0-beta05.pom
+       - https://plugins.gradle.org/m2/com/android/tools/build/gradle/7.0.0-beta05/gradle-7.0.0-beta05.pom
+       - https://oss.sonatype.org/content/repositories/snapshots/com/android/tools/build/gradle/7.0.0-beta05/gradle-7.0.0-beta05.pom
+       - https://jcenter.bintray.com/com/android/tools/build/gradle/7.0.0-beta05/gradle-7.0.0-beta05.pom
+       - https://dl.google.com/dl/android/maven2/com/android/tools/build/gradle/7.0.0-beta05/gradle-7.0.0-beta05.pom
+     Required by:
+         project :
+
+Solution:
+
+Search here for available gradle version, in normod/build.gradle:
+
+.. code-block:: groovy
+
+    dependencies {
+        classpath 'org.wisepersist:gwt-gradle-plugin:1.0.9'
+        classpath 'com.android.tools.build:gradle:7.0.0-alpha08'
+        ...
+    }
+..
+
+*Note* gradle 7 needs JDK 11.
+
+Gradle version not supported
+_____________________________
+
+Error::
+
+	FAILURE: Build failed with an exception.
+
+	* Where:
+	Build file '/home/user/git/wnw/normode/build.gradle' line: 62
+
+	* What went wrong:
+	A problem occurred evaluating root project 'normode'.
+	> Failed to apply plugin 'com.android.internal.version-check'.
+	> Minimum supported Gradle version is 6.8.2. Current version is 6.6.1. If using the gradle wrapper, try editing the distributionUrl in /home/ody/git/wnw/normode/gradle/wrapper/gradle-wrapper.properties to gradle-6.8.2-all.zip
+
+Solution:
+
+Download at `Gradle Release <https://gradle.org/releases/>`_.
+
 Can not resolve Ashley 1.7.0
 ____________________________
 
-.. attention:: This will be changed using Ashley 1.7.4.
+.. attention:: This will be changed to use Ashley 1.7.4.
     see `Ashley issue #278 <https://github.com/libgdx/ashley/issues/278>`_
     & `#279 <https://github.com/libgdx/ashley/pull/279>`_
 
@@ -170,7 +225,7 @@ It's recommended use the forked version on Ubuntu.
 
 The defualt task is configure as installing local repo.
 
-Also, `the question and answer at stackoverflow <https://stackoverflow.com/questions/32107205/gradle-does-not-use-the-maven-local-repository-for-a-new-dependency>_`
+Also, `the question and answer at stackoverflow <https://stackoverflow.com/questions/32107205/gradle-does-not-use-the-maven-local-repository-for-a-new-dependency>`_
 might be useful.
 
 Installing Universal-tween-engine on Ubuntu

@@ -112,8 +112,8 @@ public class RayPicker extends EntitySystem implements InputProcessor {
 		}
 		else if (XWorld.log(5))
 			System.out.println("[5]");
-		TO BE CONTINUED:
-		Change current selection doesn't deselect previous
+//		TO BE CONTINUED:
+//		Change current selection doesn't deselect previous
 
 		this.dirty = false;
 	}
