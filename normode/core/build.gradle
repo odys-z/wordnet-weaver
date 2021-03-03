@@ -26,5 +26,5 @@ dependencies {
 	// To install client, install wn-weaver first
 	compile 'io.github.odys-z:anclient.weaver:0.0.1-SNAPSHOT'
 	
-	// compile 'com.aurelienribon:tween-engine-api:6.3.3'
+	compile 'com.aurelienribon:tween-engine-api:6.3.3'
 }

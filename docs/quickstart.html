@@ -84,9 +84,14 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="">Start from sources</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#import-wn-server">Import wn-server</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#import-anclient-weaver">Import anclient.weaver</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#import-normod">Import normod</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#import-normod">Import normod</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#install-universal-tween-engine-locally">1. Install Universal Tween Engine Locally</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#about-install-ashley-locally">2. About Install Ashley Locally</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#add-gradle-mirror-repository-as-defualt-by-gdx-setup">3. Add gradle mirror repository as defualt by gdx-setup</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#troubleshootings">Troubleshootings</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#can-not-clean-with-gradle">Can not clean with gradle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#could-not-find-com-android-tools-build-gradle">Could not find com.android.tools.build:gradle</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#gradle-version-not-supported">Gradle version not supported</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#can-not-resolve-ashley-1-7-0">Can not resolve Ashley 1.7.0</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#class-of-dependency-not-found">Class of Dependency not Found</a></li>
@@ -183,9 +188,18 @@ and the file path needing to be changed in configure file.</p>
 <p>Note: According to the author&#8217;s experience, you better run desktop project in
 Eclipse and run Android project from Android Studio.</p>
 <p><em>Note</em></p>
-<ol class="arabic simple">
-<li>About Install Ashley Locally</li>
-</ol>
+<div class="section" id="install-universal-tween-engine-locally">
+<h3>1. Install Universal Tween Engine Locally<a class="headerlink" href="#install-universal-tween-engine-locally" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://github.com/AurelienRibon/universal-tween-engine">Universal Tween Engine</a>
+can be installed to local maven repository. The build.gradle has a default task
+to install into local manven.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#install-tween-ubuntu"><span>install on Ubuntu</span></a></p>
+</div>
+</div>
+<div class="section" id="about-install-ashley-locally">
+<h3>2. About Install Ashley Locally<a class="headerlink" href="#about-install-ashley-locally" title="Permalink to this headline">¶</a></h3>
 <p>The normal project depends on Ashley and <a class="reference external" href="https://github.com/AurelienRibon/universal-tween-engine">Universal-tween-engine</a>.
 Both have some problem for newest GDX version to depends on. And have to be installed
 in local maven repository.</p>
@@ -195,16 +209,17 @@ in local maven repository.</p>
 <div class="highlight-python"><div class="highlight"><pre>right click build.gradle -&gt; gradle -&gt; refresh project
 </pre></div>
 </div>
-<ol class="arabic simple" start="2">
-<li>Add gradle mirror repository as defualt by gdx-setup</li>
-</ol>
+</div>
+<div class="section" id="add-gradle-mirror-repository-as-defualt-by-gdx-setup">
+<h3>3. Add gradle mirror repository as defualt by gdx-setup<a class="headerlink" href="#add-gradle-mirror-repository-as-defualt-by-gdx-setup" title="Permalink to this headline">¶</a></h3>
 <p>The default gdx-setup doesn&#8217;t use any mirror repository. The experimenting version
 may be helpful at <a class="reference external" href="https://github.com/odys-z/hello/tree/master/GDX/gdx-setup">odys-z/hello</a>.</p>
 </div>
+</div>
 <div class="section" id="troubleshootings">
 <h2>Troubleshootings<a class="headerlink" href="#troubleshootings" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="can-not-clean-with-gradle">
-<h3>Can not clean with gradle<a class="headerlink" href="#can-not-clean-with-gradle" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="could-not-find-com-android-tools-build-gradle">
+<h3>Could not find com.android.tools.build:gradle<a class="headerlink" href="#could-not-find-com-android-tools-build-gradle" title="Permalink to this headline">¶</a></h3>
 <p>Error:</p>
 <div class="highlight-python"><div class="highlight"><pre>FAILURE: Build failed with an exception.
 
@@ -224,7 +239,9 @@ A problem occurred configuring root project &#39;normode&#39;.
 </pre></div>
 </div>
 <p>Solution:</p>
-<p>Search here for available gradle version, in normod/build.gradle:</p>
+<p>Search <a class="reference external" href="https://maven.google.com/web/index.html?q=gradle#com.android.tools.build:gradle">manven.google</a>
+or <a class="reference external" href="https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google">maven repo</a>
+for available gradle version, in normod/build.gradle:</p>
 <div class="highlight-groovy"><div class="highlight"><pre><span class="n">dependencies</span> <span class="o">{</span>
     <span class="n">classpath</span> <span class="s1">&#39;org.wisepersist:gwt-gradle-plugin:1.0.9&#39;</span>
     <span class="n">classpath</span> <span class="s1">&#39;com.android.tools.build:gradle:7.0.0-alpha08&#39;</span>
@@ -232,7 +249,11 @@ A problem occurred configuring root project &#39;normode&#39;.
 <span class="o">}</span>
 </pre></div>
 </div>
-<p><em>Note</em> gradle 7 needs JDK 11.</p>
+<p><strong>Note:</strong> gradle 7 needs JDK 11.</p>
+<p>To change gradle jdk version, in gradle.properties:</p>
+<div class="highlight-python"><div class="highlight"><pre>org.gradle.java.home=/home/ody/progs/jdk-15.0.2
+</pre></div>
+</div>
 </div>
 <div class="section" id="gradle-version-not-supported">
 <h3>Gradle version not supported<a class="headerlink" href="#gradle-version-not-supported" title="Permalink to this headline">¶</a></h3>
@@ -346,7 +367,7 @@ might be useful.</p>
 <p>Gradle complain about command not found while installing to local repository.</p>
 <p>Cause:</p>
 <p>The gradle task script can’t do the job of installing tween-engine locally.</p>
-<p>Solution:</p>
+<p id="install-tween-ubuntu">Solution:</p>
 <p>Try this <a class="reference external" href="https://github.com/odys-z/universal-tween-engine/blob/master/build.gradle">modified build.gradle version</a></p>
 </div>
 <div class="section" id="can-not-attach-source-to-gdx-jar">

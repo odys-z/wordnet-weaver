@@ -46,9 +46,28 @@ To import normod, in Eclipse::
 Note: According to the author's experience, you better run desktop project in
 Eclipse and run Android project from Android Studio.
 
-*Note*
+*Follow these steps to resolve dependencies.*
 
-1. About Install Ashley Locally
+1. Install Universal Tween Engine Locally
+_________________________________________
+
+`Universal Tween Engine <https://github.com/AurelienRibon/universal-tween-engine>`_
+can be installed to local maven repository. The build.gradle has a default task
+to install into local manven.
+
+.. seealso:: :ref:`install on Ubuntu <install-tween-ubuntu>`
+
+2. Install Anclient.weaver
+__________________________
+
+In sub-folder wn-serv::
+
+    mvn install
+
+.. seealso:: :ref:`Troubleshooting <sol-install-wnw-client>`
+
+2. About Install Ashley Locally (optional)
+__________________________________________
 
 The normal project depends on Ashley and `Universal-tween-engine <https://github.com/AurelienRibon/universal-tween-engine>`_.
 Both have some problem for newest GDX version to depends on. And have to be installed
@@ -62,7 +81,8 @@ If Eclipse doesn't recognize dependency class, this may help::
 
     right click build.gradle -> gradle -> refresh project
 
-2. Add gradle mirror repository as defualt by gdx-setup
+3. Add gradle mirror repository as defualt by gdx-setup (optional)
+__________________________________________________________________
 
 The default gdx-setup doesn't use any mirror repository. The experimenting version
 may be helpful at `odys-z/hello <https://github.com/odys-z/hello/tree/master/GDX/gdx-setup>`_.
@@ -70,8 +90,8 @@ may be helpful at `odys-z/hello <https://github.com/odys-z/hello/tree/master/GDX
 Troubleshootings
 ----------------
 
-Can not clean with gradle
-_________________________
+Could not find com.android.tools.build:gradle
+_____________________________________________
 
 Error::
 
@@ -93,7 +113,9 @@ Error::
 
 Solution:
 
-Search here for available gradle version, in normod/build.gradle:
+Search `manven.google <https://maven.google.com/web/index.html?q=gradle#com.android.tools.build:gradle>`_
+or `maven repo <https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google>`_
+for available gradle version, in normod/build.gradle:
 
 .. code-block:: groovy
 
@@ -104,12 +126,12 @@ Search here for available gradle version, in normod/build.gradle:
     }
 ..
 
-*Note* gradle 7 needs JDK 11.
+**Note:** gradle 7 needs JDK 11.
 
-gradle.properties::
+To change gradle jdk version, in gradle.properties::
 
-    org.gradle.java.home=/home/ody/progs/jdk-15
-	
+    org.gradle.java.home=/home/ody/progs/jdk-15.0.2
+
 Gradle version not supported
 _____________________________
 
@@ -150,8 +172,8 @@ Install Ashley 1.7.0 to local maven::
 
     gradlew install
 
-Class of Dependency not Found
-_____________________________
+Class of Weaver not Found
+_________________________
 
 Error:
 
@@ -166,6 +188,8 @@ Cause:
 
 The normode/core gradle sub-project depends on another maven project, anclient.weaver.
 The desktop application can't find it's class in run time environment.
+
+.. _sol-install-wnw-client:
 
 Solution:
 
@@ -242,6 +266,8 @@ Gradle complain about command not found while installing to local repository.
 Cause:
 
 The gradle task script can’t do the job of installing tween-engine locally.
+
+.. _install-tween-ubuntu:
 
 Solution:
 
