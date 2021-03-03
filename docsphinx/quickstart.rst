@@ -46,9 +46,31 @@ To import normod, in Eclipse::
 Note: According to the author's experience, you better run desktop project in
 Eclipse and run Android project from Android Studio.
 
-*Note*
+*Follow these steps to resolve dependencies.*
 
-1. About Install Ashley Locally
+1. Install Universal Tween Engine Locally
+_________________________________________
+
+`Universal Tween Engine <https://github.com/AurelienRibon/universal-tween-engine>`_
+can be installed to local maven repository. The build.gradle has a default task
+to install into local manven.
+
+.. seealso:: :ref:`install on Ubuntu <install-tween-ubuntu>`
+
+2. Install Anclient.weaver
+__________________________
+
+In sub-folder lib/anclient::
+
+    mvn install
+
+If Eclipse still reporting error of not found class from io.oz.jwi.*, try fix
+project's build path - add anclient.weaver to core project build path in Eclipse.
+
+.. seealso:: :ref:`Troubleshooting <sol-install-wnw-client>`
+
+3. About Install Ashley Locally (optional)
+__________________________________________
 
 The normal project depends on Ashley and `Universal-tween-engine <https://github.com/AurelienRibon/universal-tween-engine>`_.
 Both have some problem for newest GDX version to depends on. And have to be installed
@@ -62,7 +84,8 @@ If Eclipse doesn't recognize dependency class, this may help::
 
     right click build.gradle -> gradle -> refresh project
 
-2. Add gradle mirror repository as defualt by gdx-setup
+4. Add gradle mirror repository as defualt by gdx-setup (optional)
+__________________________________________________________________
 
 The default gdx-setup doesn't use any mirror repository. The experimenting version
 may be helpful at `odys-z/hello <https://github.com/odys-z/hello/tree/master/GDX/gdx-setup>`_.
@@ -70,10 +93,71 @@ may be helpful at `odys-z/hello <https://github.com/odys-z/hello/tree/master/GDX
 Troubleshootings
 ----------------
 
+Could not find com.android.tools.build:gradle
+_____________________________________________
+
+Error::
+
+    FAILURE: Build failed with an exception.
+
+    * What went wrong:
+    A problem occurred configuring root project 'normode'.
+    > Could not resolve all artifacts for configuration ':classpath'.
+    > Could not find com.android.tools.build:gradle:7.0.0-beta05.
+     Searched in the following locations:
+       - file:/home/user/.m2/repository/com/android/tools/build/gradle/7.0.0-beta05/gradle-7.0.0-beta05.pom
+       - https://repo.maven.apache.org/maven2/com/android/tools/build/gradle/7.0.0-beta05/gradle-7.0.0-beta05.pom
+       - https://plugins.gradle.org/m2/com/android/tools/build/gradle/7.0.0-beta05/gradle-7.0.0-beta05.pom
+       - https://oss.sonatype.org/content/repositories/snapshots/com/android/tools/build/gradle/7.0.0-beta05/gradle-7.0.0-beta05.pom
+       - https://jcenter.bintray.com/com/android/tools/build/gradle/7.0.0-beta05/gradle-7.0.0-beta05.pom
+       - https://dl.google.com/dl/android/maven2/com/android/tools/build/gradle/7.0.0-beta05/gradle-7.0.0-beta05.pom
+     Required by:
+         project :
+
+Solution:
+
+Search `manven.google <https://maven.google.com/web/index.html?q=gradle#com.android.tools.build:gradle>`_
+or `maven repo <https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google>`_
+for available gradle version, in normod/build.gradle:
+
+.. code-block:: groovy
+
+    dependencies {
+        classpath 'org.wisepersist:gwt-gradle-plugin:1.0.9'
+        classpath 'com.android.tools.build:gradle:7.0.0-alpha08'
+        ...
+    }
+..
+
+**Note:** gradle 7 needs JDK 11.
+
+To change gradle jdk version, in gradle.properties::
+
+    org.gradle.java.home=/home/ody/progs/jdk-15.0.2
+
+Gradle version not supported
+_____________________________
+
+Error::
+
+	FAILURE: Build failed with an exception.
+
+	* Where:
+	Build file '/home/user/git/wnw/normode/build.gradle' line: 62
+
+	* What went wrong:
+	A problem occurred evaluating root project 'normode'.
+	> Failed to apply plugin 'com.android.internal.version-check'.
+	> Minimum supported Gradle version is 6.8.2. Current version is 6.6.1. If using the gradle wrapper, try editing the distributionUrl in /home/ody/git/wnw/normode/gradle/wrapper/gradle-wrapper.properties to gradle-6.8.2-all.zip
+
+Solution:
+
+Download at `Gradle Release <https://gradle.org/releases/>`_.
+
 Can not resolve Ashley 1.7.0
 ____________________________
 
-.. attention:: This will be changed using Ashley 1.7.4.
+.. attention:: This will be changed to use Ashley 1.7.4.
     see `Ashley issue #278 <https://github.com/libgdx/ashley/issues/278>`_
     & `#279 <https://github.com/libgdx/ashley/pull/279>`_
 
@@ -91,8 +175,8 @@ Install Ashley 1.7.0 to local maven::
 
     gradlew install
 
-Class of Dependency not Found
-_____________________________
+Class of Weaver not Found
+_________________________
 
 Error:
 
@@ -108,27 +192,34 @@ Cause:
 The normode/core gradle sub-project depends on another maven project, anclient.weaver.
 The desktop application can't find it's class in run time environment.
 
+.. _sol-install-wnw-client:
+
 Solution:
 
 In core/gradle.build, add compile dependency after applied Java plugin. (
 `Otherwise the compile command will failed <https://stackoverflow.com/questions/23796404/could-not-find-method-compile-for-arguments-gradle>`_.)
-::
+
+.. code-block:: groovy
 
     dependencies {
 	    compile 'io.github.odys-z:anclient.weaver:0.0.1-SNAPSHOT'
     }
+..
 
 Update anclient.weaver dependency or install it to local repository. In sub-folder
 wn-serv::
 
     mvn install
 
-then have normal/gradle.build use mavenLocal::
+then have normal/gradle.build use mavenLocal:
+
+.. code-block:: groovy
 
     repositories {
         mavenLocal()
         ...
     }
+..
 
 Now the gradlew run task should start the desktop application.
 
@@ -170,7 +261,7 @@ It's recommended use the forked version on Ubuntu.
 
 The defualt task is configure as installing local repo.
 
-Also, `the question and answer at stackoverflow <https://stackoverflow.com/questions/32107205/gradle-does-not-use-the-maven-local-repository-for-a-new-dependency>_`
+Also, `the question and answer at stackoverflow <https://stackoverflow.com/questions/32107205/gradle-does-not-use-the-maven-local-repository-for-a-new-dependency>`_
 might be useful.
 
 Installing Universal-tween-engine on Ubuntu
@@ -183,6 +274,8 @@ Gradle complain about command not found while installing to local repository.
 Cause:
 
 The gradle task script can’t do the job of installing tween-engine locally.
+
+.. _install-tween-ubuntu:
 
 Solution:
 

@@ -68,34 +68,6 @@ public class CubeTree {
 	private static Color _colr;
 
 	/**
-	 * <p>
-	 * Layer Cubes:<br>
-	 * hypernym, lemma, hyponym
-	 * </p>
-	 * <p>
-	 * "lemma" means word base form, see
-	 * <a href='https://wordnet.princeton.edu/documentation/wngloss7wn'>
-	 * wngloss(7WN) wordnet documentation</a>:
-	 * </p>
-	 * <p>
-	 * Lower case ASCII text of word as found in the WordNet database index files.
-	 * </p>
-	 * <p>
-	 * Cube State:<br>
-	 * lemma-stable, selected, push-down(hidden), on-sky<br>
-	 * Usually the base form for a word or collocation.
-	 * </p>
-	 * private ArrayList<TreemapNode[]>[] layers = (ArrayList<TreemapNode[]>[]) new
-	 * ArrayList<?>[3];
-	 * 
-	 * public ArrayList<TreemapNode[]> hypernyms() { return
-	 * (ArrayList<TreemapNode[]>) layers[lyx]; // correct? } public
-	 * ArrayList<TreemapNode[]> lemmas() { return (ArrayList<TreemapNode[]>)
-	 * layers[lyx + 1]; } public ArrayList<TreemapNode[]> hyponyms() { return
-	 * (ArrayList<TreemapNode[]>) layers[lyx + 2]; }
-	 */
-
-	/**
 	 * @param font
 	 */
 	public static void init(String font) {
@@ -251,6 +223,6 @@ public class CubeTree {
 				Usage.Position | Usage.ColorUnpacked | Usage.TextureCoordinates | Usage.Normal, starMatrl);
 		Cell2D grid = contxt.allocatCell();
 		float mem = wMemory.memory;
-		QuadShapeBuilder.build(mpbuilder, grid.pos(), _colr.set(mem, mem / 3, 0, 1), .8f, .8f); 
+		QuadShapeBuilder.build(mpbuilder, grid.pos(), _colr.set(mem, mem / 3, 0, 1), 1.6f, 1.6f); 
 	}
 }

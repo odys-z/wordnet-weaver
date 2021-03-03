@@ -18,6 +18,7 @@ import io.oz.xv.glsl.Glsl.ShaderFlag;
 public class PlaneStar extends WShader {
 	protected int u_alpha = register("u_alpha");
 	protected int u_tex0 = register("u_tex0");
+	protected int u_time = register("u_time");
 
 	/**For translate plane facing scring,
 	 * see https://stackoverflow.com/a/5487981
@@ -41,7 +42,8 @@ public class PlaneStar extends WShader {
 	public PlaneStar(Visual visual) {
 		super(ShaderFlag.cubic, visual);
 		vs = Gdx.files.classpath("io/oz/xv/glsl/shaders/plane-star2.vert.glsl").readString();
-		fs = Gdx.files.classpath("io/oz/xv/glsl/shaders/plane-star.frag.glsl").readString();
+		// fs = Gdx.files.classpath("io/oz/xv/glsl/shaders/plane-star.frag.glsl").readString();
+		fs = Gdx.files.classpath("io/oz/xv/glsl/shaders/plane-star.fragx.glsl").readString();
 
 		this.visual = visual;
 		program = new ShaderProgram(vs, fs);
@@ -53,6 +55,7 @@ public class PlaneStar extends WShader {
 		enableViewM4();
 		super.init();
 
+		/*
 		Pixmap pixmap;
 		pixmap = new Pixmap(256, 256, Format.RGBA8888);
 		pixmap.setColor(0.0f, 0.0f, 1f, 1);
@@ -61,13 +64,12 @@ public class PlaneStar extends WShader {
 		pixmap.drawLine(0, 0, 256, 256);
 		pixmap.drawLine(256, 0, 0, 256);
 		tex = new Texture(pixmap);
-
-		// int uTex0 = context.textureBinder.bind(tex);
-		// uAlpha = 1.0f;
-		xuni.f1(u_alpha, 1f);
-//			.sampler2D(u_tex0, tex);
-
 		pixmap.dispose();
+		*/
+		// FIXME share textures
+		tex = new Texture(Gdx.files.internal("tex/byr0.png"));
+
+		xuni.f1(u_alpha, 1f);
 	}
 	
 	@Override
@@ -76,6 +78,7 @@ public class PlaneStar extends WShader {
 
 		// a shader is updating it's uniforms
 		xuni.f1(u_alpha);
+		xuni.f1(u_time, System.currentTimeMillis() % 1000);
 		
 		if (tex != null) {
 			xuni.sampler2D(u_tex0, tex, context); // now shader has context
