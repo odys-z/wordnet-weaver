@@ -60,13 +60,16 @@ to install into local manven.
 2. Install Anclient.weaver
 __________________________
 
-In sub-folder wn-serv::
+In sub-folder lib/anclient::
 
     mvn install
 
+If Eclipse still reporting error of not found class from io.oz.jwi.*, try fix
+project's build path - add anclient.weaver to core project build path in Eclipse.
+
 .. seealso:: :ref:`Troubleshooting <sol-install-wnw-client>`
 
-2. About Install Ashley Locally (optional)
+3. About Install Ashley Locally (optional)
 __________________________________________
 
 The normal project depends on Ashley and `Universal-tween-engine <https://github.com/AurelienRibon/universal-tween-engine>`_.
@@ -81,7 +84,7 @@ If Eclipse doesn't recognize dependency class, this may help::
 
     right click build.gradle -> gradle -> refresh project
 
-3. Add gradle mirror repository as defualt by gdx-setup (optional)
+4. Add gradle mirror repository as defualt by gdx-setup (optional)
 __________________________________________________________________
 
 The default gdx-setup doesn't use any mirror repository. The experimenting version
@@ -195,23 +198,28 @@ Solution:
 
 In core/gradle.build, add compile dependency after applied Java plugin. (
 `Otherwise the compile command will failed <https://stackoverflow.com/questions/23796404/could-not-find-method-compile-for-arguments-gradle>`_.)
-::
+
+.. code-block:: groovy
 
     dependencies {
 	    compile 'io.github.odys-z:anclient.weaver:0.0.1-SNAPSHOT'
     }
+..
 
 Update anclient.weaver dependency or install it to local repository. In sub-folder
 wn-serv::
 
     mvn install
 
-then have normal/gradle.build use mavenLocal::
+then have normal/gradle.build use mavenLocal:
+
+.. code-block:: groovy
 
     repositories {
         mavenLocal()
         ...
     }
+..
 
 Now the gradlew run task should start the desktop application.
 

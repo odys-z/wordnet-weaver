@@ -86,15 +86,16 @@
 <li class="toctree-l2"><a class="reference internal" href="#import-anclient-weaver">Import anclient.weaver</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#import-normod">Import normod</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#install-universal-tween-engine-locally">1. Install Universal Tween Engine Locally</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#about-install-ashley-locally">2. About Install Ashley Locally</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#add-gradle-mirror-repository-as-defualt-by-gdx-setup">3. Add gradle mirror repository as defualt by gdx-setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#install-anclient-weaver">2. Install Anclient.weaver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#about-install-ashley-locally-optional">3. About Install Ashley Locally (optional)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#add-gradle-mirror-repository-as-defualt-by-gdx-setup-optional">4. Add gradle mirror repository as defualt by gdx-setup (optional)</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#troubleshootings">Troubleshootings</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#could-not-find-com-android-tools-build-gradle">Could not find com.android.tools.build:gradle</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#gradle-version-not-supported">Gradle version not supported</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#can-not-resolve-ashley-1-7-0">Can not resolve Ashley 1.7.0</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#class-of-dependency-not-found">Class of Dependency not Found</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#class-of-weaver-not-found">Class of Weaver not Found</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#gradle-failed-on-resolving-tween-engine-api">Gradle failed on Resolving tween-engine-api</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#installing-universal-tween-engine-on-ubuntu">Installing Universal-tween-engine on Ubuntu</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#can-not-attach-source-to-gdx-jar">Can not attach source to GDX.jar</a></li>
@@ -187,7 +188,7 @@ and the file path needing to be changed in configure file.</p>
 </div>
 <p>Note: According to the author&#8217;s experience, you better run desktop project in
 Eclipse and run Android project from Android Studio.</p>
-<p><em>Note</em></p>
+<p><em>Follow these steps to resolve dependencies.</em></p>
 <div class="section" id="install-universal-tween-engine-locally">
 <h3>1. Install Universal Tween Engine Locally<a class="headerlink" href="#install-universal-tween-engine-locally" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="https://github.com/AurelienRibon/universal-tween-engine">Universal Tween Engine</a>
@@ -198,8 +199,21 @@ to install into local manven.</p>
 <p class="last"><a class="reference internal" href="#install-tween-ubuntu"><span>install on Ubuntu</span></a></p>
 </div>
 </div>
-<div class="section" id="about-install-ashley-locally">
-<h3>2. About Install Ashley Locally<a class="headerlink" href="#about-install-ashley-locally" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="install-anclient-weaver">
+<h3>2. Install Anclient.weaver<a class="headerlink" href="#install-anclient-weaver" title="Permalink to this headline">¶</a></h3>
+<p>In sub-folder lib/anclient:</p>
+<div class="highlight-python"><div class="highlight"><pre>mvn install
+</pre></div>
+</div>
+<p>If Eclipse still reporting error of not found class from io.oz.jwi.*, try fix
+project&#8217;s build path - add anclient.weaver to core project build path in Eclipse.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#sol-install-wnw-client"><span>Troubleshooting</span></a></p>
+</div>
+</div>
+<div class="section" id="about-install-ashley-locally-optional">
+<h3>3. About Install Ashley Locally (optional)<a class="headerlink" href="#about-install-ashley-locally-optional" title="Permalink to this headline">¶</a></h3>
 <p>The normal project depends on Ashley and <a class="reference external" href="https://github.com/AurelienRibon/universal-tween-engine">Universal-tween-engine</a>.
 Both have some problem for newest GDX version to depends on. And have to be installed
 in local maven repository.</p>
@@ -210,8 +224,8 @@ in local maven repository.</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="add-gradle-mirror-repository-as-defualt-by-gdx-setup">
-<h3>3. Add gradle mirror repository as defualt by gdx-setup<a class="headerlink" href="#add-gradle-mirror-repository-as-defualt-by-gdx-setup" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="add-gradle-mirror-repository-as-defualt-by-gdx-setup-optional">
+<h3>4. Add gradle mirror repository as defualt by gdx-setup (optional)<a class="headerlink" href="#add-gradle-mirror-repository-as-defualt-by-gdx-setup-optional" title="Permalink to this headline">¶</a></h3>
 <p>The default gdx-setup doesn&#8217;t use any mirror repository. The experimenting version
 may be helpful at <a class="reference external" href="https://github.com/odys-z/hello/tree/master/GDX/gdx-setup">odys-z/hello</a>.</p>
 </div>
@@ -293,8 +307,8 @@ depend it locally.</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="class-of-dependency-not-found">
-<h3>Class of Dependency not Found<a class="headerlink" href="#class-of-dependency-not-found" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="class-of-weaver-not-found">
+<h3>Class of Weaver not Found<a class="headerlink" href="#class-of-weaver-not-found" title="Permalink to this headline">¶</a></h3>
 <p>Error:</p>
 <p>When running desktop, report error message like:</p>
 <div class="highlight-python"><div class="highlight"><pre>Exception in thread &quot;LWJGL Application&quot; com.badlogic.gdx.utils.GdxRuntimeException: java.lang.NoClassDefFoundError: io/oz/wnw/my/ISettings
@@ -306,12 +320,12 @@ Caused by: java.lang.NoClassDefFoundError: io/oz/wnw/my/ISettings
 <p>Cause:</p>
 <p>The normode/core gradle sub-project depends on another maven project, anclient.weaver.
 The desktop application can&#8217;t find it&#8217;s class in run time environment.</p>
-<p>Solution:</p>
+<p id="sol-install-wnw-client">Solution:</p>
 <p>In core/gradle.build, add compile dependency after applied Java plugin. (
 <a class="reference external" href="https://stackoverflow.com/questions/23796404/could-not-find-method-compile-for-arguments-gradle">Otherwise the compile command will failed</a>.)</p>
-<div class="highlight-python"><div class="highlight"><pre>dependencies {
-        compile &#39;io.github.odys-z:anclient.weaver:0.0.1-SNAPSHOT&#39;
-}
+<div class="highlight-groovy"><div class="highlight"><pre><span class="n">dependencies</span> <span class="o">{</span>
+        <span class="n">compile</span> <span class="s1">&#39;io.github.odys-z:anclient.weaver:0.0.1-SNAPSHOT&#39;</span>
+<span class="o">}</span>
 </pre></div>
 </div>
 <p>Update anclient.weaver dependency or install it to local repository. In sub-folder
@@ -320,10 +334,10 @@ wn-serv:</p>
 </pre></div>
 </div>
 <p>then have normal/gradle.build use mavenLocal:</p>
-<div class="highlight-python"><div class="highlight"><pre>repositories {
-    mavenLocal()
-    ...
-}
+<div class="highlight-groovy"><div class="highlight"><pre><span class="n">repositories</span> <span class="o">{</span>
+    <span class="n">mavenLocal</span><span class="o">()</span>
+    <span class="o">...</span>
+<span class="o">}</span>
 </pre></div>
 </div>
 <p>Now the gradlew run task should start the desktop application.</p>
