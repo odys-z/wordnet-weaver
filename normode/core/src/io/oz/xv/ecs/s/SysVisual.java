@@ -35,16 +35,18 @@ public class SysVisual extends EntitySystem {
 
 	@Override
 	public void update(float deltaTime) {
-		if (picker.currentPicked != null && picker.currentPicked.selectUp) {
-			Visual v = mVisual.get(picker.currentPicked.entity);
-			if (v != null)
-				umode(v, 1);
-		}
+		if (picker != null) {
+			if (picker.currentPicked != null && picker.currentPicked.selectUp) {
+				Visual v = mVisual.get(picker.currentPicked.entity);
+				if (v != null)
+					umode(v, 1);
+			}
 
-		if (picker.lastPickable != null && picker.lastPickable.deselectDown) {
-			Visual v = mVisual.get(picker.lastPickable.entity);
-			if (v != null)
-				umode(v, 0);
+			if (picker.lastPickable != null && picker.lastPickable.deselectDown) {
+				Visual v = mVisual.get(picker.lastPickable.entity);
+				if (v != null)
+					umode(v, 0);
+			}
 		}
 	}
 

@@ -31,9 +31,6 @@ public class RayPicker extends EntitySystem implements InputProcessor {
 
 	protected ComponentMapper<RayPickable> mPickable;
 
-	/** picked by user, not handled by ecs */
-//	protected int pickingId;
-
 	/** picked and handling by ecs */
 	protected RayPickable currentPicked;
 	RayPickable lastPickable;
@@ -75,6 +72,7 @@ public class RayPicker extends EntitySystem implements InputProcessor {
 			lastPickable = null;
 		}
 
+		// side effect: filter out currentPicked == null && picking == null
 		if (!this.pickingFired) return;
 		this.pickingFired = false;
 		
@@ -95,7 +93,18 @@ public class RayPicker extends EntitySystem implements InputProcessor {
 			lastPickable = currentPicked;
 			currentPicked = null;
 		}
-		// 3. select none (click at blank)
+		// 3. select another
+		else if (picking != null && currentPicked != null){
+			if (XWorld.log(5))
+				System.out.println(String.format("[5] select form %d to %d", currentPicked.uuid, picking.uuid));
+
+			currentPicked.selectUp = false;
+			currentPicked.deselectDown = true;
+			lastPickable = currentPicked;
+			currentPicked = picking;
+			currentPicked.selectUp = true;
+		}
+		// 4. select none (click at blank)
 		else if (picking == null && currentPicked != null){
 			if (XWorld.log(5))
 				System.out.println(String.format("[5] unselect as blank: %d", currentPicked.uuid));

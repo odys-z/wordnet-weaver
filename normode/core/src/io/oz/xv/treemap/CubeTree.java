@@ -223,6 +223,6 @@ public class CubeTree {
 				Usage.Position | Usage.ColorUnpacked | Usage.TextureCoordinates | Usage.Normal, starMatrl);
 		Cell2D grid = contxt.allocatCell();
 		float mem = wMemory.memory;
-		QuadShapeBuilder.build(mpbuilder, grid.pos(), _colr.set(mem, mem / 3, 0, 1), 1.6f, 1.6f); 
+		QuadShapeBuilder.build(mpbuilder, grid.pos(), _colr.set(mem, mem / 3, 0, 1), 3.6f, 3.6f); 
 	}
 }
