@@ -17,7 +17,7 @@ buildscript {
         classpath 'com.android.tools.build:gradle:7.0.0-alpha08'
 
 		classpath 'io.github.odys-z:anclient.weaver:0.0.1-SNAPSHOT'
-		classpath 'com.aurelienribon:tween-engine-api:6.3.3'
+		// classpath 'com.aurelienribon:tween-engine-api:6.3.3'
     }
 }
 
@@ -108,7 +108,7 @@ project(":core") {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
         api "com.badlogicgames.ashley:ashley:$ashleyVersion"
 
-		api 'com.aurelienribon:tween-engine-api:6.3.3'
+		// api 'com.aurelienribon:tween-engine-api:6.3.3'
 
 		// https://stackoverflow.com/questions/35795250/maven-project-as-dependency-in-gradle-project
 		// To install client, install wn-weaver first
