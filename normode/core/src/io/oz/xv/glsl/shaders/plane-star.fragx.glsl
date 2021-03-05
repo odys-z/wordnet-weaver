@@ -22,8 +22,8 @@ in vec4 vcolor;
 in float vRoty;
 
 float occlude( in vec2 uv ) {
-	float d = 1. - length(uv);
-	return (pow( d, 7. ) + pow( d, 1.2 ) ) / 2.;
+	float d = 1. - min(1., length(uv));
+	return clamp((pow( d, 7. ) + pow( d, 1.2 ) ) / 2., 0., 1.);
 }
 
 float noise( in vec2 x) {
@@ -57,26 +57,30 @@ void main() {
 	brightness = 0.7;
 
 	float ray_brightness = u_ray_brightness; //!slider [0.01, 12.0, 20]
-	ray_brightness = 18.;
+	ray_brightness = 182.;
 
 	float gamma = u_gamma; //! slider[0.01, 2.33, 20]
 	gamma = 2.33;
 
 	float spot_brightness = u_spot_brightness; //! slider[0, 1.75, 10]
-	spot_brightness = 1.75;
+	spot_brightness = 0.75;
 
 	float ray_density = u_ray_density; //! slider[0.01, 3.3, 9.0]
-	ray_density = 0.7;
+	ray_density = 0.27;
 
 	float curvature = u_curvature; //! slider[0.001, 0.6, 30]
-	curvature = 0.3;
+	curvature = 3.3;
 
 	float sin_freq = u_sin_freq; //! slider[0, 54.0, 150];
-	sin_freq = 4.;
+	sin_freq = 6.;
+	
+	////////// try parameters
+	// curvature *= abs(sin(u_time)) * 0.4;
 	
 	////////// copy section
+	float occ = occlude( vUv * 2. - 1.0 );
 	
-	float t = -u_time * .3;
+	float t = -u_time * .03;
 	vec2 uv = vUv - 0.5;
 	uv.x *= 4. / 3.; // how ? iResolution.x / iResolution.y;
 	uv *= curvature * .05 + 0.0001;
@@ -87,6 +91,7 @@ void main() {
 
 	float val;
 	val = fbm(vec2(r + y * ray_density, r + x * ray_density - y), sin_freq);
+
 	val = smoothstep(gamma * .02 - .1,
 			ray_brightness + (gamma * 0.02 - .1) + .1, val);
 	val = sqrt(val);
@@ -97,11 +102,11 @@ void main() {
 	col = mix(col, vec3(1.),
 			spot_brightness - r / curvature * 333. / brightness);
 
-	float occ = occlude( vUv - 0.5 );
-	fragColor = vec4(col * occ, occ);
+	fragColor = vec4(col, occ);
 
 	if (u_noise > 0.)
-		fragColor.rgb += (0.5 - texture(u_tex0, vUv).rgb) * occ * u_noise;
+		// fragColor.rgb *= (0.5 - texture(u_tex0, vUv).rgb) * occ * u_noise;
+		fragColor.rgb += texture(u_tex0, vUv).rgb * u_noise;
 
 	////////// debug section
 	// fragColor = texture(u_tex0, vUv);
@@ -113,5 +118,6 @@ void main() {
 	// fragColor = vec4(col, 1.);
 	// fragColor.rgb += 0.3 * texture(u_tex0, vUv).rgb * occ;
 	// fragColor.rgb += (0.5 - texture(u_tex0, vUv).rgb) * 0.2;
+	// if (fragColor.a < 0.05) fragColor.a = 0.0;
 }
 

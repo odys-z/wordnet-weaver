@@ -7,6 +7,6 @@ public class TestPlaneStar extends WGameTest {
 	@Override
 	public void create () {
 		super.create();
-		setScreen(new TestPlaneStarView(this));
+		setScreen(new TestPlaneStarView());
 	}
 }

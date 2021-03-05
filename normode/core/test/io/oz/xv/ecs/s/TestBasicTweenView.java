@@ -1,4 +1,4 @@
-package io.oz.xv.glsl.shader;
+package io.oz.xv.ecs.s;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
@@ -26,8 +26,9 @@ import io.oz.xv.gdxpatch.utils.QuadShapeBuilder;
 import io.oz.xv.gdxpatch.utils.XModelBuilder;
 import io.oz.xv.glsl.shaders.PlaneStar;
 import io.oz.xv.material.XMaterial;
+import io.oz.xv.test.WGameTest;
 
-public class TestPlaneStarView extends ScreenAdapter {
+public class TestBasicTweenView extends ScreenAdapter {
 	PooledEngine ecs;
 
 	private CameraInputController camController;
@@ -36,7 +37,7 @@ public class TestPlaneStarView extends ScreenAdapter {
 	private SysVisual visualsys;
 	public PerspectiveCamera cam() { return cam; }
 
-	public TestPlaneStarView() {
+	public TestBasicTweenView(WGameTest game) {
 		// buffer
 		_colr = new Color();
 

@@ -61,7 +61,7 @@ public class PlaneStar extends WShader {
 		tex = new Texture(Gdx.files.internal("tex/tex12.png"));
 
 		xuni.f1(u_alpha, 1f);
-		xuni.f1(u_noise, 0.7f);
+		xuni.f1(u_noise, 0.1f);
 		
 		time0 = System.currentTimeMillis();
 	}
@@ -73,7 +73,9 @@ public class PlaneStar extends WShader {
 		// a shader is updating it's uniforms
 		xuni.f1(u_alpha);
 		xuni.f1(u_noise);
-		xuni.f1(u_time, (System.currentTimeMillis() - time0) / 1000);
+		float snds = (float) ((System.currentTimeMillis() - time0) / 1000);
+//		System.out.println(snds);
+		xuni.f1(u_time, snds);
 		
 		if (tex != null) {
 			xuni.sampler2D(u_tex0, tex, context); // now shader has context

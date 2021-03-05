@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Hacking GDX &mdash; wordnet weaver 1.0 documentation</title>
+  <title>GDX Renderer &mdash; wordnet weaver 1.0 documentation</title>
   
 
   
@@ -33,8 +33,8 @@
 
   
     <link rel="top" title="wordnet weaver 1.0 documentation" href="../index.html"/>
-        <link rel="next" title="Building Shape" href="gdx-modelbuilder.html"/>
-        <link rel="prev" title="Start from sources" href="../quickstart.html"/> 
+        <link rel="up" title="Hacking GDX" href="index.html"/>
+        <link rel="prev" title="GDX Shadowmap" href="gdx-shadow.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -82,11 +82,14 @@
                 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Start from sources</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Hacking GDX</a><ul>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Hacking GDX</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="gdx-modelbuilder.html">Building Shape</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gdx-modelbatch.html">ModelBatch &amp; Renderable</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gdx-shadow.html">GDX Shadowmap</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gdx-renderer.html">GDX Renderer</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">GDX Renderer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#blending-mode">Blending Mode</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -119,7 +122,9 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../index.html">Docs</a> &raquo;</li>
       
-    <li>Hacking GDX</li>
+          <li><a href="index.html">Hacking GDX</a> &raquo;</li>
+      
+    <li>GDX Renderer</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -131,26 +136,25 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="hacking-gdx">
-<h1>Hacking GDX<a class="headerlink" href="#hacking-gdx" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound" id="contents">
-<p class="caption"><span class="caption-text">Contents:</span><a class="headerlink" href="#contents" title="Permalink to this toctree">¶</a></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="gdx-modelbuilder.html">Building Shape</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="gdx-modelbuilder.html#mesh-part-build">Mesh(Part)Build</a></li>
+  <div class="section" id="gdx-renderer">
+<h1>GDX Renderer<a class="headerlink" href="#gdx-renderer" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="blending-mode">
+<h2>Blending Mode<a class="headerlink" href="#blending-mode" title="Permalink to this headline">¶</a></h2>
+<p>Final Color = (srcColor * srcBlendingFactor) + (dstColor * dstBlendingFactor)</p>
+<ul class="simple">
+<li>Destination Color:</li>
 </ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="gdx-modelbatch.html">ModelBatch &amp; Renderable</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="gdx-modelbatch.html#modelbatch-core">ModelBatch Core</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gdx-modelbatch.html#modelinstance">ModelInstance</a></li>
+<p>the color in the buffer, which will (eventually) be drawn unless it is modified
+or overwritten with new values.</p>
+<ul class="simple">
+<li>Source Color:</li>
 </ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="gdx-shadow.html">GDX Shadowmap</a></li>
-<li class="toctree-l1"><a class="reference internal" href="gdx-renderer.html">GDX Renderer</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="gdx-renderer.html#blending-mode">Blending Mode</a></li>
-</ul>
-</li>
-</ul>
+<p>the color coming in from additional rendering commands, which may or may not
+interact with the destination color (depending on our settings)</p>
+<p>Reference</p>
+<p>1. stackoverflow question:
+<a class="reference external" href="https://stackoverflow.com/questions/25347456/how-to-do-blending-in-libgdx">How to do blending in LibGDX</a></p>
+<img alt="https://i.stack.imgur.com/22m2l.jpg" src="https://i.stack.imgur.com/22m2l.jpg" />
 </div>
 </div>
 
@@ -161,10 +165,8 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="gdx-modelbuilder.html" class="btn btn-neutral float-right" title="Building Shape" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
-      
-        <a href="../quickstart.html" class="btn btn-neutral" title="Start from sources" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="gdx-shadow.html" class="btn btn-neutral" title="GDX Shadowmap" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
