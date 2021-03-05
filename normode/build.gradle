@@ -11,10 +11,13 @@ buildscript {
     }
     dependencies {
         classpath 'org.wisepersist:gwt-gradle-plugin:1.0.9'
-        classpath 'com.android.tools.build:gradle:3.4.1'
+        // classpath 'com.android.tools.build:gradle:3.4.1'
+        // classpath 'com.android.tools.build:gradle:6.6.1'
+        // classpath 'com.android.tools.build:gradle:4.6.1'
+        classpath 'com.android.tools.build:gradle:7.0.0-alpha08'
 
 		classpath 'io.github.odys-z:anclient.weaver:0.0.1-SNAPSHOT'
-		classpath 'com.aurelienribon:tween-engine-api:6.3.3'
+		// classpath 'com.aurelienribon:tween-engine-api:6.3.3'
     }
 }
 
@@ -32,11 +35,12 @@ allprojects {
 
     repositories {
         mavenLocal()
-        mavenCentral()
-        jcenter()
-        google()
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public" }
         maven { url 'https://maven.aliyun.com/repository/google' }
         maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        mavenCentral()
+        jcenter()
+        // google()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
     }
@@ -67,7 +71,7 @@ project(":android") {
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-arm64-v8a"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86_64"
-        api "com.badlogicgames.ashley:ashley:$ashleyVersion"
+        // api "com.badlogicgames.ashley:ashley:$ashleyVersion"
 
     }
 }
@@ -103,6 +107,8 @@ project(":core") {
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
         api "com.badlogicgames.ashley:ashley:$ashleyVersion"
+
+		// api 'com.aurelienribon:tween-engine-api:6.3.3'
 
 		// https://stackoverflow.com/questions/35795250/maven-project-as-dependency-in-gradle-project
 		// To install client, install wn-weaver first

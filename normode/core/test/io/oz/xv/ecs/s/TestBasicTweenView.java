@@ -3,8 +3,8 @@ package io.oz.xv.ecs.s;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.VertexAttributes.Usage;
@@ -17,19 +17,25 @@ import com.badlogic.gdx.graphics.g3d.utils.shapebuilders.BoxShapeBuilder;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.equations.Elastic;
 import io.oz.wnw.ecs.cmp.ds.AffineTrans;
 import io.oz.wnw.ecs.cmp.ds.AffineType;
 import io.oz.xv.ecs.c.Affines;
 import io.oz.xv.ecs.c.Obj3;
-import io.oz.xv.ecs.c.RayPickable;
 import io.oz.xv.ecs.c.Visual;
-import io.oz.xv.ecs.s.RayPicker.PickingShape;
+import io.oz.xv.ecs.s.SysAffine;
+import io.oz.xv.ecs.s.SysModelRenderer;
+import io.oz.xv.ecs.s.SysVisual;
+import io.oz.xv.gdxpatch.utils.QuadShapeBuilder;
+import io.oz.xv.gdxpatch.utils.XModelBuilder;
 import io.oz.xv.glsl.Glsl;
 import io.oz.xv.glsl.Glsl.ShaderFlag;
+import io.oz.xv.glsl.shaders.PlaneStar;
 import io.oz.xv.material.XMaterial;
 import io.oz.xv.test.WGameTest;
 
-public class RayPickingTestView extends ScreenAdapter {
+public class TestBasicTweenView extends ScreenAdapter {
 	PooledEngine ecs;
 	RayPicker rayPicker; 
 
@@ -39,7 +45,7 @@ public class RayPickingTestView extends ScreenAdapter {
 	private SysVisual visualsys;
 	public PerspectiveCamera cam() { return cam; }
 
-	public RayPickingTestView(WGameTest game) {
+	public TestBasicTweenView(WGameTest game) {
 		// create screen
 		cam = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		cam.position.set(0f, 0f, 20f);
@@ -53,9 +59,10 @@ public class RayPickingTestView extends ScreenAdapter {
 		camController = new CameraInputController(cam);
 		camController.translateUnits *= 10f;
 		Gdx.input.setInputProcessor(camController);
-		rayPicker = new RayPicker(cam);
-		Gdx.input.setInputProcessor(new InputMultiplexer(rayPicker, camController));
-		ecs.addSystem(rayPicker);
+
+//		rayPicker = new RayPicker(cam);
+//		Gdx.input.setInputProcessor(new InputMultiplexer(rayPicker, camController));
+//		ecs.addSystem(rayPicker);
 
 		visualsys = new SysVisual(rayPicker);
 		ecs.addSystem(visualsys);
@@ -63,9 +70,7 @@ public class RayPickingTestView extends ScreenAdapter {
 		ecs.addSystem(new SysAffine());
 		ecs.addSystem(new SysModelRenderer(cam));
 
-		createBox(ecs, 10);
 		createBox(ecs, 0);
-		createBox(ecs, -10);
 	}
 
 	@Override
@@ -99,17 +104,12 @@ public class RayPickingTestView extends ScreenAdapter {
 		obj3.modInst = new ModelInstance(model);
 		box.add(obj3);
 
-		RayPickable pickable = ecs.createComponent(RayPickable.class);
-		pickable.uuid = RayPicker.uuId();
-		pickable.pickingShape = PickingShape.box;
-		pickable.whd = obj3.modInst.calculateBoundingBox(pickable.whd);
-		pickable.entity = box;
-		box.add(pickable);
-
 		Affines aff = ecs.createComponent(Affines.class);
 		aff.transforms = new Array<AffineTrans>();
 		aff.transforms.add(new AffineTrans(AffineType.translate).translate(x, 0, 0));
 		box.add(aff);
+		
+		Tween.to(aff.transforms.get(0), -1, 1.0f).target(20, 30).ease(Elastic.INOUT);
 		
 		return box;
 	}

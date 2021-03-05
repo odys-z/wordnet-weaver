@@ -39,8 +39,10 @@ public class SysAffine extends IteratingSystem {
 			a.dirty = false;
 			Obj3 obj = mObj3.get(entity);
 			ModelInstance mi = obj.modInst;
-			mi.calculateTransforms(); // not necessary?
-			transform(mi.transform, a);
+			if (mi != null) {
+				mi.calculateTransforms(); // not necessary?
+				transform(mi.transform, a);
+			}
 		}
 	}
 
