@@ -108,6 +108,20 @@ classpath.
 
 .. image:: imgs/002-mvn-prj-dependency.png
 
+.. note:: Install maven will download dependency. To use mirror repository
+    project wise, `use .mvn/settings.xml and add mirror configuration <https://stackoverflow.com/a/48583079>`_:
+
+.. code-block:: xml
+
+    <mirrors>
+      <mirror>
+        <id>aliyun_nexus</id>
+        <mirrorOf>*</mirrorOf>
+        <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+      </mirror>
+    </mirrors>
+..
+
 Installing Universal-tween-engine on Ubuntu
 ___________________________________________
 

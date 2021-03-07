@@ -230,6 +230,20 @@ The desktop application can’t find it’s class in run time environment.</p>
 <p>When using Eclipse to debug, the depending project must been added to runtime
 classpath.</p>
 <img alt="_images/002-mvn-prj-dependency.png" src="_images/002-mvn-prj-dependency.png" />
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Install maven will download dependency. To use mirror repository
+project wise, <a class="reference external" href="https://stackoverflow.com/a/48583079">use .mvn/settings.xml and add mirror configuration</a>:</p>
+</div>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;mirrors&gt;</span>
+  <span class="nt">&lt;mirror&gt;</span>
+    <span class="nt">&lt;id&gt;</span>aliyun_nexus<span class="nt">&lt;/id&gt;</span>
+    <span class="nt">&lt;mirrorOf&gt;</span>*<span class="nt">&lt;/mirrorOf&gt;</span>
+    <span class="nt">&lt;url&gt;</span>http://maven.aliyun.com/nexus/content/groups/public/<span class="nt">&lt;/url&gt;</span>
+  <span class="nt">&lt;/mirror&gt;</span>
+<span class="nt">&lt;/mirrors&gt;</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="installing-universal-tween-engine-on-ubuntu">
 <h3>Installing Universal-tween-engine on Ubuntu<a class="headerlink" href="#installing-universal-tween-engine-on-ubuntu" title="Permalink to this headline">¶</a></h3>
