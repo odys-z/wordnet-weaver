@@ -25,6 +25,11 @@ class XUniformer {
 		return this;
 	}
 
+	public XUniformer f1(int name, Double f) {
+		vis.uniforms.put(name, f);
+		return this;
+	}
+
 	public XUniformer f1(int name) {
 		Float f = (Float) vis.uniforms.get(name);
 		if (f != null)

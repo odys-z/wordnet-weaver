@@ -13,6 +13,7 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 
+import io.oz.xv.XWorld;
 import io.oz.xv.ecs.c.Obj3;
 import io.oz.xv.ecs.c.RayPickable;
 
@@ -30,13 +31,13 @@ public class RayPicker extends EntitySystem implements InputProcessor {
 
 	protected ComponentMapper<RayPickable> mPickable;
 
-	/** picked by user, not handled by ecs */
-	protected int pickingId;
-
 	/** picked and handling by ecs */
 	protected RayPickable currentPicked;
 	RayPickable lastPickable;
-	private boolean dirty;
+	private boolean pickingFired;
+
+	/** picked by user, not handled by ecs */
+	private RayPickable picking;
 
 	public RayPicker(PerspectiveCamera camera) {
 		super();
@@ -44,7 +45,8 @@ public class RayPicker extends EntitySystem implements InputProcessor {
 		mPickable = ComponentMapper.getFor(RayPickable.class);
 
 		cam = camera;
-		pickingId = -1;
+
+		picking = null;
 	}
 
 	@Override
@@ -64,51 +66,56 @@ public class RayPicker extends EntitySystem implements InputProcessor {
 	 */
 	@Override
 	public void update(float deltaTime) {
-		if (!this.dirty) return;
-
-		// 1. clear events
+		// 0. clear events
 		if (lastPickable != null) {
 			lastPickable.deselectDown = false;
 			lastPickable = null;
 		}
 
-		// change selection
-		if (currentPicked != null) {
-			currentPicked.selectUp = false;
-			
-			// deselect
-			if (pickingId < 0) {
-				currentPicked.deselectDown = true;
-				lastPickable = currentPicked;
-				currentPicked = null;
-			}
-			// change selection (pickingId >= 0)
-			else if (pickingId == currentPicked.uuid) {
-				currentPicked.deselectDown = true;
-			}
-		}
+		// side effect: filter out currentPicked == null && picking == null
+		if (!this.pickingFired) return;
+		this.pickingFired = false;
 		
-		if (pickingId > 0) {
-			for (Entity e : entities) {
-				// FIXME
-				// TODO really have to do like this?
-				RayPickable pick = e.getComponent(RayPickable.class);
-				if (pickingId == pick.uuid) {
-					if (currentPicked != null) {
-						currentPicked.selected = false;
-						lastPickable = currentPicked;
-					}
-					
-					pick.selected = true;
-					currentPicked = pick;
-					currentPicked.selectUp = true;
-					pickingId = -1;
-					break;
-				}
-			}
-			System.out.println(currentPicked);
+		// 1. select new
+		if (picking != null && currentPicked == null) {
+			currentPicked = picking;
+			currentPicked.selectUp = true;
+			if (XWorld.log(5))
+				System.out.println(String.format("[5] select new: %d", currentPicked.uuid));
 		}
-		this.dirty = false;
+		// 2. unselect (click again)
+		else if (picking != null && picking.uuid == currentPicked.uuid) {
+			if (XWorld.log(5))
+				System.out.println(String.format("[5] unselect old: %d", currentPicked.uuid));
+
+			currentPicked.selectUp = false;
+			currentPicked.deselectDown = true;
+			lastPickable = currentPicked;
+			currentPicked = null;
+		}
+		// 3. select another
+		else if (picking != null && currentPicked != null){
+			if (XWorld.log(5))
+				System.out.println(String.format("[5] select form %d to %d", currentPicked.uuid, picking.uuid));
+
+			currentPicked.selectUp = false;
+			currentPicked.deselectDown = true;
+			lastPickable = currentPicked;
+			currentPicked = picking;
+			currentPicked.selectUp = true;
+		}
+		// 4. select none (click at blank)
+		else if (picking == null && currentPicked != null){
+			if (XWorld.log(5))
+				System.out.println(String.format("[5] unselect as blank: %d", currentPicked.uuid));
+			currentPicked.deselectDown = true;
+			lastPickable = currentPicked;
+			currentPicked = null;
+		}
+		else if (XWorld.log(5))
+			System.out.println("[5]");
+
+		picking = null;
 	}
 
 	@Override
@@ -125,9 +132,9 @@ public class RayPicker extends EntitySystem implements InputProcessor {
 	 */
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		pickingId = getObject(screenX, screenY);
-		this.dirty = true;
-		return this.pickingId >= 0;
+		picking = getObject(screenX, screenY);
+		this.pickingFired = true;
+		return this.picking != null;
 	}
 
 	/**Get Pickable.id with ray picking.
@@ -135,11 +142,11 @@ public class RayPicker extends EntitySystem implements InputProcessor {
 	 * @param screenY
 	 * @return RayPickalble.id
 	 */
-	protected int getObject(int screenX, int screenY) {
-		if (entities == null || entities.size() == 0) return -1;
+	protected RayPickable getObject(int screenX, int screenY) {
+		if (entities == null || entities.size() == 0) return null;
 		Ray ray = cam.getPickRay(screenX, screenY);
 
-		int result = -1;
+		RayPickable result = null;
 		float distance = -1;
 		for (Entity e : entities) {
 			Obj3 obj3 = e.getComponent(Obj3.class);
@@ -151,7 +158,7 @@ public class RayPicker extends EntitySystem implements InputProcessor {
 			Matrix4 t = obj3.modInst.transform;
 			float dist2 = intersects(ray, t, pickable, obj3);
 			if (dist2 >= 0 && (distance < 0f || dist2 < distance)) { 
-				result = pickable.uuid;
+				result = pickable;
 				distance = dist2;
 			}
 		}

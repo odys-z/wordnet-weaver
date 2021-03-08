@@ -92,6 +92,7 @@ public class MultipleRenderTargetTest extends GdxTest {
 
 	final int NUM_LIGHTS = 10;
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void create () {
 		//use default prepend shader code for batch, some gpu drivers are less forgiving

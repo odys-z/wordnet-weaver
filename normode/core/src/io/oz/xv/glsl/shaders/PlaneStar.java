@@ -2,8 +2,6 @@ package io.oz.xv.glsl.shaders;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
@@ -18,6 +16,8 @@ import io.oz.xv.glsl.Glsl.ShaderFlag;
 public class PlaneStar extends WShader {
 	protected int u_alpha = register("u_alpha");
 	protected int u_tex0 = register("u_tex0");
+	protected int u_time = register("u_time");
+	protected int u_noise = register("u_noise");
 
 	/**For translate plane facing scring,
 	 * see https://stackoverflow.com/a/5487981
@@ -34,6 +34,7 @@ public class PlaneStar extends WShader {
 
 	/** texture of u_tex0 */
 	Texture tex = null;
+	private double time0;
 
 	/**
 	 * @param visual given Visual that ecs tweening, moving or updating
@@ -41,7 +42,8 @@ public class PlaneStar extends WShader {
 	public PlaneStar(Visual visual) {
 		super(ShaderFlag.cubic, visual);
 		vs = Gdx.files.classpath("io/oz/xv/glsl/shaders/plane-star2.vert.glsl").readString();
-		fs = Gdx.files.classpath("io/oz/xv/glsl/shaders/plane-star.frag.glsl").readString();
+		// fs = Gdx.files.classpath("io/oz/xv/glsl/shaders/plane-star.frag.glsl").readString();
+		fs = Gdx.files.classpath("io/oz/xv/glsl/shaders/plane-star.fragx.glsl").readString();
 
 		this.visual = visual;
 		program = new ShaderProgram(vs, fs);
@@ -53,21 +55,15 @@ public class PlaneStar extends WShader {
 		enableViewM4();
 		super.init();
 
-		Pixmap pixmap;
-		pixmap = new Pixmap(256, 256, Format.RGBA8888);
-		pixmap.setColor(0.0f, 0.0f, 1f, 1);
-		pixmap.fill();
-		pixmap.setColor(0, 0, 0, 1);
-		pixmap.drawLine(0, 0, 256, 256);
-		pixmap.drawLine(256, 0, 0, 256);
-		tex = new Texture(pixmap);
+		// FIXME share textures
+		// FIXME why byr0.png not working?
+		// tex = new Texture(Gdx.files.internal("tex/byr0.png"));
+		tex = new Texture(Gdx.files.internal("tex/tex12.png"));
 
-		// int uTex0 = context.textureBinder.bind(tex);
-		// uAlpha = 1.0f;
 		xuni.f1(u_alpha, 1f);
-//			.sampler2D(u_tex0, tex);
-
-		pixmap.dispose();
+		xuni.f1(u_noise, 0.1f);
+		
+		time0 = System.currentTimeMillis();
 	}
 	
 	@Override
@@ -76,6 +72,10 @@ public class PlaneStar extends WShader {
 
 		// a shader is updating it's uniforms
 		xuni.f1(u_alpha);
+		xuni.f1(u_noise);
+		float snds = (float) ((System.currentTimeMillis() - time0) / 1000);
+//		System.out.println(snds);
+		xuni.f1(u_time, snds);
 		
 		if (tex != null) {
 			xuni.sampler2D(u_tex0, tex, context); // now shader has context

@@ -2,8 +2,6 @@ package io.oz.xv.glsl.shaders;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
@@ -34,8 +32,9 @@ public class Cubic extends WShader {
 	public void init() {
 		super.init();
 
-		uAlpha = 0.5f;
+		uAlpha = 0.7f;
 
+		/*
 		Pixmap pixmap;
 		pixmap = new Pixmap(256, 256, Format.RGBA8888);
 		pixmap.setColor(0.1f, 0.1f, 0.1f, 1);
@@ -45,6 +44,8 @@ public class Cubic extends WShader {
 		pixmap.drawLine(256, 0, 0, 256);
 		tex = new Texture(pixmap);
 		pixmap.dispose();
+		*/
+		tex = new Texture(Gdx.files.internal("tex/byr0.png"));
 
 	}
 	

@@ -8,7 +8,6 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.VertexAttributes.Usage;
-import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
@@ -84,7 +83,7 @@ public class RayPickingTestView extends ScreenAdapter {
 
 		Visual vis = new Visual();
 		vis.shader = Glsl.wshader(ShaderFlag.simple, vis);
-		Material mat = new XMaterial("simple").visual(vis);
+		XMaterial mat = new XMaterial("simple").visual(vis);
 		box.add(vis);
 
 		Obj3 obj3 = ecs.createComponent(Obj3.class);

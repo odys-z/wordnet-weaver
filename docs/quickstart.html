@@ -87,9 +87,19 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Start from sources</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#import-wn-server">Import wn-server</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#import-anclient-weaver">Import anclient.weaver</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#import-normod">Import normod</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#troublshootings">Troublshootings</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#class-of-dependency-not-found">Class of Dependency not Found</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#import-normod">Import normod</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#install-universal-tween-engine-locally">1. Install Universal Tween Engine Locally</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#install-anclient-weaver">2. Install Anclient.weaver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#about-install-ashley-locally-optional">3. About Install Ashley Locally (optional)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#add-gradle-mirror-repository-as-defualt-by-gdx-setup-optional">4. Add gradle mirror repository as defualt by gdx-setup (optional)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#troubleshootings">Troubleshootings</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#could-not-find-com-android-tools-build-gradle">Could not find com.android.tools.build:gradle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gradle-version-not-supported">Gradle version not supported</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#can-not-resolve-ashley-1-7-0">Can not resolve Ashley 1.7.0</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#class-of-weaver-not-found">Class of Weaver not Found</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gradle-failed-on-resolving-tween-engine-api">Gradle failed on Resolving tween-engine-api</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#installing-universal-tween-engine-on-ubuntu">Installing Universal-tween-engine on Ubuntu</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#can-not-attach-source-to-gdx-jar">Can not attach source to GDX.jar</a></li>
 </ul>
@@ -181,21 +191,127 @@ and the file path needing to be changed in configure file.</p>
 </div>
 <p>Note: According to the author’s experience, you better run desktop project in
 Eclipse and run Android project from Android Studio.</p>
-<p><em>Note</em></p>
-<p>The normal project depends on Ashley and [Universal-tween-engine](<a class="reference external" href="https://github.com/AurelienRibon/universal-tween-engine">https://github.com/AurelienRibon/universal-tween-engine</a>).
-Both have some problem for newest GDX version to depends on. Have to be installed
+<p><em>Follow these steps to resolve dependencies.</em></p>
+<div class="section" id="install-universal-tween-engine-locally">
+<h3>1. Install Universal Tween Engine Locally<a class="headerlink" href="#install-universal-tween-engine-locally" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://github.com/AurelienRibon/universal-tween-engine">Universal Tween Engine</a>
+can be installed to local maven repository. The build.gradle has a default task
+to install into local manven.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#install-tween-ubuntu"><span class="std std-ref">install on Ubuntu</span></a></p>
+</div>
+</div>
+<div class="section" id="install-anclient-weaver">
+<h3>2. Install Anclient.weaver<a class="headerlink" href="#install-anclient-weaver" title="Permalink to this headline">¶</a></h3>
+<p>In sub-folder lib/anclient:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mvn</span> <span class="n">install</span>
+</pre></div>
+</div>
+<p>If Eclipse still reporting error of not found class from io.oz.jwi.*, try fix
+project’s build path - add anclient.weaver to core project build path in Eclipse.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#sol-install-wnw-client"><span class="std std-ref">Troubleshooting</span></a></p>
+</div>
+</div>
+<div class="section" id="about-install-ashley-locally-optional">
+<h3>3. About Install Ashley Locally (optional)<a class="headerlink" href="#about-install-ashley-locally-optional" title="Permalink to this headline">¶</a></h3>
+<p>The normal project depends on Ashley and <a class="reference external" href="https://github.com/AurelienRibon/universal-tween-engine">Universal-tween-engine</a>.
+Both have some problem for newest GDX version to depends on. And have to be installed
 in local maven repository.</p>
-<p>To install Ashley locally, see Ashely issue #279.</p>
+<p>To install Ashley locally, see <a class="reference external" href="https://github.com/libgdx/ashley/pull/279">Ashely issue #279</a>.</p>
 <p>To install Universal-tween-engine, run it’s gradle task.</p>
 <p>If Eclipse doesn’t recognize dependency class, this may help:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">right</span> <span class="n">click</span> <span class="n">build</span><span class="o">.</span><span class="n">gradle</span> <span class="o">-&gt;</span> <span class="n">gradle</span> <span class="o">-&gt;</span> <span class="n">refresh</span> <span class="n">project</span>
 </pre></div>
 </div>
 </div>
-<div class="section" id="troublshootings">
-<h2>Troublshootings<a class="headerlink" href="#troublshootings" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="class-of-dependency-not-found">
-<h3>Class of Dependency not Found<a class="headerlink" href="#class-of-dependency-not-found" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="add-gradle-mirror-repository-as-defualt-by-gdx-setup-optional">
+<h3>4. Add gradle mirror repository as defualt by gdx-setup (optional)<a class="headerlink" href="#add-gradle-mirror-repository-as-defualt-by-gdx-setup-optional" title="Permalink to this headline">¶</a></h3>
+<p>The default gdx-setup doesn’t use any mirror repository. The experimenting version
+may be helpful at <a class="reference external" href="https://github.com/odys-z/hello/tree/master/GDX/gdx-setup">odys-z/hello</a>.</p>
+</div>
+</div>
+<div class="section" id="troubleshootings">
+<h2>Troubleshootings<a class="headerlink" href="#troubleshootings" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="could-not-find-com-android-tools-build-gradle">
+<h3>Could not find com.android.tools.build:gradle<a class="headerlink" href="#could-not-find-com-android-tools-build-gradle" title="Permalink to this headline">¶</a></h3>
+<p>Error:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FAILURE</span><span class="p">:</span> <span class="n">Build</span> <span class="n">failed</span> <span class="k">with</span> <span class="n">an</span> <span class="n">exception</span><span class="o">.</span>
+
+<span class="o">*</span> <span class="n">What</span> <span class="n">went</span> <span class="n">wrong</span><span class="p">:</span>
+<span class="n">A</span> <span class="n">problem</span> <span class="n">occurred</span> <span class="n">configuring</span> <span class="n">root</span> <span class="n">project</span> <span class="s1">&#39;normode&#39;</span><span class="o">.</span>
+<span class="o">&gt;</span> <span class="n">Could</span> <span class="ow">not</span> <span class="n">resolve</span> <span class="nb">all</span> <span class="n">artifacts</span> <span class="k">for</span> <span class="n">configuration</span> <span class="s1">&#39;:classpath&#39;</span><span class="o">.</span>
+<span class="o">&gt;</span> <span class="n">Could</span> <span class="ow">not</span> <span class="n">find</span> <span class="n">com</span><span class="o">.</span><span class="n">android</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">build</span><span class="p">:</span><span class="n">gradle</span><span class="p">:</span><span class="mf">7.0</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">beta05</span><span class="o">.</span>
+ <span class="n">Searched</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">following</span> <span class="n">locations</span><span class="p">:</span>
+   <span class="o">-</span> <span class="n">file</span><span class="p">:</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">user</span><span class="o">/.</span><span class="n">m2</span><span class="o">/</span><span class="n">repository</span><span class="o">/</span><span class="n">com</span><span class="o">/</span><span class="n">android</span><span class="o">/</span><span class="n">tools</span><span class="o">/</span><span class="n">build</span><span class="o">/</span><span class="n">gradle</span><span class="o">/</span><span class="mf">7.0</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">beta05</span><span class="o">/</span><span class="n">gradle</span><span class="o">-</span><span class="mf">7.0</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">beta05</span><span class="o">.</span><span class="n">pom</span>
+   <span class="o">-</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">repo</span><span class="o">.</span><span class="n">maven</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">maven2</span><span class="o">/</span><span class="n">com</span><span class="o">/</span><span class="n">android</span><span class="o">/</span><span class="n">tools</span><span class="o">/</span><span class="n">build</span><span class="o">/</span><span class="n">gradle</span><span class="o">/</span><span class="mf">7.0</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">beta05</span><span class="o">/</span><span class="n">gradle</span><span class="o">-</span><span class="mf">7.0</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">beta05</span><span class="o">.</span><span class="n">pom</span>
+   <span class="o">-</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">plugins</span><span class="o">.</span><span class="n">gradle</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">m2</span><span class="o">/</span><span class="n">com</span><span class="o">/</span><span class="n">android</span><span class="o">/</span><span class="n">tools</span><span class="o">/</span><span class="n">build</span><span class="o">/</span><span class="n">gradle</span><span class="o">/</span><span class="mf">7.0</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">beta05</span><span class="o">/</span><span class="n">gradle</span><span class="o">-</span><span class="mf">7.0</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">beta05</span><span class="o">.</span><span class="n">pom</span>
+   <span class="o">-</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">oss</span><span class="o">.</span><span class="n">sonatype</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">content</span><span class="o">/</span><span class="n">repositories</span><span class="o">/</span><span class="n">snapshots</span><span class="o">/</span><span class="n">com</span><span class="o">/</span><span class="n">android</span><span class="o">/</span><span class="n">tools</span><span class="o">/</span><span class="n">build</span><span class="o">/</span><span class="n">gradle</span><span class="o">/</span><span class="mf">7.0</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">beta05</span><span class="o">/</span><span class="n">gradle</span><span class="o">-</span><span class="mf">7.0</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">beta05</span><span class="o">.</span><span class="n">pom</span>
+   <span class="o">-</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">jcenter</span><span class="o">.</span><span class="n">bintray</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">com</span><span class="o">/</span><span class="n">android</span><span class="o">/</span><span class="n">tools</span><span class="o">/</span><span class="n">build</span><span class="o">/</span><span class="n">gradle</span><span class="o">/</span><span class="mf">7.0</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">beta05</span><span class="o">/</span><span class="n">gradle</span><span class="o">-</span><span class="mf">7.0</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">beta05</span><span class="o">.</span><span class="n">pom</span>
+   <span class="o">-</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">dl</span><span class="o">.</span><span class="n">google</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">dl</span><span class="o">/</span><span class="n">android</span><span class="o">/</span><span class="n">maven2</span><span class="o">/</span><span class="n">com</span><span class="o">/</span><span class="n">android</span><span class="o">/</span><span class="n">tools</span><span class="o">/</span><span class="n">build</span><span class="o">/</span><span class="n">gradle</span><span class="o">/</span><span class="mf">7.0</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">beta05</span><span class="o">/</span><span class="n">gradle</span><span class="o">-</span><span class="mf">7.0</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">beta05</span><span class="o">.</span><span class="n">pom</span>
+ <span class="n">Required</span> <span class="n">by</span><span class="p">:</span>
+     <span class="n">project</span> <span class="p">:</span>
+</pre></div>
+</div>
+<p>Solution:</p>
+<p>Search <a class="reference external" href="https://maven.google.com/web/index.html?q=gradle#com.android.tools.build:gradle">manven.google</a>
+or <a class="reference external" href="https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google">maven repo</a>
+for available gradle version, in normod/build.gradle:</p>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">dependencies</span> <span class="o">{</span>
+    <span class="n">classpath</span> <span class="s1">&#39;org.wisepersist:gwt-gradle-plugin:1.0.9&#39;</span>
+    <span class="n">classpath</span> <span class="s1">&#39;com.android.tools.build:gradle:7.0.0-alpha08&#39;</span>
+    <span class="o">...</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p><strong>Note:</strong> gradle 7 needs JDK 11.</p>
+<p>To change gradle jdk version, in gradle.properties:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">org</span><span class="o">.</span><span class="n">gradle</span><span class="o">.</span><span class="n">java</span><span class="o">.</span><span class="n">home</span><span class="o">=/</span><span class="n">home</span><span class="o">/</span><span class="n">ody</span><span class="o">/</span><span class="n">progs</span><span class="o">/</span><span class="n">jdk</span><span class="o">-</span><span class="mf">15.0</span><span class="o">.</span><span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="gradle-version-not-supported">
+<h3>Gradle version not supported<a class="headerlink" href="#gradle-version-not-supported" title="Permalink to this headline">¶</a></h3>
+<p>Error:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FAILURE</span><span class="p">:</span> <span class="n">Build</span> <span class="n">failed</span> <span class="k">with</span> <span class="n">an</span> <span class="n">exception</span><span class="o">.</span>
+
+<span class="o">*</span> <span class="n">Where</span><span class="p">:</span>
+<span class="n">Build</span> <span class="n">file</span> <span class="s1">&#39;/home/user/git/wnw/normode/build.gradle&#39;</span> <span class="n">line</span><span class="p">:</span> <span class="mi">62</span>
+
+<span class="o">*</span> <span class="n">What</span> <span class="n">went</span> <span class="n">wrong</span><span class="p">:</span>
+<span class="n">A</span> <span class="n">problem</span> <span class="n">occurred</span> <span class="n">evaluating</span> <span class="n">root</span> <span class="n">project</span> <span class="s1">&#39;normode&#39;</span><span class="o">.</span>
+<span class="o">&gt;</span> <span class="n">Failed</span> <span class="n">to</span> <span class="n">apply</span> <span class="n">plugin</span> <span class="s1">&#39;com.android.internal.version-check&#39;</span><span class="o">.</span>
+<span class="o">&gt;</span> <span class="n">Minimum</span> <span class="n">supported</span> <span class="n">Gradle</span> <span class="n">version</span> <span class="ow">is</span> <span class="mf">6.8</span><span class="o">.</span><span class="mf">2.</span> <span class="n">Current</span> <span class="n">version</span> <span class="ow">is</span> <span class="mf">6.6</span><span class="o">.</span><span class="mf">1.</span> <span class="n">If</span> <span class="n">using</span> <span class="n">the</span> <span class="n">gradle</span> <span class="n">wrapper</span><span class="p">,</span> <span class="k">try</span> <span class="n">editing</span> <span class="n">the</span> <span class="n">distributionUrl</span> <span class="ow">in</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">ody</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">wnw</span><span class="o">/</span><span class="n">normode</span><span class="o">/</span><span class="n">gradle</span><span class="o">/</span><span class="n">wrapper</span><span class="o">/</span><span class="n">gradle</span><span class="o">-</span><span class="n">wrapper</span><span class="o">.</span><span class="n">properties</span> <span class="n">to</span> <span class="n">gradle</span><span class="o">-</span><span class="mf">6.8</span><span class="o">.</span><span class="mi">2</span><span class="o">-</span><span class="nb">all</span><span class="o">.</span><span class="n">zip</span>
+</pre></div>
+</div>
+<p>Solution:</p>
+<p>Download at <a class="reference external" href="https://gradle.org/releases/">Gradle Release</a>.</p>
+</div>
+<div class="section" id="can-not-resolve-ashley-1-7-0">
+<h3>Can not resolve Ashley 1.7.0<a class="headerlink" href="#can-not-resolve-ashley-1-7-0" title="Permalink to this headline">¶</a></h3>
+<div class="admonition attention">
+<p class="first admonition-title">Attention</p>
+<p class="last">This will be changed to use Ashley 1.7.4.
+see <a class="reference external" href="https://github.com/libgdx/ashley/issues/278">Ashley issue #278</a>
+&amp; <a class="reference external" href="https://github.com/libgdx/ashley/pull/279">#279</a></p>
+</div>
+<p>Error:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">The</span> <span class="n">container</span> <span class="s1">&#39;Project and External Dependencies&#39;</span> <span class="n">references</span> <span class="n">non</span> <span class="n">existing</span> <span class="n">library</span>
+<span class="s1">&#39;/home/ody/.gradle/caches/modules-2/files-2.1/com.badlogicgames.ashley/ashley/1.7.0/a7c4083c0a42027a3c03ba7ccecef6cbe1c5f0a4/ashley-1.7.0.jar&#39;</span>
+</pre></div>
+</div>
+<p>Cause:</p>
+<p>Wordnet-weaver/normal module depends on Ashley v1.7.0. The desktop(Eclipse) project
+depend it locally.</p>
+<p>Install Ashley 1.7.0 to local maven:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gradlew</span> <span class="n">install</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="class-of-weaver-not-found">
+<h3>Class of Weaver not Found<a class="headerlink" href="#class-of-weaver-not-found" title="Permalink to this headline">¶</a></h3>
 <p>Error:</p>
 <p>When running desktop, report error message like:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Exception in thread &quot;LWJGL Application&quot; com.badlogic.gdx.utils.GdxRuntimeException: java.lang.NoClassDefFoundError: io/oz/wnw/my/ISettings
@@ -207,23 +323,24 @@ Caused by: java.lang.NoClassDefFoundError: io/oz/wnw/my/ISettings
 <p>Cause:</p>
 <p>The normode/core gradle sub-project depends on another maven project, anclient.weaver.
 The desktop application can’t find it’s class in run time environment.</p>
-<p>Shooting:</p>
+<p id="sol-install-wnw-client">Solution:</p>
 <p>In core/gradle.build, add compile dependency after applied Java plugin. (
 <a class="reference external" href="https://stackoverflow.com/questions/23796404/could-not-find-method-compile-for-arguments-gradle">Otherwise the compile command will failed</a>.)</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dependencies</span> <span class="p">{</span>
-        <span class="nb">compile</span> <span class="s1">&#39;io.github.odys-z:anclient.weaver:0.0.1-SNAPSHOT&#39;</span>
-<span class="p">}</span>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">dependencies</span> <span class="o">{</span>
+        <span class="n">compile</span> <span class="s1">&#39;io.github.odys-z:anclient.weaver:0.0.1-SNAPSHOT&#39;</span>
+<span class="o">}</span>
 </pre></div>
 </div>
-<p>Update anclient.weaver dependency or install it to local repository:</p>
+<p>Update anclient.weaver dependency or install it to local repository. In sub-folder
+wn-serv:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mvn</span> <span class="n">install</span>
 </pre></div>
 </div>
 <p>then have normal/gradle.build use mavenLocal:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">repositories</span> <span class="p">{</span>
-    <span class="n">mavenLocal</span><span class="p">()</span>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">repositories</span> <span class="o">{</span>
+    <span class="n">mavenLocal</span><span class="o">()</span>
     <span class="o">...</span>
-<span class="p">}</span>
+<span class="o">}</span>
 </pre></div>
 </div>
 <p>Now the gradlew run task should start the desktop application.</p>
@@ -245,13 +362,43 @@ project wise, <a class="reference external" href="https://stackoverflow.com/a/48
 </pre></div>
 </div>
 </div>
+<div class="section" id="gradle-failed-on-resolving-tween-engine-api">
+<h3>Gradle failed on Resolving tween-engine-api<a class="headerlink" href="#gradle-failed-on-resolving-tween-engine-api" title="Permalink to this headline">¶</a></h3>
+<p>Error:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FAILURE</span><span class="p">:</span> <span class="n">Build</span> <span class="n">failed</span> <span class="k">with</span> <span class="n">an</span> <span class="n">exception</span><span class="o">.</span>
+
+<span class="o">*</span> <span class="n">What</span> <span class="n">went</span> <span class="n">wrong</span><span class="p">:</span>
+<span class="n">A</span> <span class="n">problem</span> <span class="n">occurred</span> <span class="n">configuring</span> <span class="n">root</span> <span class="n">project</span> <span class="s1">&#39;normode&#39;</span><span class="o">.</span>
+<span class="o">&gt;</span> <span class="n">Could</span> <span class="ow">not</span> <span class="n">resolve</span> <span class="nb">all</span> <span class="n">artifacts</span> <span class="k">for</span> <span class="n">configuration</span> <span class="s1">&#39;:classpath&#39;</span><span class="o">.</span>
+   <span class="o">&gt;</span> <span class="n">Could</span> <span class="ow">not</span> <span class="n">resolve</span> <span class="n">com</span><span class="o">.</span><span class="n">aurelienribon</span><span class="p">:</span><span class="n">tween</span><span class="o">-</span><span class="n">engine</span><span class="o">-</span><span class="n">api</span><span class="p">:</span><span class="mf">6.3</span><span class="o">.</span><span class="mf">3.</span>
+     <span class="n">Required</span> <span class="n">by</span><span class="p">:</span>
+         <span class="n">project</span> <span class="p">:</span>
+      <span class="o">&gt;</span> <span class="n">Could</span> <span class="ow">not</span> <span class="n">resolve</span> <span class="n">com</span><span class="o">.</span><span class="n">aurelienribon</span><span class="p">:</span><span class="n">tween</span><span class="o">-</span><span class="n">engine</span><span class="o">-</span><span class="n">api</span><span class="p">:</span><span class="mf">6.3</span><span class="o">.</span><span class="mf">3.</span>
+         <span class="o">&gt;</span> <span class="n">Could</span> <span class="ow">not</span> <span class="n">get</span> <span class="n">resource</span> <span class="s1">&#39;https://repo.maven.apache.org/maven2/com/aurelienribon/tween-engine-api/6.3.3/tween-engine-api-6.3.3.pom&#39;</span><span class="o">.</span>
+            <span class="o">&gt;</span> <span class="n">Could</span> <span class="ow">not</span> <span class="n">GET</span> <span class="s1">&#39;https://repo.maven.apache.org/maven2/com/aurelienribon/tween-engine-api/6.3.3/tween-engine-api-6.3.3.pom&#39;</span><span class="o">.</span>
+               <span class="o">&gt;</span> <span class="n">No</span> <span class="n">route</span> <span class="n">to</span> <span class="n">host</span> <span class="p">(</span><span class="n">Host</span> <span class="n">unreachable</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Solution:</p>
+<p>Install <a class="reference external" href="https://github.com/AurelienRibon/universal-tween-engine">universal-tween-engine</a>
+locally.</p>
+<p>It’s recommended use the forked version on Ubuntu.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">odys</span><span class="o">-</span><span class="n">z</span><span class="o">/</span><span class="n">universal</span><span class="o">-</span><span class="n">tween</span><span class="o">-</span><span class="n">engine</span><span class="o">.</span><span class="n">git</span>
+    <span class="n">cd</span> <span class="n">universal</span><span class="o">-</span><span class="n">tween</span><span class="o">-</span><span class="n">engine</span>
+    <span class="n">gradle</span>
+</pre></div>
+</div>
+<p>The defualt task is configure as installing local repo.</p>
+<p>Also, <a class="reference external" href="https://stackoverflow.com/questions/32107205/gradle-does-not-use-the-maven-local-repository-for-a-new-dependency">the question and answer at stackoverflow</a>
+might be useful.</p>
+</div>
 <div class="section" id="installing-universal-tween-engine-on-ubuntu">
 <h3>Installing Universal-tween-engine on Ubuntu<a class="headerlink" href="#installing-universal-tween-engine-on-ubuntu" title="Permalink to this headline">¶</a></h3>
 <p>Error</p>
 <p>Gradle complain about command not found while installing to local repository.</p>
 <p>Cause:</p>
-<p>The gradle task script can’t do the job.</p>
-<p>Shooting:</p>
+<p>The gradle task script can’t do the job of installing tween-engine locally.</p>
+<p id="install-tween-ubuntu">Solution:</p>
 <p>Try this <a class="reference external" href="https://github.com/odys-z/universal-tween-engine/blob/master/build.gradle">modified build.gradle version</a></p>
 </div>
 <div class="section" id="can-not-attach-source-to-gdx-jar">
