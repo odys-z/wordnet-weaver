@@ -3,6 +3,10 @@ package io.oz.wnw.ecs.cmp.ds;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 
+/**@deprecated
+ * @author odys-z@github.com
+ *
+ */
 public class AffineTrans {
 	public AffineType a;
 

@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.VertexAttributes.Usage;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.model.NodeKeyframe;
+import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.graphics.g3d.utils.MeshPartBuilder;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
@@ -16,11 +18,6 @@ import com.badlogic.gdx.graphics.g3d.utils.shapebuilders.BoxShapeBuilder;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
-import aurelienribon.tweenengine.Tween;
-import aurelienribon.tweenengine.equations.Elastic;
-import io.oz.wnw.ecs.cmp.ds.AffineTrans;
-import io.oz.wnw.ecs.cmp.ds.AffineType;
-import io.oz.xv.ecs.c.Affines;
 import io.oz.xv.ecs.c.Obj3;
 import io.oz.xv.ecs.c.Visual;
 import io.oz.xv.glsl.Glsl;
@@ -53,14 +50,10 @@ public class TestBasicTweenView extends ScreenAdapter {
 		camController.translateUnits *= 10f;
 		Gdx.input.setInputProcessor(camController);
 
-//		rayPicker = new RayPicker(cam);
-//		Gdx.input.setInputProcessor(new InputMultiplexer(rayPicker, camController));
-//		ecs.addSystem(rayPicker);
-
 		visualsys = new SysVisual(rayPicker);
 		ecs.addSystem(visualsys);
 
-		ecs.addSystem(new SysAffine());
+		ecs.addSystem(new SysAffine3());
 		ecs.addSystem(new SysModelRenderer(cam));
 
 		createBox(ecs, 0);
@@ -97,12 +90,13 @@ public class TestBasicTweenView extends ScreenAdapter {
 		obj3.modInst = new ModelInstance(model);
 		box.add(obj3);
 
-		Affines aff = ecs.createComponent(Affines.class);
-		aff.transforms = new Array<AffineTrans>();
-		aff.transforms.add(new AffineTrans(AffineType.translate).translate(x, 0, 0));
+		AffineAnim aff = ecs.createComponent(AffineAnim.class); 
+		aff.translation = new Array<NodeKeyframe<Vector3>>();
+		aff.translation.add(new NodeKeyframe<Vector3>(1, new Vector3(x, 0, 0)));
+		AnimationController controller = new AnimationController(obj3.modInst);
+	    controller.setAnimation("simple");
+	    aff.controllor = controller;
 		box.add(aff);
-		
-		Tween.to(aff.transforms.get(0), -1, 1.0f).target(20, 30).ease(Elastic.INOUT);
 		
 		return box;
 	}
