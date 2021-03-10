@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 
+import io.oz.xv.ecs.c.AffineAnim;
 import io.oz.xv.ecs.c.Obj3;
 import io.oz.xv.gdxpatch.XShaderProvider;
 

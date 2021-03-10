@@ -1,4 +1,4 @@
-package io.oz.xv.ecs.s;
+package io.oz.xv.ecs.c;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.graphics.g3d.model.NodeAnimation;

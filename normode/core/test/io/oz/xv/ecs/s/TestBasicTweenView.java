@@ -18,12 +18,16 @@ import com.badlogic.gdx.graphics.g3d.utils.shapebuilders.BoxShapeBuilder;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
+import io.oz.xv.ecs.c.AffineAnim;
 import io.oz.xv.ecs.c.Obj3;
 import io.oz.xv.ecs.c.Visual;
 import io.oz.xv.glsl.Glsl;
 import io.oz.xv.glsl.Glsl.ShaderFlag;
 import io.oz.xv.material.XMaterial;
 import io.oz.xv.test.WGameTest;
+import net.mgsx.gltf.loaders.gltf.GLTFLoader;
+import net.mgsx.gltf.scene3d.scene.SceneAsset;
+import net.mgsx.gltf.scene3d.scene.SceneModel;
 
 public class TestBasicTweenView extends ScreenAdapter {
 	PooledEngine ecs;
@@ -86,10 +90,17 @@ public class TestBasicTweenView extends ScreenAdapter {
 				Usage.Position | Usage.ColorUnpacked | Usage.TextureCoordinates | Usage.Normal, mat);
 		BoxShapeBuilder.build(mpbuilder, whd.x, whd.y, whd.z); // test size
 		Model model = builder.end();
+
+		// prepare animation
+		SceneAsset sceneAsset = new GLTFLoader().load(Gdx.files.classpath("res/khronosgroup/simple.gltf"));
+		for(SceneModel scene : sceneAsset.scenes){
+			model.animations.addAll(scene.model.animations);
+		}
+
 		model.calculateTransforms();
 		obj3.modInst = new ModelInstance(model);
 		box.add(obj3);
-
+		
 		AffineAnim aff = ecs.createComponent(AffineAnim.class); 
 		aff.translation = new Array<NodeKeyframe<Vector3>>();
 		aff.translation.add(new NodeKeyframe<Vector3>(1, new Vector3(x, 0, 0)));

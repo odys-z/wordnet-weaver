@@ -7,6 +7,7 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 
+import io.oz.xv.ecs.c.AffineAnim;
 import io.oz.xv.ecs.c.Obj3;
 
 /**Is this the transformation tweener?
