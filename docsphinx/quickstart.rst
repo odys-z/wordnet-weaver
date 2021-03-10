@@ -140,15 +140,15 @@ _____________________________
 
 Error::
 
-	FAILURE: Build failed with an exception.
+    FAILURE: Build failed with an exception.
 
-	* Where:
-	Build file '/home/user/git/wnw/normode/build.gradle' line: 62
+    * Where:
+    Build file '/home/user/git/wnw/normode/build.gradle' line: 62
 
-	* What went wrong:
-	A problem occurred evaluating root project 'normode'.
-	> Failed to apply plugin 'com.android.internal.version-check'.
-	> Minimum supported Gradle version is 6.8.2. Current version is 6.6.1. If using the gradle wrapper, try editing the distributionUrl in /home/ody/git/wnw/normode/gradle/wrapper/gradle-wrapper.properties to gradle-6.8.2-all.zip
+    * What went wrong:
+    A problem occurred evaluating root project 'normode'.
+    > Failed to apply plugin 'com.android.internal.version-check'.
+    > Minimum supported Gradle version is 6.8.2. Current version is 6.6.1. If using the gradle wrapper, try editing the distributionUrl in /home/ody/git/wnw/normode/gradle/wrapper/gradle-wrapper.properties to gradle-6.8.2-all.zip
 
 Solution:
 
