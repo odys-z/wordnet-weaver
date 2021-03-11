@@ -28,7 +28,7 @@ dependencies {
 	api 'io.github.odys-z:anclient.weaver:0.0.1-SNAPSHOT'
 	
 	// See fork https://github.com/odys-z/gdx-gltf
-	api 'io.github.odys-z:gdx-gltf:0.1.0-SNAPSHOT'
+	// api 'io.github.odys-z:gdx-gltf:0.1.0-SNAPSHOT'
 	
     // Use JUnit Jupiter API for testing.
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'

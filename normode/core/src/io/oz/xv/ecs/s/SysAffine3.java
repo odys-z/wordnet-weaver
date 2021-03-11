@@ -36,7 +36,7 @@ public class SysAffine3 extends IteratingSystem {
 	protected void processEntity(Entity entity, float deltaTime) {
 		AffineAnim a = mAffine.get(entity);
 		if (inAction) {
-			inAction = false;
+			// inAction = false;
 
 			Obj3 obj = mObj3.get(entity);
 			ModelInstance mi = obj.modInst;

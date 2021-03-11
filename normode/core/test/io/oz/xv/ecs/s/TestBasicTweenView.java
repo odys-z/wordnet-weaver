@@ -90,22 +90,21 @@ public class TestBasicTweenView extends ScreenAdapter {
 				Usage.Position | Usage.ColorUnpacked | Usage.TextureCoordinates | Usage.Normal, mat);
 		BoxShapeBuilder.build(mpbuilder, whd.x, whd.y, whd.z); // test size
 		Model model = builder.end();
+		model.calculateTransforms();
+		obj3.modInst = new ModelInstance(model);
 
 		// prepare animation
 		SceneAsset sceneAsset = new GLTFLoader().load(Gdx.files.classpath("res/khronosgroup/simple.gltf"));
-		for(SceneModel scene : sceneAsset.scenes){
-			model.animations.addAll(scene.model.animations);
+		for(SceneModel scene : sceneAsset.scenes) {
+			obj3.modInst.animations.addAll(scene.model.animations);
 		}
-
-		model.calculateTransforms();
-		obj3.modInst = new ModelInstance(model);
 		box.add(obj3);
 		
 		AffineAnim aff = ecs.createComponent(AffineAnim.class); 
 		aff.translation = new Array<NodeKeyframe<Vector3>>();
 		aff.translation.add(new NodeKeyframe<Vector3>(1, new Vector3(x, 0, 0)));
 		AnimationController controller = new AnimationController(obj3.modInst);
-	    // controller.setAnimation("simple");
+	    controller.setAnimation("simple");
 	    aff.controllor = controller;
 		box.add(aff);
 		

@@ -18,6 +18,7 @@ allprojects {
     version = '1.0'
     ext {
         appName = "wn cloud"
+        // FIXME use 1.9.15 / 13 instead
         gdxVersion = '1.9.14'
         gltfVersion = '0.1.0-SNAPSHOT'
         roboVMVersion = '2.3.8'
@@ -100,7 +101,8 @@ project(":core") {
         api "com.badlogicgames.ashley:ashley:$ashleyVersion"
 
 		// See fork https://github.com/odys-z/gdx-gltf
-		api 'io.github.odys-z:gdx-gltf:0.1.0-SNAPSHOT'
+		// api 'io.github.odys-z:gdx-gltf:0.1.0-SNAPSHOT'
+		api 'net.mgsx.gltf:gdx-gltf:2.0.1-SNAPSHOT'
 
 		// https://stackoverflow.com/questions/35795250/maven-project-as-dependency-in-gradle-project
 		// To install client, install wn-weaver first
