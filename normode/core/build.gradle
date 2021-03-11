@@ -20,6 +20,7 @@ sourceCompatibility = 1.8
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 sourceSets.main.java.srcDirs = [ "src/", "test/" ]
+sourceSets.main.resources.srcDirs = [ "assets/", "src/" ]
 
 dependencies {
 	// https://stackoverflow.com/questions/35795250/maven-project-as-dependency-in-gradle-project
@@ -27,7 +28,7 @@ dependencies {
 	api 'io.github.odys-z:anclient.weaver:0.0.1-SNAPSHOT'
 	
 	// See fork https://github.com/odys-z/gdx-gltf
-	// api 'io.github.odys-z:gdx-gltf:$gltfVersion'
+	api 'io.github.odys-z:gdx-gltf:0.1.0-SNAPSHOT'
 	
     // Use JUnit Jupiter API for testing.
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'

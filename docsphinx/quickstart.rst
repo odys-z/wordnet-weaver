@@ -51,6 +51,8 @@ Eclipse and run Android project from Android Studio.
 1. Install Universal Tween Engine Locally
 _________________________________________
 
+.. attention:: Tween Engine will be dropped in the near future.
+
 `Universal Tween Engine <https://github.com/AurelienRibon/universal-tween-engine>`_
 can be installed to local maven repository. The build.gradle has a default task
 to install into local manven.
@@ -311,3 +313,47 @@ To solve the problem, see::
 Also source.jar and javadoc.jar can be download manually, e.g. ::
 
     wget https://repo.maven.apache.org/maven2/com/badlogicgames/gdx/gdx/1.9.11/gdx-1.9.11-sources.jar
+
+`SUNWprivate_1.1' not found (JDK 15)
+____________________________________
+
+Error::
+
+    java.lang.UnsatisfiedLinkError libjawt.so: version `SUNWprivate_1.1' not found ...
+
+There are similar issue at `github/libgdx <https://github.com/libgdx/libgdx/issues/5996>`_.
+
+Cause:
+
+Only matched JDK version and LWJGL can work together. LibGdx 1.9.14 is recommended
+using JDK 11.
+
+Can't load *.glsl
+_________________
+
+Error::
+
+    Exception in thread "LWJGL Application" com.badlogic.gdx.utils.GdxRuntimeException:
+	File not found: io/oz/xv/glsl/shaders/cube-skin.vert.glsl (Classpath)
+        at com.badlogic.gdx.files.FileHandle.read(FileHandle.java:142)
+        at com.badlogic.gdx.files.FileHandle.length(FileHandle.java:638)
+        at com.badlogic.gdx.files.FileHandle.estimateLength(FileHandle.java:239)
+        at com.badlogic.gdx.files.FileHandle.readString(FileHandle.java:204)
+        at com.badlogic.gdx.files.FileHandle.readString(FileHandle.java:197)
+        at io.oz.xv.glsl.shaders.Cubic.<init>(Cubic.java:26)
+        at io.oz.xv.treemap.CubeTree.init(CubeTree.java:77)
+        at io.oz.wnw.norm.A.StageA.loadMyset(StageA.java:108)
+        at io.oz.wnw.norm.A.ViewA1.<init>(ViewA1.java:41)
+        at io.oz.wnw.norm.WGame.create(WGame.java:29)
+        at com.badlogic.gdx.backends.lwjgl.LwjglApplication.mainLoop(LwjglApplication.java:150)
+        at com.badlogic.gdx.backends.lwjgl.LwjglApplication$1.run(LwjglApplication.java:127)
+
+Cause:
+
+Resource in src folder ignored by gradle project.
+
+Solution:
+
+In core:build.gradle:
+
+    sourceSets.main.resources.srcDirs = [ "assets/", "src/" ]

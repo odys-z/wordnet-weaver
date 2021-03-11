@@ -105,7 +105,7 @@ public class TestBasicTweenView extends ScreenAdapter {
 		aff.translation = new Array<NodeKeyframe<Vector3>>();
 		aff.translation.add(new NodeKeyframe<Vector3>(1, new Vector3(x, 0, 0)));
 		AnimationController controller = new AnimationController(obj3.modInst);
-	    controller.setAnimation("simple");
+	    // controller.setAnimation("simple");
 	    aff.controllor = controller;
 		box.add(aff);
 		

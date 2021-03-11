@@ -2,9 +2,11 @@ apply plugin: "java"
 
 sourceCompatibility = 1.8
 sourceSets.main.java.srcDirs = [ "src/", "test/" ]
-sourceSets.main.resources.srcDirs = ["../android/assets"]
+sourceSets.main.resources.srcDirs = ["../android/assets", "test"]
 
-project.ext.mainClassName = "io.oz.wnw.norm.desktop.DesktopLauncher"
+// project.ext.mainClassName = "io.oz.wnw.norm.desktop.DesktopLauncher"
+// project.ext.mainClassName = "io.oz.wnw.norm.desktop.PlaneStarTest"
+project.ext.mainClassName = "io.oz.wnw.norm.desktop.BasicTweenTest"
 project.ext.assetsDir = new File("../android/assets")
 
 task run(dependsOn: classes, type: JavaExec) {
