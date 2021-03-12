@@ -19,7 +19,7 @@ public class SysAffine3 extends IteratingSystem {
 
 	private ComponentMapper<AffineAnim> mAffine;
 	private ComponentMapper<Obj3> mObj3;
-	private boolean inAction;
+	private boolean inAction; // FIXME move to AffineAnim
 
 	/**Buffer
 	Matrix4 _m4;
@@ -42,8 +42,8 @@ public class SysAffine3 extends IteratingSystem {
 			ModelInstance mi = obj.modInst;
 			AnimationController anctrl = a.controllor;
 			if (mi != null && anctrl != null) {
-				// mi.calculateTransforms(); // not necessary?
 				anctrl.update(deltaTime);
+				mi.calculateTransforms(); // not necessary?
 
 				inAction |= anctrl.inAction;
 			}

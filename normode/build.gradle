@@ -18,8 +18,8 @@ allprojects {
     version = '1.0'
     ext {
         appName = "wn cloud"
-        // FIXME use 1.9.15 / 13 instead
-        gdxVersion = '1.9.14'
+        // don't use 1.9.14
+        gdxVersion = '1.9.13'
         gltfVersion = '0.1.0-SNAPSHOT'
         roboVMVersion = '2.3.8'
         box2DLightsVersion = '1.4'
