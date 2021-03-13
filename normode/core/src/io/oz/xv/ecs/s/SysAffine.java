@@ -13,6 +13,7 @@ import io.oz.xv.ecs.c.Obj3;
 
 /**Is this the transformation tweener?
  * 
+ * @deprecated
  * @author Odys Zhou
  *
  */

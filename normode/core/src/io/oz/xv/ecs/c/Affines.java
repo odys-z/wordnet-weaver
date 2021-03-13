@@ -7,7 +7,7 @@ import com.badlogic.gdx.utils.Array;
 import io.oz.wnw.ecs.cmp.ds.AffineTrans;
 
 /**3D stage object transformation
- * 
+ * @deprecated
  * @author Odys Zhou
  *
  */

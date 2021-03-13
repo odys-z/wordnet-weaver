@@ -199,6 +199,9 @@ public class RayPicker extends EntitySystem implements InputProcessor {
 	public boolean mouseMoved(int screenX, int screenY) { return false; }
 
 	@Override
-	public boolean scrolled(int amount) { return false; }
+	public boolean scrolled(float amountX, float amountY) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 }
