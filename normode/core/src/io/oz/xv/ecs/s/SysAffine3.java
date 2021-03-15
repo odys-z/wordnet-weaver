@@ -4,11 +4,11 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 
 import io.oz.xv.ecs.c.AffineAnim;
 import io.oz.xv.ecs.c.Obj3;
+import io.oz.xv.gdxpatch.g3d.XModelInstance;
+import patch.net.mgsx.gltf.scene3d.animation.XAnimationController;
 
 /**Is this the transformation tweener?
  * 
@@ -20,10 +20,6 @@ public class SysAffine3 extends IteratingSystem {
 	private ComponentMapper<AffineAnim> mAffine;
 	private ComponentMapper<Obj3> mObj3;
 	private boolean inAction; // FIXME move to AffineAnim
-
-	/**Buffer
-	Matrix4 _m4;
-	 * */
 
 	public SysAffine3() {
 		super(Family.all(AffineAnim.class, Obj3.class).get());
@@ -39,8 +35,8 @@ public class SysAffine3 extends IteratingSystem {
 			// inAction = false;
 
 			Obj3 obj = mObj3.get(entity);
-			ModelInstance mi = obj.modInst;
-			AnimationController anctrl = a.controllor;
+			XModelInstance mi = obj.modInst;
+			XAnimationController anctrl = a.controllor;
 			if (mi != null && anctrl != null) {
 				anctrl.update(deltaTime);
 				mi.calculateTransforms(); // not necessary?

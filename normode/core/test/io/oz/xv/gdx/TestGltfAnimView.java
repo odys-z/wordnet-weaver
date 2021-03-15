@@ -1,4 +1,4 @@
-package io.oz.xv.ecs.s;
+package io.oz.xv.gdx;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.VertexAttributes.Usage;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.model.NodeKeyframe;
-import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.graphics.g3d.utils.MeshPartBuilder;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
@@ -21,13 +20,21 @@ import com.badlogic.gdx.utils.Array;
 import io.oz.xv.ecs.c.AffineAnim;
 import io.oz.xv.ecs.c.Obj3;
 import io.oz.xv.ecs.c.Visual;
+import io.oz.xv.ecs.s.RayPicker;
+import io.oz.xv.ecs.s.SysAffine3;
+import io.oz.xv.ecs.s.SysModelRenderer;
+import io.oz.xv.ecs.s.SysVisual;
+import io.oz.xv.gdxpatch.g3d.ModelInstancePlus;
+import io.oz.xv.gdxpatch.g3d.XModelInstance;
 import io.oz.xv.glsl.Glsl;
 import io.oz.xv.glsl.Glsl.ShaderFlag;
 import io.oz.xv.material.XMaterial;
 import io.oz.xv.test.WGameTest;
+import net.mgsx.gltf.loaders.gltf.GLTFLoader;
 import net.mgsx.gltf.scene3d.animation.AnimationControllerHack;
-import net.mgsx.gltf.scene3d.model.NodePartPlus;
-import net.mgsx.gltf.scene3d.model.NodePlus;
+import net.mgsx.gltf.scene3d.scene.SceneAsset;
+import net.mgsx.gltf.scene3d.scene.SceneModel;
+import patch.net.mgsx.gltf.scene3d.animation.XAnimationController;
 
 public class TestGltfAnimView extends ScreenAdapter {
 	PooledEngine ecs;
@@ -90,21 +97,32 @@ public class TestGltfAnimView extends ScreenAdapter {
 				Usage.Position | Usage.ColorUnpacked | Usage.TextureCoordinates | Usage.Normal, mat);
 		BoxShapeBuilder.build(mpbuilder, whd.x, whd.y, whd.z); // test size
 		Model model = builder.end();
+
+		// prepare animation
+		SceneAsset sceneAsset = new GLTFLoader().load(Gdx.files.classpath("res/khronosgroup/simple.gltf"));
+		for(SceneModel scene : sceneAsset.scenes) {
+			model.animations.addAll(scene.model.animations); // Of course only appliable should be added
+		}
+
 		model.calculateTransforms();
-		obj3.modInst = new ModelInstance(model);
-		obj3.modInst.nodes.clear();
+		obj3.modInst = new XModelInstance(model);
+		// obj3.modInst.nodes.clear();
 
-		NodePlus node = new NodePlus();
-		NodePartPlus nodePart = new NodePartPlus();
-		nodePart.morphTargets = ((NodePlus)node).weights;
-		nodePart.meshPart = model.meshParts.get(0);
-		obj3.modInst.nodes.add(node);
-
+		// replace nodes
+//		NodePlus node = new NodePlus();
+//		NodePartPlus nodePart = new NodePartPlus();
+//		nodePart.morphTargets = ((NodePlus)node).weights;
+//		nodePart.meshPart = model.meshParts.get(0);
+//		obj3.modInst.nodes.add(node);
+		box.add(obj3);
+	
 		AffineAnim aff = ecs.createComponent(AffineAnim.class); 
 		aff.translation = new Array<NodeKeyframe<Vector3>>();
 		aff.translation.add(new NodeKeyframe<Vector3>(1, new Vector3(x, 0, 0)));
-		AnimationController controller = new AnimationControllerHack(obj3.modInst);
-	    controller.setAnimation("simple");
+		aff.controllor = new XAnimationController(obj3.modInst);
+	    // aff.controllor.setAnimation("simple");
+	    aff.controllor.animate("simple", 0);
+	    box.add(aff);
 
 		return box;
 	}

@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 
+import io.oz.xv.gdxpatch.g3d.XModelInstance;
+
 /**<p>3D Stage Object</p>
  * <p>In this component, the transformation is decomposed into pos, scl, rot,then tweened
  * at each loop and re-composed into transform matrix of model instance.</p>
@@ -23,7 +25,7 @@ public class Obj3 implements Component {
 	public Vector3 scl = new Vector3(1f, 1f, 1f);
 	public Quaternion rot = new Quaternion();
 	
-	public ModelInstance modInst;
+	public XModelInstance modInst;
 	/** Plane meshs that always facing screen */
 	public ModelInstance orthoFace;
 }

@@ -121,7 +121,11 @@ public class CubeTree {
 		BoxShapeBuilder.build(mpbuilder, whd.x, whd.y, whd.z); // test size
 		Model model = builder.end();
 		model.calculateTransforms();
-		obj3.modInst = new ModelInstance(model);
+		// FIXME
+		// FIXME
+		// FIXME
+		// obj3.modInst = new XModelInstance(model);
+
 		ground.add(obj3);
 
 		RayPickable pickable = ecs.createComponent(RayPickable.class);
@@ -168,7 +172,12 @@ public class CubeTree {
 		eLemma.add(lemVis);
 
 		Obj3 obj3 = ecs.createComponent(Obj3.class);
-		obj3.modInst = glyphs.bindText(wrd.word, wrd.color, lemVis );
+		// FIXME
+		// FIXME
+		// FIXME
+		// FIXME
+		// obj3.modInst = glyphs.bindText(wrd.word, wrd.color, lemVis );
+
 		eLemma.add(obj3);
 
 		Affines aff = ecs.createComponent(Affines.class);

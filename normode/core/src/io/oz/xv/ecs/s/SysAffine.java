@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Matrix4;
 import io.oz.wnw.ecs.cmp.ds.AffineTrans;
 import io.oz.xv.ecs.c.Affines;
 import io.oz.xv.ecs.c.Obj3;
+import io.oz.xv.gdxpatch.g3d.XModelInstance;
 
 /**Is this the transformation tweener?
  * 
@@ -39,7 +40,7 @@ public class SysAffine extends IteratingSystem {
 		if (a.dirty) {
 			a.dirty = false;
 			Obj3 obj = mObj3.get(entity);
-			ModelInstance mi = obj.modInst;
+			XModelInstance mi = obj.modInst;
 			if (mi != null) {
 				mi.calculateTransforms(); // not necessary?
 				transform(mi.transform, a);

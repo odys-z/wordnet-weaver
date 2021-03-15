@@ -24,6 +24,7 @@ import io.oz.xv.ecs.c.Obj3;
 import io.oz.xv.ecs.c.RayPickable;
 import io.oz.xv.ecs.c.Visual;
 import io.oz.xv.ecs.s.RayPicker.PickingShape;
+import io.oz.xv.gdxpatch.g3d.XModelInstance;
 import io.oz.xv.glsl.Glsl;
 import io.oz.xv.glsl.Glsl.ShaderFlag;
 import io.oz.xv.material.XMaterial;
@@ -96,7 +97,8 @@ public class RayPickingTestView extends ScreenAdapter {
 		BoxShapeBuilder.build(mpbuilder, whd.x, whd.y, whd.z); // test size
 		Model model = builder.end();
 		model.calculateTransforms();
-		obj3.modInst = new ModelInstance(model);
+		// obj3.modInst = new ModelInstance(model);
+		obj3.modInst = new XModelInstance(model);
 		box.add(obj3);
 
 		RayPickable pickable = ecs.createComponent(RayPickable.class);

@@ -85,7 +85,12 @@ public class StageA {
 		Obj3 obj3 = ecs.createComponent(Obj3.class);
 		// works: obj3.modInst = Xutils.modelInstance(Geoshape.cube, new Vector3(5, 5,
 		// 5));
-		obj3.modInst = glyphs.bindText(me.myset().lemma(), new Color(1f, 1f, 0f, 1f));
+		// FIXME
+		// FIXME
+		// FIXME
+		// FIXME
+		// obj3.modInst = glyphs.bindText(me.myset().lemma(), new Color(1f, 1f, 0f, 1f));
+
 		entity.add(obj3);
 
 		Affines aff = ecs.createComponent(Affines.class);
