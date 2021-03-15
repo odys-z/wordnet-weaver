@@ -32,6 +32,9 @@
   
 
   
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
     <link rel="top" title="wordnet weaver 1.0 documentation" href="../index.html"/>
         <link rel="up" title="Hacking GDX" href="index.html"/>
         <link rel="prev" title="GDX Shadowmap" href="gdx-shadow.html"/> 
@@ -86,7 +89,7 @@
 <li class="toctree-l2"><a class="reference internal" href="gdx-modelbuilder.html">Building Shape</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gdx-modelbatch.html">ModelBatch &amp; Renderable</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gdx-shadow.html">GDX Shadowmap</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="">GDX Renderer</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">GDX Renderer</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#blending-mode">Blending Mode</a></li>
 </ul>
 </li>
@@ -151,10 +154,20 @@ or overwritten with new values.</p>
 </ul>
 <p>the color coming in from additional rendering commands, which may or may not
 interact with the destination color (depending on our settings)</p>
+<p>Blending Factors are:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">GL_ZERO</span><span class="p">:</span> <span class="n">RGB</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="n">A</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">GL_ONE</span><span class="p">:</span>  <span class="n">RGB</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="n">A</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<p>See GDX API[2] for more.</p>
 <p>Reference</p>
 <p>1. stackoverflow question:
 <a class="reference external" href="https://stackoverflow.com/questions/25347456/how-to-do-blending-in-libgdx">How to do blending in LibGDX</a></p>
 <img alt="https://i.stack.imgur.com/22m2l.jpg" src="https://i.stack.imgur.com/22m2l.jpg" />
+<ol class="arabic simple" start="2">
+<li>GDX API</li>
+</ol>
 </div>
 </div>
 
@@ -206,7 +219,7 @@ interact with the destination color (depending on our settings)</p>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../_static/language_data.js"></script>
 
   
 

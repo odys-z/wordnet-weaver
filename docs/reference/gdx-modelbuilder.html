@@ -32,6 +32,9 @@
   
 
   
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
     <link rel="top" title="wordnet weaver 1.0 documentation" href="../index.html"/>
         <link rel="up" title="Hacking GDX" href="index.html"/>
         <link rel="next" title="ModelBatch &amp; Renderable" href="gdx-modelbatch.html"/>
@@ -84,7 +87,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Start from sources</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Hacking GDX</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="">Building Shape</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Building Shape</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#mesh-part-build">Mesh(Part)Build</a></li>
 </ul>
 </li>
@@ -142,112 +145,112 @@
 <div class="section" id="mesh-part-build">
 <h2>Mesh(Part)Build<a class="headerlink" href="#mesh-part-build" title="Permalink to this headline">¶</a></h2>
 <p>Usage:</p>
-<div class="highlight-java"><div class="highlight"><pre><span class="n">vis</span> <span class="o">=</span> <span class="k">new</span> <span class="n">VertexInfo</span><span class="o">[</span><span class="mi">4</span><span class="o">]</span> <span class="o">{</span> <span class="cm">/* inited */</span> <span class="o">};</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">vis</span> <span class="o">=</span> <span class="k">new</span> <span class="n">VertexInfo</span><span class="o">[</span><span class="mi">4</span><span class="o">]</span> <span class="p">{</span> <span class="cm">/* inited */</span> <span class="p">};</span>
 
-<span class="n">Node</span> <span class="n">node</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="na">node</span><span class="o">();</span>
-<span class="n">node</span><span class="o">.</span><span class="na">id</span> <span class="o">=</span> <span class="n">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;p1&quot;</span><span class="o">);</span>
-<span class="n">node</span><span class="o">.</span><span class="na">scale</span><span class="o">.</span><span class="na">scl</span><span class="o">(</span><span class="n">paperScl</span><span class="o">);</span>
-<span class="n">node</span><span class="o">.</span><span class="na">translation</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="mf">0f</span><span class="o">,</span> <span class="mf">0f</span><span class="o">,</span> <span class="mf">0f</span><span class="o">);</span>
+<span class="n">Node</span> <span class="n">node</span> <span class="o">=</span> <span class="n">builder</span><span class="p">.</span><span class="na">node</span><span class="p">();</span>
+<span class="n">node</span><span class="p">.</span><span class="na">id</span> <span class="o">=</span> <span class="n">String</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="s">&quot;p1&quot;</span><span class="p">);</span>
+<span class="n">node</span><span class="p">.</span><span class="na">scale</span><span class="p">.</span><span class="na">scl</span><span class="p">(</span><span class="n">paperScl</span><span class="p">);</span>
+<span class="n">node</span><span class="p">.</span><span class="na">translation</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="mf">0f</span><span class="p">,</span> <span class="mf">0f</span><span class="p">,</span> <span class="mf">0f</span><span class="p">);</span>
 
-<span class="n">MeshPartBuilder</span> <span class="n">mpbuilder</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ModelBuilder</span><span class="o">().</span><span class="na">part</span><span class="o">(</span>
-        <span class="s">&quot;part1&quot;</span><span class="o">,</span>
-        <span class="n">GL20</span><span class="o">.</span><span class="na">GL_TRIANGLES</span><span class="o">,</span> <span class="n">Usage</span><span class="o">.</span><span class="na">Position</span> <span class="o">|</span> <span class="n">Usage</span><span class="o">.</span><span class="na">Normal</span><span class="o">,</span>
-        <span class="n">inkMat</span><span class="o">);</span>
-<span class="n">mpbuilder</span><span class="o">.</span><span class="na">rect</span><span class="o">(</span><span class="n">vi4</span><span class="o">[</span><span class="mi">0</span><span class="o">],</span> <span class="n">vi4</span><span class="o">[</span><span class="mi">1</span><span class="o">],</span> <span class="n">vi4</span><span class="o">[</span><span class="mi">2</span><span class="o">],</span> <span class="n">vi4</span><span class="o">[</span><span class="mi">3</span><span class="o">]);</span>
+<span class="n">MeshPartBuilder</span> <span class="n">mpbuilder</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ModelBuilder</span><span class="p">().</span><span class="na">part</span><span class="p">(</span>
+        <span class="s">&quot;part1&quot;</span><span class="p">,</span>
+        <span class="n">GL20</span><span class="p">.</span><span class="na">GL_TRIANGLES</span><span class="p">,</span> <span class="n">Usage</span><span class="p">.</span><span class="na">Position</span> <span class="o">|</span> <span class="n">Usage</span><span class="p">.</span><span class="na">Normal</span><span class="p">,</span>
+        <span class="n">inkMat</span><span class="p">);</span>
+<span class="n">mpbuilder</span><span class="p">.</span><span class="na">rect</span><span class="p">(</span><span class="n">vi4</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">,</span> <span class="n">vi4</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="p">,</span> <span class="n">vi4</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span><span class="p">,</span> <span class="n">vi4</span><span class="o">[</span><span class="mi">3</span><span class="o">]</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>ModelBuilder#part() Creates a new MeshPart within the current Node and returns
-a MeshPartBuilder interface&#8217;s implementation, MeshBuilder, which can be used to
+a MeshPartBuilder interface’s implementation, MeshBuilder, which can be used to
 build the shape of the part.</p>
-<div class="highlight-java"><div class="highlight"><pre><span class="kd">public</span> <span class="n">MeshPartBuilder</span> <span class="nf">part</span> <span class="o">(</span><span class="kd">final</span> <span class="n">String</span> <span class="n">id</span><span class="o">,</span> <span class="kt">int</span> <span class="n">primitiveType</span><span class="o">,</span>
-       <span class="kd">final</span> <span class="n">Material</span> <span class="n">material</span><span class="o">)</span> <span class="o">{</span>
-    <span class="kd">final</span> <span class="n">MeshBuilder</span> <span class="n">builder</span> <span class="o">=</span> <span class="n">getBuilder</span><span class="o">(</span><span class="n">attributes</span><span class="o">);</span>
-    <span class="n">part</span><span class="o">(</span><span class="n">builder</span><span class="o">.</span><span class="na">part</span><span class="o">(</span><span class="n">id</span><span class="o">,</span> <span class="n">primitiveType</span><span class="o">),</span> <span class="n">material</span><span class="o">);</span>
-    <span class="k">return</span> <span class="n">builder</span><span class="o">;</span>
-<span class="o">}</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="n">MeshPartBuilder</span> <span class="nf">part</span> <span class="p">(</span><span class="kd">final</span> <span class="n">String</span> <span class="n">id</span><span class="p">,</span> <span class="kt">int</span> <span class="n">primitiveType</span><span class="p">,</span>
+       <span class="kd">final</span> <span class="n">Material</span> <span class="n">material</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">final</span> <span class="n">MeshBuilder</span> <span class="n">builder</span> <span class="o">=</span> <span class="n">getBuilder</span><span class="p">(</span><span class="n">attributes</span><span class="p">);</span>
+    <span class="n">part</span><span class="p">(</span><span class="n">builder</span><span class="p">.</span><span class="na">part</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">primitiveType</span><span class="p">),</span> <span class="n">material</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">builder</span><span class="p">;</span>
+<span class="p">}</span>
 
-<span class="kd">public</span> <span class="n">MeshPart</span> <span class="nf">part</span> <span class="o">(</span><span class="kd">final</span> <span class="n">String</span> <span class="n">id</span><span class="o">,</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">primitiveType</span><span class="o">)</span> <span class="o">{</span>
-    <span class="n">part</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MeshPart</span><span class="o">();</span>
-    <span class="n">part</span><span class="o">.</span><span class="na">id</span> <span class="o">=</span> <span class="n">id</span><span class="o">;</span>
-    <span class="n">parts</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">part</span><span class="o">);</span>
+<span class="kd">public</span> <span class="n">MeshPart</span> <span class="nf">part</span> <span class="p">(</span><span class="kd">final</span> <span class="n">String</span> <span class="n">id</span><span class="p">,</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">primitiveType</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">part</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MeshPart</span><span class="p">();</span>
+    <span class="n">part</span><span class="p">.</span><span class="na">id</span> <span class="o">=</span> <span class="n">id</span><span class="p">;</span>
+    <span class="n">parts</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">part</span><span class="p">);</span>
 
-    <span class="n">setColor</span><span class="o">(</span><span class="kc">null</span><span class="o">);</span>
-    <span class="n">setVertexTransform</span><span class="o">(</span><span class="kc">null</span><span class="o">);</span>
-    <span class="n">setUVRange</span><span class="o">(</span><span class="kc">null</span><span class="o">);</span>
+    <span class="n">setColor</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+    <span class="n">setVertexTransform</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+    <span class="n">setUVRange</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
 
-    <span class="k">return</span> <span class="n">part</span><span class="o">;</span>
-<span class="o">}</span>
+    <span class="k">return</span> <span class="n">part</span><span class="p">;</span>
+<span class="p">}</span>
 </pre></div>
 </div>
-<p>When calling MeshBuilder.rect(), it push vertex into it&#8217;s buffer.</p>
-<div class="highlight-java"><div class="highlight"><pre><span class="kd">public</span> <span class="kt">void</span> <span class="nf">rect</span> <span class="o">(</span><span class="n">VertexInfo</span> <span class="n">corner00</span><span class="o">,</span> <span class="n">VertexInfo</span> <span class="n">corner10</span><span class="o">,</span> <span class="n">VertexInfo</span> <span class="n">corner11</span><span class="o">,</span> <span class="n">VertexInfo</span> <span class="n">corner01</span><span class="o">)</span> <span class="o">{</span>
-    <span class="n">ensureVertices</span><span class="o">(</span><span class="mi">4</span><span class="o">);</span>
-    <span class="n">index</span><span class="o">(</span><span class="n">vertex</span><span class="o">(</span><span class="n">corner00</span><span class="o">),</span> <span class="n">vertex</span><span class="o">(</span><span class="n">corner10</span><span class="o">),</span> <span class="n">vertex</span><span class="o">(</span><span class="n">corner11</span><span class="o">),</span> <span class="n">vertex</span><span class="o">(</span><span class="n">corner01</span><span class="o">));</span>
-<span class="o">}</span>
+<p>When calling MeshBuilder.rect(), it push vertex into it’s buffer.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">rect</span> <span class="p">(</span><span class="n">VertexInfo</span> <span class="n">corner00</span><span class="p">,</span> <span class="n">VertexInfo</span> <span class="n">corner10</span><span class="p">,</span> <span class="n">VertexInfo</span> <span class="n">corner11</span><span class="p">,</span> <span class="n">VertexInfo</span> <span class="n">corner01</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">ensureVertices</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+    <span class="n">index</span><span class="p">(</span><span class="n">vertex</span><span class="p">(</span><span class="n">corner00</span><span class="p">),</span> <span class="n">vertex</span><span class="p">(</span><span class="n">corner10</span><span class="p">),</span> <span class="n">vertex</span><span class="p">(</span><span class="n">corner11</span><span class="p">),</span> <span class="n">vertex</span><span class="p">(</span><span class="n">corner01</span><span class="p">));</span>
+<span class="p">}</span>
 
-<span class="kd">public</span> <span class="kt">void</span> <span class="nf">index</span> <span class="o">(</span><span class="kt">short</span> <span class="n">value1</span><span class="o">,</span> <span class="kt">short</span> <span class="n">value2</span><span class="o">,</span> <span class="kt">short</span> <span class="n">value3</span><span class="o">,</span> <span class="kt">short</span> <span class="n">value4</span><span class="o">,</span> <span class="kt">short</span> <span class="n">value5</span><span class="o">,</span> <span class="kt">short</span> <span class="n">value6</span><span class="o">)</span> <span class="o">{</span>
-    <span class="n">ensureIndices</span><span class="o">(</span><span class="mi">6</span><span class="o">);</span>
-    <span class="n">indices</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">value1</span><span class="o">);</span>
-    <span class="n">indices</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">value2</span><span class="o">);</span>
-    <span class="n">indices</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">value3</span><span class="o">);</span>
-    <span class="n">indices</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">value4</span><span class="o">);</span>
-    <span class="n">indices</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">value5</span><span class="o">);</span>
-    <span class="n">indices</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">value6</span><span class="o">);</span>
-<span class="o">}</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">index</span> <span class="p">(</span><span class="kt">short</span> <span class="n">value1</span><span class="p">,</span> <span class="kt">short</span> <span class="n">value2</span><span class="p">,</span> <span class="kt">short</span> <span class="n">value3</span><span class="p">,</span> <span class="kt">short</span> <span class="n">value4</span><span class="p">,</span> <span class="kt">short</span> <span class="n">value5</span><span class="p">,</span> <span class="kt">short</span> <span class="n">value6</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">ensureIndices</span><span class="p">(</span><span class="mi">6</span><span class="p">);</span>
+    <span class="n">indices</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">value1</span><span class="p">);</span>
+    <span class="n">indices</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">value2</span><span class="p">);</span>
+    <span class="n">indices</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">value3</span><span class="p">);</span>
+    <span class="n">indices</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">value4</span><span class="p">);</span>
+    <span class="n">indices</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">value5</span><span class="p">);</span>
+    <span class="n">indices</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">value6</span><span class="p">);</span>
+<span class="p">}</span>
 
 <span class="c1">// unpack VertextInfo then:</span>
-<span class="kd">public</span> <span class="kt">short</span> <span class="nf">vertex</span> <span class="o">(</span><span class="n">Vector3</span> <span class="n">pos</span><span class="o">,</span> <span class="n">Vector3</span> <span class="n">nor</span><span class="o">,</span> <span class="n">Color</span> <span class="n">col</span><span class="o">,</span> <span class="n">Vector2</span> <span class="n">uv</span><span class="o">)</span> <span class="o">{</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">vindex</span> <span class="o">&gt;</span> <span class="n">Short</span><span class="o">.</span><span class="na">MAX_VALUE</span><span class="o">)</span> <span class="k">throw</span> <span class="k">new</span> <span class="n">GdxRuntimeException</span><span class="o">(</span><span class="s">&quot;Too many vertices used&quot;</span><span class="o">);</span>
+<span class="kd">public</span> <span class="kt">short</span> <span class="nf">vertex</span> <span class="p">(</span><span class="n">Vector3</span> <span class="n">pos</span><span class="p">,</span> <span class="n">Vector3</span> <span class="n">nor</span><span class="p">,</span> <span class="n">Color</span> <span class="n">col</span><span class="p">,</span> <span class="n">Vector2</span> <span class="n">uv</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">vindex</span> <span class="o">&gt;</span> <span class="n">Short</span><span class="p">.</span><span class="na">MAX_VALUE</span><span class="p">)</span> <span class="k">throw</span> <span class="k">new</span> <span class="n">GdxRuntimeException</span><span class="p">(</span><span class="s">&quot;Too many vertices used&quot;</span><span class="p">);</span>
 
-    <span class="n">vertex</span><span class="o">[</span><span class="n">posOffset</span><span class="o">]</span> <span class="o">=</span> <span class="n">pos</span><span class="o">.</span><span class="na">x</span><span class="o">;</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">posSize</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="o">)</span> <span class="n">vertex</span><span class="o">[</span><span class="n">posOffset</span> <span class="o">+</span> <span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">pos</span><span class="o">.</span><span class="na">y</span><span class="o">;</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">posSize</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="o">)</span> <span class="n">vertex</span><span class="o">[</span><span class="n">posOffset</span> <span class="o">+</span> <span class="mi">2</span><span class="o">]</span> <span class="o">=</span> <span class="n">pos</span><span class="o">.</span><span class="na">z</span><span class="o">;</span>
+    <span class="n">vertex</span><span class="o">[</span><span class="n">posOffset</span><span class="o">]</span> <span class="o">=</span> <span class="n">pos</span><span class="p">.</span><span class="na">x</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">posSize</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="n">vertex</span><span class="o">[</span><span class="n">posOffset</span> <span class="o">+</span> <span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">pos</span><span class="p">.</span><span class="na">y</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">posSize</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">)</span> <span class="n">vertex</span><span class="o">[</span><span class="n">posOffset</span> <span class="o">+</span> <span class="mi">2</span><span class="o">]</span> <span class="o">=</span> <span class="n">pos</span><span class="p">.</span><span class="na">z</span><span class="p">;</span>
 
-    <span class="k">if</span> <span class="o">(</span><span class="n">norOffset</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">nor</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="n">nor</span> <span class="o">=</span> <span class="n">tmpNormal</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="n">pos</span><span class="o">).</span><span class="na">nor</span><span class="o">();</span>
-        <span class="n">vertex</span><span class="o">[</span><span class="n">norOffset</span><span class="o">]</span> <span class="o">=</span> <span class="n">nor</span><span class="o">.</span><span class="na">x</span><span class="o">;</span>
-        <span class="n">vertex</span><span class="o">[</span><span class="n">norOffset</span> <span class="o">+</span> <span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">nor</span><span class="o">.</span><span class="na">y</span><span class="o">;</span>
-        <span class="n">vertex</span><span class="o">[</span><span class="n">norOffset</span> <span class="o">+</span> <span class="mi">2</span><span class="o">]</span> <span class="o">=</span> <span class="n">nor</span><span class="o">.</span><span class="na">z</span><span class="o">;</span>
-    <span class="o">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">norOffset</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">nor</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="n">nor</span> <span class="o">=</span> <span class="n">tmpNormal</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="n">pos</span><span class="p">).</span><span class="na">nor</span><span class="p">();</span>
+        <span class="n">vertex</span><span class="o">[</span><span class="n">norOffset</span><span class="o">]</span> <span class="o">=</span> <span class="n">nor</span><span class="p">.</span><span class="na">x</span><span class="p">;</span>
+        <span class="n">vertex</span><span class="o">[</span><span class="n">norOffset</span> <span class="o">+</span> <span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">nor</span><span class="p">.</span><span class="na">y</span><span class="p">;</span>
+        <span class="n">vertex</span><span class="o">[</span><span class="n">norOffset</span> <span class="o">+</span> <span class="mi">2</span><span class="o">]</span> <span class="o">=</span> <span class="n">nor</span><span class="p">.</span><span class="na">z</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    <span class="k">if</span> <span class="o">(</span><span class="n">colOffset</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">col</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="n">col</span> <span class="o">=</span> <span class="n">Color</span><span class="o">.</span><span class="na">WHITE</span><span class="o">;</span>
-        <span class="n">vertex</span><span class="o">[</span><span class="n">colOffset</span><span class="o">]</span> <span class="o">=</span> <span class="n">col</span><span class="o">.</span><span class="na">r</span><span class="o">;</span>
-        <span class="n">vertex</span><span class="o">[</span><span class="n">colOffset</span> <span class="o">+</span> <span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">col</span><span class="o">.</span><span class="na">g</span><span class="o">;</span>
-        <span class="n">vertex</span><span class="o">[</span><span class="n">colOffset</span> <span class="o">+</span> <span class="mi">2</span><span class="o">]</span> <span class="o">=</span> <span class="n">col</span><span class="o">.</span><span class="na">b</span><span class="o">;</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">colSize</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="o">)</span> <span class="n">vertex</span><span class="o">[</span><span class="n">colOffset</span> <span class="o">+</span> <span class="mi">3</span><span class="o">]</span> <span class="o">=</span> <span class="n">col</span><span class="o">.</span><span class="na">a</span><span class="o">;</span>
-    <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">cpOffset</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">col</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="n">col</span> <span class="o">=</span> <span class="n">Color</span><span class="o">.</span><span class="na">WHITE</span><span class="o">;</span>
-        <span class="n">vertex</span><span class="o">[</span><span class="n">cpOffset</span><span class="o">]</span> <span class="o">=</span> <span class="n">col</span><span class="o">.</span><span class="na">toFloatBits</span><span class="o">();</span> <span class="c1">// FIXME cache packed color?</span>
-    <span class="o">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">colOffset</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="n">col</span> <span class="o">=</span> <span class="n">Color</span><span class="p">.</span><span class="na">WHITE</span><span class="p">;</span>
+        <span class="n">vertex</span><span class="o">[</span><span class="n">colOffset</span><span class="o">]</span> <span class="o">=</span> <span class="n">col</span><span class="p">.</span><span class="na">r</span><span class="p">;</span>
+        <span class="n">vertex</span><span class="o">[</span><span class="n">colOffset</span> <span class="o">+</span> <span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">col</span><span class="p">.</span><span class="na">g</span><span class="p">;</span>
+        <span class="n">vertex</span><span class="o">[</span><span class="n">colOffset</span> <span class="o">+</span> <span class="mi">2</span><span class="o">]</span> <span class="o">=</span> <span class="n">col</span><span class="p">.</span><span class="na">b</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">colSize</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">)</span> <span class="n">vertex</span><span class="o">[</span><span class="n">colOffset</span> <span class="o">+</span> <span class="mi">3</span><span class="o">]</span> <span class="o">=</span> <span class="n">col</span><span class="p">.</span><span class="na">a</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">cpOffset</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="n">col</span> <span class="o">=</span> <span class="n">Color</span><span class="p">.</span><span class="na">WHITE</span><span class="p">;</span>
+        <span class="n">vertex</span><span class="o">[</span><span class="n">cpOffset</span><span class="o">]</span> <span class="o">=</span> <span class="n">col</span><span class="p">.</span><span class="na">toFloatBits</span><span class="p">();</span> <span class="c1">// FIXME cache packed color?</span>
+    <span class="p">}</span>
 
-    <span class="k">if</span> <span class="o">(</span><span class="n">uv</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">uvOffset</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">vertex</span><span class="o">[</span><span class="n">uvOffset</span><span class="o">]</span> <span class="o">=</span> <span class="n">uv</span><span class="o">.</span><span class="na">x</span><span class="o">;</span>
-        <span class="n">vertex</span><span class="o">[</span><span class="n">uvOffset</span> <span class="o">+</span> <span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">uv</span><span class="o">.</span><span class="na">y</span><span class="o">;</span>
-    <span class="o">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">uv</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">uvOffset</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">vertex</span><span class="o">[</span><span class="n">uvOffset</span><span class="o">]</span> <span class="o">=</span> <span class="n">uv</span><span class="p">.</span><span class="na">x</span><span class="p">;</span>
+        <span class="n">vertex</span><span class="o">[</span><span class="n">uvOffset</span> <span class="o">+</span> <span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">uv</span><span class="p">.</span><span class="na">y</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    <span class="n">addVertex</span><span class="o">(</span><span class="n">vertex</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span> <span class="c1">// vertex been pushed into vertices</span>
-    <span class="k">return</span> <span class="n">lastIndex</span><span class="o">;</span>
-<span class="o">}</span>
+    <span class="n">addVertex</span><span class="p">(</span><span class="n">vertex</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span> <span class="c1">// vertex been pushed into vertices</span>
+    <span class="k">return</span> <span class="n">lastIndex</span><span class="p">;</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>At the end of building, when MeshBuilder.end() called, all vertices been collected,
 with indices.</p>
-<div class="highlight-java"><div class="highlight"><pre><span class="kd">public</span> <span class="n">Mesh</span> <span class="nf">end</span> <span class="o">()</span> <span class="o">{</span>
-    <span class="n">Mesh</span> <span class="n">mesh</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Mesh</span><span class="o">();</span>
-    <span class="n">mesh</span><span class="o">.</span><span class="na">setVertices</span><span class="o">(</span><span class="n">vertices</span><span class="o">.</span><span class="na">items</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">vertices</span><span class="o">.</span><span class="na">size</span><span class="o">);</span>
-    <span class="n">mesh</span><span class="o">.</span><span class="na">setIndices</span><span class="o">(</span><span class="n">indices</span><span class="o">.</span><span class="na">items</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">indices</span><span class="o">.</span><span class="na">size</span><span class="o">);</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="n">Mesh</span> <span class="nf">end</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="n">Mesh</span> <span class="n">mesh</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Mesh</span><span class="p">();</span>
+    <span class="n">mesh</span><span class="p">.</span><span class="na">setVertices</span><span class="p">(</span><span class="n">vertices</span><span class="p">.</span><span class="na">items</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">vertices</span><span class="p">.</span><span class="na">size</span><span class="p">);</span>
+    <span class="n">mesh</span><span class="p">.</span><span class="na">setIndices</span><span class="p">(</span><span class="n">indices</span><span class="p">.</span><span class="na">items</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">indices</span><span class="p">.</span><span class="na">size</span><span class="p">);</span>
 
-    <span class="k">for</span> <span class="o">(</span><span class="n">MeshPart</span> <span class="n">p</span> <span class="o">:</span> <span class="n">parts</span><span class="o">)</span>
-        <span class="n">p</span><span class="o">.</span><span class="na">mesh</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">;</span>
-    <span class="n">parts</span><span class="o">.</span><span class="na">clear</span><span class="o">();</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">MeshPart</span> <span class="n">p</span> <span class="p">:</span> <span class="n">parts</span><span class="p">)</span>
+        <span class="n">p</span><span class="p">.</span><span class="na">mesh</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">;</span>
+    <span class="n">parts</span><span class="p">.</span><span class="na">clear</span><span class="p">();</span>
 
-    <span class="n">attributes</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-    <span class="n">vertices</span><span class="o">.</span><span class="na">clear</span><span class="o">();</span>
-    <span class="n">indices</span><span class="o">.</span><span class="na">clear</span><span class="o">();</span>
+    <span class="n">attributes</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+    <span class="n">vertices</span><span class="p">.</span><span class="na">clear</span><span class="p">();</span>
+    <span class="n">indices</span><span class="p">.</span><span class="na">clear</span><span class="p">();</span>
 
-    <span class="k">return</span> <span class="n">mesh</span><span class="o">;</span>
-<span class="o">}</span>
+    <span class="k">return</span> <span class="n">mesh</span><span class="p">;</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </div>
@@ -303,7 +306,7 @@ with indices.</p>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="../_static/language_data.js"></script>
 
   
 

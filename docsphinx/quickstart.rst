@@ -142,15 +142,15 @@ _____________________________
 
 Error::
 
-	FAILURE: Build failed with an exception.
+    FAILURE: Build failed with an exception.
 
-	* Where:
-	Build file '/home/user/git/wnw/normode/build.gradle' line: 62
+    * Where:
+    Build file '/home/user/git/wnw/normode/build.gradle' line: 62
 
-	* What went wrong:
-	A problem occurred evaluating root project 'normode'.
-	> Failed to apply plugin 'com.android.internal.version-check'.
-	> Minimum supported Gradle version is 6.8.2. Current version is 6.6.1. If using the gradle wrapper, try editing the distributionUrl in /home/ody/git/wnw/normode/gradle/wrapper/gradle-wrapper.properties to gradle-6.8.2-all.zip
+    * What went wrong:
+    A problem occurred evaluating root project 'normode'.
+    > Failed to apply plugin 'com.android.internal.version-check'.
+    > Minimum supported Gradle version is 6.8.2. Current version is 6.6.1. If using the gradle wrapper, try editing the distributionUrl in /home/ody/git/wnw/normode/gradle/wrapper/gradle-wrapper.properties to gradle-6.8.2-all.zip
 
 Solution:
 
@@ -229,6 +229,20 @@ When using Eclipse to debug, the depending project must been added to runtime
 classpath.
 
 .. image:: imgs/002-mvn-prj-dependency.png
+
+.. note:: Install maven will download dependency. To use mirror repository
+    project wise, `use .mvn/settings.xml and add mirror configuration <https://stackoverflow.com/a/48583079>`_:
+
+.. code-block:: xml
+
+    <mirrors>
+      <mirror>
+        <id>aliyun_nexus</id>
+        <mirrorOf>*</mirrorOf>
+        <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+      </mirror>
+    </mirrors>
+..
 
 Gradle failed on Resolving tween-engine-api
 ___________________________________________
