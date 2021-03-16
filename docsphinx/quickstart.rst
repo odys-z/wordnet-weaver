@@ -297,6 +297,14 @@ Solution:
 
 Try this `modified build.gradle version <https://github.com/odys-z/universal-tween-engine/blob/master/build.gradle>`_
 
+Eclipse can't resolve local repo
+________________________________
+
+See `Eclipse libGDX project can't resolve gradle dependency of local repo but CLI has no problem? <https://stackoverflow.com/questions/66578518/eclipse-libgdx-project-cant-resolve-gradle-dependency-of-local-repo-but-cli-has>`_
+
+Further, if follow the comments to walk around, there can be another trouble:
+Eclipse won't clear cached bin/*.class if dependency been upgraded.
+
 Can not attach source to GDX.jar
 ________________________________
 

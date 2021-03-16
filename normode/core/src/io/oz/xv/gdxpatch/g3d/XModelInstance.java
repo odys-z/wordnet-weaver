@@ -18,8 +18,10 @@ package io.oz.xv.gdxpatch.g3d;
 
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
+import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.RenderableProvider;
+import com.badlogic.gdx.graphics.g3d.Shader;
 import com.badlogic.gdx.graphics.g3d.model.Animation;
 import com.badlogic.gdx.graphics.g3d.model.Node;
 import com.badlogic.gdx.graphics.g3d.model.NodeAnimation;
@@ -31,7 +33,6 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ArrayMap;
-import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.Pool;
 
 import net.mgsx.gltf.scene3d.model.NodePlus;
@@ -50,11 +51,11 @@ public class XModelInstance implements RenderableProvider {
 
 	/** the materials of the model, used by nodes that have a graphical representation FIXME not sure if superfluous, allows
 	 * modification of materials without having to traverse the nodes **/
-	public final Array<Material> materials = new Array();
+	public final Array<Material> materials = new Array<Material>();
 	/** root nodes of the model **/
-	public final Array<Node> nodes = new Array();
+	public final Array<Node> nodes = new Array<Node>();
 	/** animations of the model, modifying node transformations **/
-	public final Array<Animation> animations = new Array();
+	public final Array<Animation> animations = new Array<Animation>();
 	/** the {@link Model} this instances derives from **/
 	public final Model model;
 	/** the world transform **/
@@ -228,6 +229,7 @@ public class XModelInstance implements RenderableProvider {
 		for (int i = 0, n = nodes.size; i < n; ++i) {
 			final Node node = nodes.get(i);
 			// this.nodes.add(node.copy());
+			NodePlus tmp = new NodePlus();
 			this.nodes.add(NodePlus.clone(node));
 		}
 		invalidate();

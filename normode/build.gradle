@@ -20,7 +20,7 @@ allprojects {
         appName = "wn cloud"
         // don't use 1.9.14
         gdxVersion = '1.9.13'
-        gltfVersion = '0.1.0-SNAPSHOT'
+        gltfVersion = '0.1.1-SNAPSHOT'
         roboVMVersion = '2.3.8'
         box2DLightsVersion = '1.4'
         ashleyVersion = '1.7.0'
@@ -101,8 +101,8 @@ project(":core") {
         api "com.badlogicgames.ashley:ashley:$ashleyVersion"
 
 		// See fork https://github.com/odys-z/gdx-gltf
-		// api 'io.github.odys-z:gdx-gltf:0.1.0-SNAPSHOT'
-		api 'net.mgsx.gltf:gdx-gltf:2.0.1-SNAPSHOT'
+		api 'io.github.odys-z:gdx-gltf:0.1.1-SNAPSHOT'
+		// api 'net.mgsx.gltf:gdx-gltf:2.0.2-SNAPSHOT'
 
 		// https://stackoverflow.com/questions/35795250/maven-project-as-dependency-in-gradle-project
 		// To install client, install wn-weaver first

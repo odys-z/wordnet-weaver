@@ -1,6 +1,10 @@
 apply plugin: "java"
 
-sourceCompatibility = 1.8
+// change Eclipse settings manually
+// see https://github.com/eclipse/buildship/issues/778
+sourceCompatibility = 11
+targetCompatibility = 11
+
 sourceSets.main.java.srcDirs = [ "src/", "test/" ]
 sourceSets.main.resources.srcDirs = ["../android/assets", "test"]
 
