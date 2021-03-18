@@ -300,10 +300,14 @@ Try this `modified build.gradle version <https://github.com/odys-z/universal-twe
 Eclipse can't resolve local repo
 ________________________________
 
+.. image:: https://i.stack.imgur.com/LsOeZ.png
+    :width: 480px
+
 See `Eclipse libGDX project can't resolve gradle dependency of local repo but CLI has no problem? <https://stackoverflow.com/questions/66578518/eclipse-libgdx-project-cant-resolve-gradle-dependency-of-local-repo-but-cli-has>`_
 
 Further, if follow the comments to walk around, there can be another trouble:
-Eclipse won't clear cached bin/*.class if dependency been upgraded.
+
+Eclipse won't clear cached bin/\*.class if dependency been upgraded.
 
 Can not attach source to GDX.jar
 ________________________________
@@ -336,7 +340,7 @@ Also source.jar and javadoc.jar can be download manually, e.g. ::
 
     wget https://repo.maven.apache.org/maven2/com/badlogicgames/gdx/gdx/1.9.11/gdx-1.9.11-sources.jar
 
-`SUNWprivate_1.1' not found (JDK 15)
+'SUNWprivate_1.1' not found (JDK 15)
 ____________________________________
 
 Error::
@@ -350,8 +354,8 @@ Cause:
 Only matched JDK version and LWJGL can work together. LibGdx 1.9.14 is recommended
 using JDK 11.
 
-Can't load *.glsl
-_________________
+Can't load \*.glsl
+__________________
 
 Error::
 

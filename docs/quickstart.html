@@ -101,7 +101,10 @@
 <li class="toctree-l3"><a class="reference internal" href="#class-of-weaver-not-found">Class of Weaver not Found</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#gradle-failed-on-resolving-tween-engine-api">Gradle failed on Resolving tween-engine-api</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#installing-universal-tween-engine-on-ubuntu">Installing Universal-tween-engine on Ubuntu</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#eclipse-can-t-resolve-local-repo">Eclipse can’t resolve local repo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#can-not-attach-source-to-gdx-jar">Can not attach source to GDX.jar</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sunwprivate-1-1-not-found-jdk-15">‘SUNWprivate_1.1’ not found (JDK 15)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#can-t-load-glsl">Can’t load *.glsl</a></li>
 </ul>
 </li>
 </ul>
@@ -194,6 +197,10 @@ Eclipse and run Android project from Android Studio.</p>
 <p><em>Follow these steps to resolve dependencies.</em></p>
 <div class="section" id="install-universal-tween-engine-locally">
 <h3>1. Install Universal Tween Engine Locally<a class="headerlink" href="#install-universal-tween-engine-locally" title="Permalink to this headline">¶</a></h3>
+<div class="admonition attention">
+<p class="first admonition-title">Attention</p>
+<p class="last">Tween Engine will be dropped in the near future.</p>
+</div>
 <p><a class="reference external" href="https://github.com/AurelienRibon/universal-tween-engine">Universal Tween Engine</a>
 can be installed to local maven repository. The build.gradle has a default task
 to install into local manven.</p>
@@ -401,6 +408,13 @@ might be useful.</p>
 <p id="install-tween-ubuntu">Solution:</p>
 <p>Try this <a class="reference external" href="https://github.com/odys-z/universal-tween-engine/blob/master/build.gradle">modified build.gradle version</a></p>
 </div>
+<div class="section" id="eclipse-can-t-resolve-local-repo">
+<h3>Eclipse can’t resolve local repo<a class="headerlink" href="#eclipse-can-t-resolve-local-repo" title="Permalink to this headline">¶</a></h3>
+<a class="reference internal image-reference" href="https://i.stack.imgur.com/LsOeZ.png"><img alt="https://i.stack.imgur.com/LsOeZ.png" src="https://i.stack.imgur.com/LsOeZ.png" style="width: 480px;" /></a>
+<p>See <a class="reference external" href="https://stackoverflow.com/questions/66578518/eclipse-libgdx-project-cant-resolve-gradle-dependency-of-local-repo-but-cli-has">Eclipse libGDX project can’t resolve gradle dependency of local repo but CLI has no problem?</a></p>
+<p>Further, if follow the comments to walk around, there can be another trouble:</p>
+<p>Eclipse won’t clear cached bin/*.class if dependency been upgraded.</p>
+</div>
 <div class="section" id="can-not-attach-source-to-gdx-jar">
 <h3>Can not attach source to GDX.jar<a class="headerlink" href="#can-not-attach-source-to-gdx-jar" title="Permalink to this headline">¶</a></h3>
 <p>This is probably caused by using mavenLocal in gradle project. Just set:</p>
@@ -427,6 +441,43 @@ might be useful.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">repo</span><span class="o">.</span><span class="n">maven</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">maven2</span><span class="o">/</span><span class="n">com</span><span class="o">/</span><span class="n">badlogicgames</span><span class="o">/</span><span class="n">gdx</span><span class="o">/</span><span class="n">gdx</span><span class="o">/</span><span class="mf">1.9</span><span class="o">.</span><span class="mi">11</span><span class="o">/</span><span class="n">gdx</span><span class="o">-</span><span class="mf">1.9</span><span class="o">.</span><span class="mi">11</span><span class="o">-</span><span class="n">sources</span><span class="o">.</span><span class="n">jar</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="sunwprivate-1-1-not-found-jdk-15">
+<h3>‘SUNWprivate_1.1’ not found (JDK 15)<a class="headerlink" href="#sunwprivate-1-1-not-found-jdk-15" title="Permalink to this headline">¶</a></h3>
+<p>Error:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>java.lang.UnsatisfiedLinkError libjawt.so: version `SUNWprivate_1.1&#39; not found ...
+</pre></div>
+</div>
+<p>There are similar issue at <a class="reference external" href="https://github.com/libgdx/libgdx/issues/5996">github/libgdx</a>.</p>
+<p>Cause:</p>
+<p>Only matched JDK version and LWJGL can work together. LibGdx 1.9.14 is recommended
+using JDK 11.</p>
+</div>
+<div class="section" id="can-t-load-glsl">
+<h3>Can’t load *.glsl<a class="headerlink" href="#can-t-load-glsl" title="Permalink to this headline">¶</a></h3>
+<p>Error:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Exception in thread &quot;LWJGL Application&quot; com.badlogic.gdx.utils.GdxRuntimeException:
+    File not found: io/oz/xv/glsl/shaders/cube-skin.vert.glsl (Classpath)
+    at com.badlogic.gdx.files.FileHandle.read(FileHandle.java:142)
+    at com.badlogic.gdx.files.FileHandle.length(FileHandle.java:638)
+    at com.badlogic.gdx.files.FileHandle.estimateLength(FileHandle.java:239)
+    at com.badlogic.gdx.files.FileHandle.readString(FileHandle.java:204)
+    at com.badlogic.gdx.files.FileHandle.readString(FileHandle.java:197)
+    at io.oz.xv.glsl.shaders.Cubic.&lt;init&gt;(Cubic.java:26)
+    at io.oz.xv.treemap.CubeTree.init(CubeTree.java:77)
+    at io.oz.wnw.norm.A.StageA.loadMyset(StageA.java:108)
+    at io.oz.wnw.norm.A.ViewA1.&lt;init&gt;(ViewA1.java:41)
+    at io.oz.wnw.norm.WGame.create(WGame.java:29)
+    at com.badlogic.gdx.backends.lwjgl.LwjglApplication.mainLoop(LwjglApplication.java:150)
+    at com.badlogic.gdx.backends.lwjgl.LwjglApplication$1.run(LwjglApplication.java:127)
+</pre></div>
+</div>
+<p>Cause:</p>
+<p>Resource in src folder ignored by gradle project.</p>
+<p>Solution:</p>
+<p>In core:build.gradle:</p>
+<blockquote>
+<div>sourceSets.main.resources.srcDirs = [ “assets/”, “src/” ]</div></blockquote>
 </div>
 </div>
 </div>
