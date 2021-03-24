@@ -87,8 +87,10 @@ public class XAnimationController extends XBaseAnimationController {
 							time += duration;
 					}
 					time = Math.abs(time % duration);
-				} else
+				}
+				else
 					loops = 1;
+
 				for (int i = 0; i < loops; i++) {
 					if (loopCount > 0) loopCount--;
 					if (loopCount != 0 && listener != null) listener.onLoop(this);
@@ -100,7 +102,8 @@ public class XAnimationController extends XBaseAnimationController {
 					}
 				}
 				return 0f;
-			} else
+			}
+			else
 				return delta;
 		}
 	}

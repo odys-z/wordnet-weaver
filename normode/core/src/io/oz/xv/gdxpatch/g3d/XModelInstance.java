@@ -35,6 +35,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ArrayMap;
 import com.badlogic.gdx.utils.Pool;
 
+import net.mgsx.gltf.loaders.shared.animation.Interpolation;
+import net.mgsx.gltf.scene3d.animation.NodeAnimationHack;
 import net.mgsx.gltf.scene3d.model.NodePlus;
 
 /** An instance of a {@link Model}, allows to specify global transform and modify the materials, as it has a copy of the model's
@@ -43,6 +45,8 @@ import net.mgsx.gltf.scene3d.model.NodePlus;
  * ModelInstances</p>
  * 
  * The ModelInstance creates a full copy of all materials, nodes and animations.
+ * 
+ * Change log: constructor create animation of array of {@link NodeAnimationHack}, which can be played by gltf {@link AnimationController}
  * @author badlogic, xoppa */
 public class XModelInstance implements RenderableProvider {
 	/** Whether, by default, {@link NodeKeyframe}'s are shared amongst {@link Model} and ModelInstance. Can be overridden per
@@ -228,8 +232,9 @@ public class XModelInstance implements RenderableProvider {
 	private void copyNodes (Array<Node> nodes) {
 		for (int i = 0, n = nodes.size; i < n; ++i) {
 			final Node node = nodes.get(i);
+			// ody FIXME probably mistake of understanding AnimationContorller's ApplyAnimationDirectly()
 			// this.nodes.add(node.copy());
-			NodePlus tmp = new NodePlus();
+			// NodePlus tmp = new NodePlus();
 			this.nodes.add(NodePlus.clone(node));
 		}
 		invalidate();
@@ -328,7 +333,11 @@ public class XModelInstance implements RenderableProvider {
 		for (final NodeAnimation nanim : sourceAnim.nodeAnimations) {
 			final Node node = getNode(nanim.node.id);
 			if (node == null) continue;
-			NodeAnimation nodeAnim = new NodeAnimation();
+
+			// ody:
+			// NodeAnimation nodeAnim = new NodeAnimation();
+			NodeAnimationHack nodeAnim = new NodeAnimationHack();
+
 			nodeAnim.node = node;
 			if (shareKeyframes) {
 				nodeAnim.translation = nanim.translation;
@@ -351,6 +360,21 @@ public class XModelInstance implements RenderableProvider {
 						nodeAnim.scaling.add(new NodeKeyframe<Vector3>(kf.keytime, kf.value));
 				}
 			}
+
+			// ody: see also gltf AnimationLoader#load()
+			// FIXME ody:
+			// what about morph target like that in AnimationLoader#()?
+			if (nanim instanceof NodeAnimationHack) {
+				nodeAnim.translationMode = ((NodeAnimationHack)nanim).translationMode;
+				nodeAnim.rotationMode = ((NodeAnimationHack)nanim).rotationMode;
+				nodeAnim.scalingMode = ((NodeAnimationHack)nanim).scalingMode;
+			}
+			else {
+				nodeAnim.translationMode = Interpolation.LINEAR;
+				nodeAnim.rotationMode = Interpolation.LINEAR;
+				nodeAnim.scalingMode = Interpolation.LINEAR;
+			}
+
 			if (nodeAnim.translation != null || nodeAnim.rotation != null || nodeAnim.scaling != null)
 				animation.nodeAnimations.add(nodeAnim);
 		}
