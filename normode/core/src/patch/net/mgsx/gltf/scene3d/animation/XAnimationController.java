@@ -167,11 +167,18 @@ public class XAnimationController extends XBaseAnimationController {
 	private AnimationDesc obtain (final AnimationDesc anim) {
 		return obtain(anim.animation, anim.offset, anim.duration, anim.loopCount, anim.speed, anim.listener);
 	}
+	
+	// ody
+	public boolean playing() {
+		return paused || !(current == null || current.loopCount == 0 || current.animation == null);
+	}
 
 	/** Update any animations currently being played.
-	 * @param delta The time elapsed since last update, change this to alter the overall speed (can be negative). */
-	public void update (float delta) {
-		if (paused) return;
+	 * @param delta The time elapsed since last update, change this to alter the overall speed (can be negative).
+	 * @return false if playing finished, true for playing(include paused)
+	 */
+	public boolean update (float delta) {
+		if (paused) return playing();
 		if (previous != null && ((transitionCurrentTime += delta) >= transitionTargetTime)) {
 			removeAnimation(previous.animation);
 			justChangedAnimation = true;
@@ -182,20 +189,25 @@ public class XAnimationController extends XBaseAnimationController {
 			target.calculateTransforms();
 			justChangedAnimation = false;
 		}
-		if (current == null || current.loopCount == 0 || current.animation == null) return;
+		// ody
+		// if (current == null || current.loopCount == 0 || current.animation == null) return;
+		if (!playing()) return false;
+
 		final float remain = current.update(delta);
 		if (queued != null) {
 			inAction = false;
 			animate(queued, queuedTransitionTime);
 			queued = null;			
 			if(remain != 0f) update(remain);
-			return;
+			return true; // ody
 		}
 		if (previous != null)
 			applyAnimations(previous.animation, previous.offset + previous.time, current.animation, current.offset + current.time,
 				transitionCurrentTime / transitionTargetTime);
 		else
 			applyAnimation(current.animation, current.offset + current.time);
+
+		return true; // ody
 	}
 
 	/** Set the active animation, replacing any current animation.

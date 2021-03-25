@@ -27,6 +27,7 @@ import io.oz.xv.ecs.c.RayPickable;
 import io.oz.xv.ecs.c.Visual;
 import io.oz.xv.ecs.s.RayPicker;
 import io.oz.xv.ecs.s.RayPicker.PickingShape;
+import io.oz.xv.gdxpatch.g3d.XModelInstance;
 import io.oz.xv.gdxpatch.utils.QuadShapeBuilder;
 import io.oz.xv.gdxpatch.utils.XModelBuilder;
 import io.oz.xv.glsl.shaders.Cubic;
@@ -121,10 +122,7 @@ public class CubeTree {
 		BoxShapeBuilder.build(mpbuilder, whd.x, whd.y, whd.z); // test size
 		Model model = builder.end();
 		model.calculateTransforms();
-		// FIXME
-		// FIXME
-		// FIXME
-		// obj3.modInst = new XModelInstance(model);
+		obj3.modInst = new XModelInstance(model);
 
 		ground.add(obj3);
 
@@ -172,11 +170,7 @@ public class CubeTree {
 		eLemma.add(lemVis);
 
 		Obj3 obj3 = ecs.createComponent(Obj3.class);
-		// FIXME
-		// FIXME
-		// FIXME
-		// FIXME
-		// obj3.modInst = glyphs.bindText(wrd.word, wrd.color, lemVis );
+		obj3.modInst = glyphs.bindText(wrd.word, wrd.color, lemVis );
 
 		eLemma.add(obj3);
 

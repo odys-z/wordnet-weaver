@@ -19,6 +19,7 @@ import io.oz.xv.ecs.s.RayPicker;
 import io.oz.xv.ecs.s.SysAffine;
 import io.oz.xv.ecs.s.SysModelRenderer;
 import io.oz.xv.ecs.s.SysVisual;
+import io.oz.xv.gdxpatch.g3d.XModelInstance;
 import io.oz.xv.material.bisheng.GlyphLib;
 import io.oz.xv.treemap.CubeTree;
 import io.oz.xv.utils.XVException;
@@ -69,8 +70,8 @@ public class StageA {
 	}
 
 	/** @deprecated only for ViewA1Try() */
-	ModelInstance loadSnyset() {
-		ModelInstance mi = glyphs.bindText(me.myset().lemma(), new Color(1f, 1f, 0f, 1f));
+	XModelInstance loadSnyset() {
+		XModelInstance mi = glyphs.bindText(me.myset().lemma(), new Color(1f, 1f, 0f, 1f));
 		return mi;
 	}
 

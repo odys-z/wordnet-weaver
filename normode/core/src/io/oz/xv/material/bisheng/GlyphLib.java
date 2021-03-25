@@ -12,12 +12,12 @@ import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.StreamUtils;
 
 import io.oz.xv.ecs.c.Visual;
+import io.oz.xv.gdxpatch.g3d.XModelInstance;
 import io.oz.xv.glsl.Glsl;
 import io.oz.xv.glsl.Glsl.ShaderFlag;
 import io.oz.xv.material.XMaterial;
@@ -64,14 +64,14 @@ public class GlyphLib implements Disposable {
      * @param texId OpenGL texture id, parameter of GL20.glActiveTexture(int)
      * @return the text model
      */
-	public ModelInstance bindText(String name, Color color) {
+	public XModelInstance bindText(String name, Color color) {
         XMaterial ink = Inkstone.colorful(name); 
 
 		Paragraph p = new Paragraph(name, color, ink);
 		return p.buildMesh(data);
 	}
 
-	public ModelInstance bindText(String name, Color color, Visual v) {
+	public XModelInstance bindText(String name, Color color, Visual v) {
 		v.name = name;
 		v.shader = new Glsl.Sdfont(v)
 							.smooth(0.06f).thin(0.5f)

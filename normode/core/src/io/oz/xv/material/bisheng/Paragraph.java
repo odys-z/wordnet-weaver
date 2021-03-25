@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g3d.utils.MeshPartBuilder.VertexInfo;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 
 import io.oz.wnw.norm.Assets;
+import io.oz.xv.gdxpatch.g3d.XModelInstance;
 import io.oz.xv.material.XMaterial;
 import io.oz.xv.material.bisheng.GlyphLib.FontData;
 import io.oz.xv.material.bisheng.GlyphLib.Glyph;
@@ -49,7 +50,7 @@ public class Paragraph {
 		return this;
 	}
 
-	public ModelInstance buildMesh(FontData fontData) {
+	public XModelInstance buildMesh(FontData fontData) {
 		// init context buffer
 		vis = new VertexInfo[4];
 		for (int i = 0; i < 4; i++)
@@ -68,7 +69,7 @@ public class Paragraph {
 		}
 		Model model = builder.end();
 		model.calculateTransforms();
-		return new ModelInstance(model);
+		return new XModelInstance(model);
 	}
 
 	/**<p>Create a rect node in builder. Call builder.end() to get the final results.<br>

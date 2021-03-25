@@ -8,7 +8,6 @@ public class TestBasicTween extends WGameTest {
 	@Override
 	public void create () {
 		super.create();
-		// setScreen(new TestBasicTweenView(this));
 		setScreen(new TestGltfAnimView(this));
 	}
 }

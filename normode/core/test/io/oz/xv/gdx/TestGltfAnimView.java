@@ -103,21 +103,12 @@ public class TestGltfAnimView extends ScreenAdapter {
 
 		model.calculateTransforms();
 		obj3.modInst = new XModelInstance(model);
-		// obj3.modInst.nodes.clear();
-
-		// replace nodes
-//		NodePlus node = new NodePlus();
-//		NodePartPlus nodePart = new NodePartPlus();
-//		nodePart.morphTargets = ((NodePlus)node).weights;
-//		nodePart.meshPart = model.meshParts.get(0);
-//		obj3.modInst.nodes.add(node);
 		box.add(obj3);
 	
 		AffineAnim aff = ecs.createComponent(AffineAnim.class); 
 		aff.translation = new Array<NodeKeyframe<Vector3>>();
 		aff.translation.add(new NodeKeyframe<Vector3>(1, new Vector3(x, 0, 0)));
 		aff.controllor = new XAnimationControllerGltf(obj3.modInst);
-	    // aff.controllor.setAnimation("simple");
 	    aff.controllor.animate("simple", 0);
 	    box.add(aff);
 
