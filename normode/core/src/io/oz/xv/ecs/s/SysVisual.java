@@ -12,6 +12,8 @@ import io.oz.xv.ecs.c.Visual;
  * but with extended attributes like shader states, etc.
  * 
  * This system is not the only one modifying Visual component.
+ * 
+ * <p>In v0.1, this system changes visual of selected, updating uniforms.</p>
  * @author Odys Zhou
  *
  */

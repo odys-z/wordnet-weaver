@@ -99,7 +99,7 @@ public class XBaseAnimationController {
 	};
 	private final static ObjectMap<Node, Transform> transforms = new ObjectMap<Node, Transform>();
 	private boolean applying = false;
-	/** The {@link ModelInstance} on which the animations are being performed. */
+	/** The {@link XModelInstance} on which the animations are being performed. */
 	public final XModelInstance target;
 
 	/** Construct a new BaseAnimationController.

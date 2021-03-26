@@ -13,15 +13,13 @@ import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.graphics.g3d.utils.MeshPartBuilder;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.Array;
 
-import io.oz.wnw.ecs.cmp.ds.AffineTrans;
-import io.oz.xv.ecs.c.Affines;
 import io.oz.xv.ecs.c.Obj3;
 import io.oz.xv.ecs.c.Visual;
-import io.oz.xv.ecs.s.SysAffine;
 import io.oz.xv.ecs.s.SysModelRenderer;
+import io.oz.xv.ecs.s.SysUnitween;
 import io.oz.xv.ecs.s.SysVisual;
+import io.oz.xv.ecs.s.Unitween;
 import io.oz.xv.gdxpatch.utils.QuadShapeBuilder;
 import io.oz.xv.gdxpatch.utils.XModelBuilder;
 import io.oz.xv.glsl.shaders.PlaneStar;
@@ -57,7 +55,8 @@ public class TestPlaneStarView extends ScreenAdapter {
 		visualsys = new SysVisual(null);
 		ecs.addSystem(visualsys);
 
-		ecs.addSystem(new SysAffine());
+		ecs.addSystem(new SysUnitween());
+
 		ecs.addSystem(new SysModelRenderer(cam)
 						  .option("background-color", new float[] {0.2f, .6f, 0.3f, 1.0f}));
 
@@ -96,10 +95,22 @@ public class TestPlaneStarView extends ScreenAdapter {
 		model.calculateTransforms();
 		Obj3 obj3 = ecs.createComponent(Obj3.class);
 		obj3.orthoFace = new ModelInstance(model);
-
-		Affines aff = ecs.createComponent(Affines.class);
-		aff.transforms = new Array<AffineTrans>();
-		star.add(aff);
 		star.add(obj3);
+
+//		Affines aff = ecs.createComponent(Affines.class);
+//		aff.transforms = new Array<AffineTrans>();
+//		star.add(aff);
+//		star.add(obj3);
+
+//		AffineAnim aff = ecs.createComponent(AffineAnim.class); 
+//		aff.translation = new Array<NodeKeyframe<Vector3>>();
+//		// aff.translation.add(new NodeKeyframe<Vector3>(1, new Vector3(x, 0, 0)));
+//		aff.controllor = new XAnimationControllerGltf(obj3.modInst);
+//	    aff.controllor.animate("simple", 0);
+		
+		Unitween ut = ecs.createComponent(Unitween.class);
+		SysUnitween.initUniform(ut, vStar);
+		star.add(ut);
+
 	}
 }

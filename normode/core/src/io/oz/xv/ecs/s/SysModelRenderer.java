@@ -11,7 +11,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 
-import io.oz.xv.ecs.c.AffineAnim;
 import io.oz.xv.ecs.c.Obj3;
 import io.oz.xv.gdxpatch.XShaderProvider;
 
@@ -64,7 +63,7 @@ public class SysModelRenderer extends EntitySystem {
 	@Override
 	public void addedToEngine(Engine engine) {
 		// entities = engine.getEntitiesFor(Family.all(Affines.class, Obj3.class).get());
-		entities = engine.getEntitiesFor(Family.all(AffineAnim.class, Obj3.class).get());
+		entities = engine.getEntitiesFor(Family.all(Obj3.class).get());
 	}
 	
 	@Override

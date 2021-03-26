@@ -21,7 +21,9 @@ import io.oz.xv.material.XMaterial;
  *
  */
 public class WShader extends BaseShader implements Shader {
-	/** uniform name of 'float u_mode' - float be cause no bitwise operation */
+	/**Uniform name of 'float u_mode'.
+	 * Typical usage are select / unselect.
+	 * It's type of float be cause no bitwise operation. */
 	public int u_mode = -1;
 
 	protected int u_vpM4 = register("u_vpMat4");
@@ -80,7 +82,7 @@ public class WShader extends BaseShader implements Shader {
 
 	@Override
 	public void begin (Camera camera, RenderContext context) {
-		program.begin();
+		program.bind();
 		context.setDepthTest(GL20.GL_LEQUAL, 0f, 1f);
 		context.setDepthMask(true);
 		camera.update();
